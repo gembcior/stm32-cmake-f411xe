@@ -5,6 +5,8 @@
 
 namespace stm32::rcc {
   namespace cr {
+    constexpr uint32_t Offset       = 0x0;
+
     constexpr uint32_t HsionPos     = 0;
     constexpr uint32_t HsionMsk     = 0x1;
 
@@ -43,6 +45,8 @@ namespace stm32::rcc {
   }
 
   namespace pllcfgr {
+    constexpr uint32_t Offset    = 0x4;
+
     constexpr uint32_t PllmPos   = 0;
     constexpr uint32_t PllmMsk   = 0x3F;
 
@@ -60,6 +64,8 @@ namespace stm32::rcc {
   }
 
   namespace cfgr {
+    constexpr uint32_t Offset     = 0x8;
+
     constexpr uint32_t SwPos      = 0;
     constexpr uint32_t SwMsk      = 0x3;
 
@@ -95,6 +101,8 @@ namespace stm32::rcc {
   }
 
   namespace cir {
+    constexpr uint32_t Offset         = 0xC;
+
     constexpr uint32_t LsirdyfPos     = 0;
     constexpr uint32_t LsirdyfMsk     = 0x1;
 
@@ -157,6 +165,8 @@ namespace stm32::rcc {
   }
 
   namespace ahb1rstr {
+    constexpr uint32_t Offset      = 0x10;
+
     constexpr uint32_t GpioarstPos = 0;
     constexpr uint32_t GpioarstMsk = 0x1;
 
@@ -186,11 +196,15 @@ namespace stm32::rcc {
   }
 
   namespace ahb2rstr {
+    constexpr uint32_t Offset      = 0x14;
+
     constexpr uint32_t OtgfsrstPos = 7;
     constexpr uint32_t OtgfsrstMsk = 0x1;
   }
 
   namespace apb1rstr {
+    constexpr uint32_t Offset       = 0x20;
+
     constexpr uint32_t Tim2rstPos   = 0;
     constexpr uint32_t Tim2rstMsk   = 0x1;
 
@@ -229,6 +243,8 @@ namespace stm32::rcc {
   }
 
   namespace apb2rstr {
+    constexpr uint32_t Offset       = 0x24;
+
     constexpr uint32_t Tim1rstPos   = 0;
     constexpr uint32_t Tim1rstMsk   = 0x1;
 
@@ -267,6 +283,8 @@ namespace stm32::rcc {
   }
 
   namespace ahb1enr {
+    constexpr uint32_t Offset     = 0x30;
+
     constexpr uint32_t GpioaenPos = 0;
     constexpr uint32_t GpioaenMsk = 0x1;
 
@@ -296,11 +314,15 @@ namespace stm32::rcc {
   }
 
   namespace ahb2enr {
+    constexpr uint32_t Offset     = 0x34;
+
     constexpr uint32_t OtgfsenPos = 7;
     constexpr uint32_t OtgfsenMsk = 0x1;
   }
 
   namespace apb1enr {
+    constexpr uint32_t Offset      = 0x40;
+
     constexpr uint32_t Tim2enPos   = 0;
     constexpr uint32_t Tim2enMsk   = 0x1;
 
@@ -339,6 +361,8 @@ namespace stm32::rcc {
   }
 
   namespace apb2enr {
+    constexpr uint32_t Offset      = 0x44;
+
     constexpr uint32_t Tim1enPos   = 0;
     constexpr uint32_t Tim1enMsk   = 0x1;
 
@@ -374,6 +398,225 @@ namespace stm32::rcc {
 
     constexpr uint32_t Spi5enPos   = 20;
     constexpr uint32_t Spi5enMsk   = 0x1;
+  }
+
+  namespace ahb1lpenr {
+    constexpr uint32_t Offset       = 0x50;
+
+    constexpr uint32_t GpioalpenPos = 0;
+    constexpr uint32_t GpioalpenMsk = 0x1;
+
+    constexpr uint32_t GpioblpenPos = 1;
+    constexpr uint32_t GpioblpenMsk = 0x1;
+
+    constexpr uint32_t GpioclpenPos = 2;
+    constexpr uint32_t GpioclpenMsk = 0x1;
+
+    constexpr uint32_t GpiodlpenPos = 3;
+    constexpr uint32_t GpiodlpenMsk = 0x1;
+
+    constexpr uint32_t GpioelpenPos = 4;
+    constexpr uint32_t GpioelpenMsk = 0x1;
+
+    constexpr uint32_t GpiohlpenPos = 7;
+    constexpr uint32_t GpiohlpenMsk = 0x1;
+
+    constexpr uint32_t CrclpenPos   = 12;
+    constexpr uint32_t CrclpenMsk   = 0x1;
+
+    constexpr uint32_t FlitflpenPos = 15;
+    constexpr uint32_t FlitflpenMsk = 0x1;
+
+    constexpr uint32_t Sram1lpenPos = 16;
+    constexpr uint32_t Sram1lpenMsk = 0x1;
+
+    constexpr uint32_t Dma1lpenPos  = 21;
+    constexpr uint32_t Dma1lpenMsk  = 0x1;
+
+    constexpr uint32_t Dma2lpenPos  = 22;
+    constexpr uint32_t Dma2lpenMsk  = 0x1;
+  }
+
+  namespace ahb2lpenr {
+    constexpr uint32_t Offset       = 0x54;
+
+    constexpr uint32_t OtgfslpenPos = 7;
+    constexpr uint32_t OtgfslpenMsk = 0x1;
+  }
+
+  namespace apb1lpenr {
+    constexpr uint32_t Offset        = 0x60;
+
+    constexpr uint32_t Tim2lpenPos   = 0;
+    constexpr uint32_t Tim2lpenMsk   = 0x1;
+
+    constexpr uint32_t Tim3lpenPos   = 1;
+    constexpr uint32_t Tim3lpenMsk   = 0x1;
+
+    constexpr uint32_t Tim4lpenPos   = 2;
+    constexpr uint32_t Tim4lpenMsk   = 0x1;
+
+    constexpr uint32_t Tim5lpenPos   = 3;
+    constexpr uint32_t Tim5lpenMsk   = 0x1;
+
+    constexpr uint32_t WwdglpenPos   = 11;
+    constexpr uint32_t WwdglpenMsk   = 0x1;
+
+    constexpr uint32_t Spi2lpenPos   = 14;
+    constexpr uint32_t Spi2lpenMsk   = 0x1;
+
+    constexpr uint32_t Spi3lpenPos   = 15;
+    constexpr uint32_t Spi3lpenMsk   = 0x1;
+
+    constexpr uint32_t Usart2lpenPos = 17;
+    constexpr uint32_t Usart2lpenMsk = 0x1;
+
+    constexpr uint32_t I2c1lpenPos   = 21;
+    constexpr uint32_t I2c1lpenMsk   = 0x1;
+
+    constexpr uint32_t I2c2lpenPos   = 22;
+    constexpr uint32_t I2c2lpenMsk   = 0x1;
+
+    constexpr uint32_t I2c3lpenPos   = 23;
+    constexpr uint32_t I2c3lpenMsk   = 0x1;
+
+    constexpr uint32_t PwrlpenPos    = 28;
+    constexpr uint32_t PwrlpenMsk    = 0x1;
+  }
+
+  namespace apb2lpenr {
+    constexpr uint32_t Offset        = 0x64;
+
+    constexpr uint32_t Tim1lpenPos   = 0;
+    constexpr uint32_t Tim1lpenMsk   = 0x1;
+
+    constexpr uint32_t Usart1lpenPos = 4;
+    constexpr uint32_t Usart1lpenMsk = 0x1;
+
+    constexpr uint32_t Usart6lpenPos = 5;
+    constexpr uint32_t Usart6lpenMsk = 0x1;
+
+    constexpr uint32_t Adc1lpenPos   = 8;
+    constexpr uint32_t Adc1lpenMsk   = 0x1;
+
+    constexpr uint32_t SdiolpenPos   = 11;
+    constexpr uint32_t SdiolpenMsk   = 0x1;
+
+    constexpr uint32_t Spi1lpenPos   = 12;
+    constexpr uint32_t Spi1lpenMsk   = 0x1;
+
+    constexpr uint32_t Spi4lpenPos   = 13;
+    constexpr uint32_t Spi4lpenMsk   = 0x1;
+
+    constexpr uint32_t SyscfglpenPos = 14;
+    constexpr uint32_t SyscfglpenMsk = 0x1;
+
+    constexpr uint32_t Tim9lpenPos   = 16;
+    constexpr uint32_t Tim9lpenMsk   = 0x1;
+
+    constexpr uint32_t Tim10lpenPos  = 17;
+    constexpr uint32_t Tim10lpenMsk  = 0x1;
+
+    constexpr uint32_t Tim11lpenPos  = 18;
+    constexpr uint32_t Tim11lpenMsk  = 0x1;
+
+    constexpr uint32_t Spi5lpenPos   = 20;
+    constexpr uint32_t Spi5lpenMsk   = 0x1;
+  }
+
+  namespace bdcr {
+    constexpr uint32_t Offset    = 0x70;
+
+    constexpr uint32_t LseonPos  = 0;
+    constexpr uint32_t LseonMsk  = 0x1;
+
+    constexpr uint32_t LserdyPos = 1;
+    constexpr uint32_t LserdyMsk = 0x1;
+
+    constexpr uint32_t LsebypPos = 2;
+    constexpr uint32_t LsebypMsk = 0x1;
+
+    constexpr uint32_t LsemodPos = 3;
+    constexpr uint32_t LsemodMsk = 0x1;
+
+    constexpr uint32_t RtcselPos = 8;
+    constexpr uint32_t RtcselMsk = 0x3;
+
+    constexpr uint32_t RtcenPos  = 15;
+    constexpr uint32_t RtcenMsk  = 0x1;
+
+    constexpr uint32_t BdrstPos  = 16;
+    constexpr uint32_t BdrstMsk  = 0x1;
+  }
+
+  namespace csr {
+    constexpr uint32_t Offset      = 0x74;
+
+    constexpr uint32_t LsionPos    = 0;
+    constexpr uint32_t LsionMsk    = 0x1;
+
+    constexpr uint32_t LsirdyPos   = 1;
+    constexpr uint32_t LsirdyMsk   = 0x1;
+
+    constexpr uint32_t RmvfPos     = 24;
+    constexpr uint32_t RmvfMsk     = 0x1;
+
+    constexpr uint32_t BorrstfPos  = 25;
+    constexpr uint32_t BorrstfMsk  = 0x1;
+
+    constexpr uint32_t PinrstfPos  = 26;
+    constexpr uint32_t PinrstfMsk  = 0x1;
+
+    constexpr uint32_t PorrstfPos  = 27;
+    constexpr uint32_t PorrstfMsk  = 0x1;
+
+    constexpr uint32_t SftrstfPos  = 28;
+    constexpr uint32_t SftrstfMsk  = 0x1;
+
+    constexpr uint32_t IwdgrstfPos = 29;
+    constexpr uint32_t IwdgrstfMsk = 0x1;
+
+    constexpr uint32_t WwdgrstfPos = 30;
+    constexpr uint32_t WwdgrstfMsk = 0x1;
+
+    constexpr uint32_t LpwrrstfPos = 31;
+    constexpr uint32_t LpwrrstfMsk = 0x1;
+  }
+
+  namespace sscgr {
+    constexpr uint32_t Offset       = 0x80;
+
+    constexpr uint32_t ModperPos    = 0;
+    constexpr uint32_t ModperMsk    = 0x1FFF;
+
+    constexpr uint32_t IncstepPos   = 13;
+    constexpr uint32_t IncstepMsk   = 0x7FFF;
+
+    constexpr uint32_t SpreadselPos = 30;
+    constexpr uint32_t SpreadselMsk = 0x1;
+
+    constexpr uint32_t SscgenPos    = 31;
+    constexpr uint32_t SscgenMsk    = 0x1;
+  }
+
+  namespace plli2scfgr {
+    constexpr uint32_t Offset     = 0x84;
+
+    constexpr uint32_t Plli2smPos = 0;
+    constexpr uint32_t Plli2smMsk = 0x3F;
+
+    constexpr uint32_t Plli2snPos = 6;
+    constexpr uint32_t Plli2snMsk = 0x1FF;
+
+    constexpr uint32_t Plli2srPos = 28;
+    constexpr uint32_t Plli2srMsk = 0x7;
+  }
+
+  namespace dckcfgr {
+    constexpr uint32_t Offset    = 0x8C;
+
+    constexpr uint32_t TimprePos = 24;
+    constexpr uint32_t TimpreMsk = 0x1;
   }
 }
 

@@ -5,6 +5,8 @@
 
 namespace stm32::gpio {
   namespace moder {
+    constexpr uint32_t Offset     = 0x0;
+
     constexpr uint32_t Moder0Pos  = 0;
     constexpr uint32_t Moder0Msk  = 0x3;
 
@@ -55,6 +57,8 @@ namespace stm32::gpio {
   }
 
   namespace otyper {
+    constexpr uint32_t Offset  = 0x4;
+
     constexpr uint32_t Ot0Pos  = 0;
     constexpr uint32_t Ot0Msk  = 0x1;
 
@@ -105,6 +109,8 @@ namespace stm32::gpio {
   }
 
   namespace ospeedr {
+    constexpr uint32_t Offset      = 0x8;
+
     constexpr uint32_t Ospeed0Pos  = 0;
     constexpr uint32_t Ospeed0Msk  = 0x3;
 
@@ -155,6 +161,8 @@ namespace stm32::gpio {
   }
 
   namespace pupdr {
+    constexpr uint32_t Offset    = 0xC;
+
     constexpr uint32_t Pupd0Pos  = 0;
     constexpr uint32_t Pupd0Msk  = 0x3;
 
@@ -205,6 +213,8 @@ namespace stm32::gpio {
   }
 
   namespace idr {
+    constexpr uint32_t Offset  = 0x10;
+
     constexpr uint32_t Id0Pos  = 0;
     constexpr uint32_t Id0Msk  = 0x1;
 
@@ -255,6 +265,8 @@ namespace stm32::gpio {
   }
 
   namespace odr {
+    constexpr uint32_t Offset  = 0x14;
+
     constexpr uint32_t Od0Pos  = 0;
     constexpr uint32_t Od0Msk  = 0x1;
 
@@ -305,6 +317,8 @@ namespace stm32::gpio {
   }
 
   namespace bsrr {
+    constexpr uint32_t Offset  = 0x18;
+
     constexpr uint32_t Bs0Pos  = 0;
     constexpr uint32_t Bs0Msk  = 0x1;
 
@@ -403,6 +417,8 @@ namespace stm32::gpio {
   }
 
   namespace lckr {
+    constexpr uint32_t Offset   = 0x1C;
+
     constexpr uint32_t Lck0Pos  = 0;
     constexpr uint32_t Lck0Msk  = 0x1;
 
@@ -456,6 +472,8 @@ namespace stm32::gpio {
   }
 
   namespace afrl {
+    constexpr uint32_t Offset    = 0x20;
+
     constexpr uint32_t Afsel0Pos = 0;
     constexpr uint32_t Afsel0Msk = 0xF;
 
@@ -482,6 +500,8 @@ namespace stm32::gpio {
   }
 
   namespace afrh {
+    constexpr uint32_t Offset     = 0x24;
+
     constexpr uint32_t Afsel8Pos  = 0;
     constexpr uint32_t Afsel8Msk  = 0xF;
 

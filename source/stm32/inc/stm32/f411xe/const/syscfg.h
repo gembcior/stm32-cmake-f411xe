@@ -5,16 +5,22 @@
 
 namespace stm32::syscfg {
   namespace memrmp {
+    constexpr uint32_t Offset     = 0x0;
+
     constexpr uint32_t MemModePos = 0;
     constexpr uint32_t MemModeMsk = 0x3;
   }
 
   namespace pmc {
+    constexpr uint32_t Offset     = 0x4;
+
     constexpr uint32_t Adc1dc2Pos = 16;
     constexpr uint32_t Adc1dc2Msk = 0x1;
   }
 
   namespace exticr1 {
+    constexpr uint32_t Offset   = 0x8;
+
     constexpr uint32_t Exti0Pos = 0;
     constexpr uint32_t Exti0Msk = 0xF;
 
@@ -29,6 +35,8 @@ namespace stm32::syscfg {
   }
 
   namespace exticr2 {
+    constexpr uint32_t Offset   = 0xC;
+
     constexpr uint32_t Exti4Pos = 0;
     constexpr uint32_t Exti4Msk = 0xF;
 
@@ -43,6 +51,8 @@ namespace stm32::syscfg {
   }
 
   namespace exticr3 {
+    constexpr uint32_t Offset    = 0x10;
+
     constexpr uint32_t Exti8Pos  = 0;
     constexpr uint32_t Exti8Msk  = 0xF;
 
@@ -57,6 +67,8 @@ namespace stm32::syscfg {
   }
 
   namespace exticr4 {
+    constexpr uint32_t Offset    = 0x14;
+
     constexpr uint32_t Exti12Pos = 0;
     constexpr uint32_t Exti12Msk = 0xF;
 
@@ -71,6 +83,8 @@ namespace stm32::syscfg {
   }
 
   namespace cmpcr {
+    constexpr uint32_t Offset   = 0x20;
+
     constexpr uint32_t CmpPdPos = 0;
     constexpr uint32_t CmpPdMsk = 0x1;
 

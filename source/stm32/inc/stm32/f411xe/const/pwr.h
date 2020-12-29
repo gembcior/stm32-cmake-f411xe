@@ -5,6 +5,8 @@
 
 namespace stm32::pwr {
   namespace cr {
+    constexpr uint32_t Offset    = 0x0;
+
     constexpr uint32_t LpdsPos   = 0;
     constexpr uint32_t LpdsMsk   = 0x1;
 
@@ -49,6 +51,8 @@ namespace stm32::pwr {
   }
 
   namespace csr {
+    constexpr uint32_t Offset    = 0x4;
+
     constexpr uint32_t WufPos    = 0;
     constexpr uint32_t WufMsk    = 0x1;
 

@@ -3,6 +3,8 @@
 
 #include <cstdint>
 
+// TODO Add support for byte access and halfword access
+// TODO Add support for other register policy
 template <uint32_t address, uint32_t offset, uint32_t mask, typename policy>
 class RegisterModel
 {
