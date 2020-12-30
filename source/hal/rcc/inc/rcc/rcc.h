@@ -3,89 +3,89 @@
 
 #include <cstdint>
 
-namespace stm32::hal {
+namespace stm32::hal::rcc {
 
 enum class ClockSource {
-  HSI,
-  HSE,
-  PLL,
-  PLLI2S,
+  Hsi,
+  Hse,
+  Pll,
+  Plli2s,
 };
 
 
 enum class PllClockSource {
-  HSI,
-  HSE,
+  Hsi = 0,
+  Hse = 1,
 };
 
 
 enum class ClockDomain {
-  AHB,
-  APB1,
-  APB2,
+  Ahb,
+  Apb1,
+  Apb2,
 };
 
 
 enum class ClockPrescaler {
-  DIV1,
-  DIV2,
-  DIV4,
-  DIV8,
-  DIV16,
-  DIV64,
-  DIV128,
-  DIV256,
-  DIV512,
+  Div1 = 0,
+  Div2,
+  Div4,
+  Div8,
+  Div16,
+  Div64,
+  Div128,
+  Div256,
+  Div512,
 };
 
 
 enum class Apb1Peripheral {
-  PWR,
-  I2C3,
-  I2C2,
-  I2C1,
-  USART2,
-  SPI3,
-  SPI2,
-  WWDG,
-  TIM5,
-  TIM4,
-  TIM3,
-  TIM2,
+  Pwr,
+  I2c3,
+  I2c2,
+  I2c1,
+  Usart2,
+  Spi3,
+  Spi2,
+  Wwdg,
+  Tim5,
+  Tim4,
+  Tim3,
+  Tim2,
 };
 
 
 enum class Apb2Peripheral {
-  SPI5,
-  TIM11,
-  TIM10,
-  TIM9,
-  SYSCFG,
-  SPI4,
-  SPI1,
-  SDIO,
-  ADC1,
-  USART6,
-  USART1,
-  TIM1,
+  Spi5,
+  Tim11,
+  Tim10,
+  Tim9,
+  Syscfg,
+  Spi4,
+  Spi1,
+  Sdio,
+  Adc1,
+  Usart6,
+  Usart1,
+  Tim1,
 };
 
 
 enum class Ahb1Peripheral {
-  DMA2,
-  DMA1,
-  CRC,
-  GPIOH,
-  GPIOE,
-  GPIOD,
-  GPIOC,
-  GPIOB,
-  GPIOA,
+  Dma2,
+  Dma1,
+  Crc,
+  Gpioh,
+  Gpioe,
+  Gpiod,
+  Gpioc,
+  Gpiob,
+  Gpioa,
 };
 
 
 enum class Ahb2Peripheral {
-  OTGFS,
+  Otgfs,
 };
 
 

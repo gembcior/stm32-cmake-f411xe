@@ -1,1 +1,4 @@
 add_subdirectory(rcc)
+add_subdirectory(pwr)
+add_subdirectory(flash)
+add_subdirectory(gpio)

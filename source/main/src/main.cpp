@@ -28,8 +28,8 @@ void SystemInit(void)
 
 int main(void)
 {
-  static hal::RccDriver rccDriver;
-  rccDriver.enableClockSource(hal::ClockSource::HSI);
+  static hal::rcc::RccDriver rccDriver;
+  rccDriver.enableClockSource(hal::rcc::ClockSource::Hsi);
 
   while (1)
   {
