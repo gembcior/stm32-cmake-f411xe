@@ -2,10 +2,12 @@
 #define STM32_F411XE_CONST_PWR_H
 
 #include <cstdint>
+#include "stm32/f411xe/const/general.h"
 
-namespace stm32::pwr {
+namespace stm32::constants::pwr {
+
   namespace cr {
-    constexpr uint32_t Offset    = 0x0;
+    constexpr uint32_t Address   = PwrBase + 0x0;
 
     constexpr uint32_t LpdsPos   = 0;
     constexpr uint32_t LpdsMsk   = 0x1;
@@ -51,7 +53,7 @@ namespace stm32::pwr {
   }
 
   namespace csr {
-    constexpr uint32_t Offset    = 0x4;
+    constexpr uint32_t Address   = PwrBase + 0x4;
 
     constexpr uint32_t WufPos    = 0;
     constexpr uint32_t WufMsk    = 0x1;
@@ -74,6 +76,7 @@ namespace stm32::pwr {
     constexpr uint32_t VosrdyPos = 14;
     constexpr uint32_t VosrdyMsk = 0x1;
   }
+
 }
 
 #endif /* STM32_F411XE_CONST_PWR_H */

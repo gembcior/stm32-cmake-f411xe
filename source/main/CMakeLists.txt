@@ -17,7 +17,11 @@ target_link_libraries(main
   PRIVATE
     crt
     stm32
+    scb
     rcc
+    pwr
+    flash
+    gpio
 )
 
 stm32_target_app_release(main)

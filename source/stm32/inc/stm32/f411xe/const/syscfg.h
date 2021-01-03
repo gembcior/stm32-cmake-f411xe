@@ -2,6 +2,7 @@
 #define STM32_F411XE_CONST_SYSCFG_H
 
 #include <cstdint>
+#include "stm32/f411xe/const/general.h"
 
 namespace stm32::syscfg {
   namespace memrmp {

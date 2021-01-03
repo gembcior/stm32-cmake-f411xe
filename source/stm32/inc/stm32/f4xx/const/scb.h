@@ -2,10 +2,12 @@
 #define STM32_F4XX_CONST_SCB_H
 
 #include <cstdint>
+#include "stm32/f4xx/const/general.h"
 
-namespace stm32::scb {
+namespace stm32::constants::scb {
+
   namespace cpuid {
-    constexpr uint32_t Offset         = 0x0;
+    constexpr uint32_t Address        = ScbBase + 0x0;
 
     constexpr uint32_t ImplementerPos = 24;
     constexpr uint32_t ImplementerMsk = 0xFF;
@@ -24,7 +26,7 @@ namespace stm32::scb {
   }
 
   namespace icsr {
-    constexpr uint32_t Offset         = 0x4;
+    constexpr uint32_t Address        = ScbBase + 0x4;
 
     constexpr uint32_t NmipendsetPos  = 31;
     constexpr uint32_t NmipendsetMsk  = 1;
@@ -58,14 +60,14 @@ namespace stm32::scb {
   }
 
   namespace vtor {
-    constexpr uint32_t Offset    = 0x8;
+    constexpr uint32_t Address   = ScbBase + 0x8;
 
-    constexpr uint32_t TbloffPos = 7;
-    constexpr uint32_t TbloffMsk = 0x1FFFFFF;
+    constexpr uint32_t TbloffPos = 9;
+    constexpr uint32_t TbloffMsk = 0x1FFFFF;
   }
 
   namespace aircr {
-    constexpr uint32_t Offset           = 0xC;
+    constexpr uint32_t Address          = ScbBase + 0xC;
 
     constexpr uint32_t VectkeyPos       = 16;
     constexpr uint32_t VectkeyMsk       = 0xFFFF;
@@ -90,7 +92,7 @@ namespace stm32::scb {
   }
 
   namespace scr {
-    constexpr uint32_t Offset         = 0x10;
+    constexpr uint32_t Address        = ScbBase + 0x10;
 
     constexpr uint32_t SevonpendPos   = 4;
     constexpr uint32_t SevonpendMsk   = 1;
@@ -103,7 +105,7 @@ namespace stm32::scb {
   }
 
   namespace ccr {
-    constexpr uint32_t Offset            = 0x14;
+    constexpr uint32_t Address           = ScbBase + 0x14;
 
     constexpr uint32_t StkalignPos       = 9;
     constexpr uint32_t StkalignMsk       = 1;
@@ -125,19 +127,19 @@ namespace stm32::scb {
   }
 
   namespace shpr1 {
-    constexpr uint32_t Offset            = 0x18;
+    constexpr uint32_t Address = ScbBase + 0x18;
   }
 
   namespace shpr2 {
-    constexpr uint32_t Offset            = 0x1C;
+    constexpr uint32_t Address = ScbBase + 0x1C;
   }
 
   namespace shpr3 {
-    constexpr uint32_t Offset            = 0x20;
+    constexpr uint32_t Address = ScbBase + 0x20;
   }
 
   namespace shcsr {
-    constexpr uint32_t Offset            = 0x24;
+    constexpr uint32_t Address           = ScbBase + 0x24;
 
     constexpr uint32_t UsgfaultenaPos    = 18;
     constexpr uint32_t UsgfaultenaMsk    = 1;
@@ -183,7 +185,7 @@ namespace stm32::scb {
   }
 
   namespace cfsr {
-    constexpr uint32_t Offset         = 0x28;
+    constexpr uint32_t Address        = ScbBase + 0x28;
 
     constexpr uint32_t UsgfaultsrPos  = 16;
     constexpr uint32_t UsgfaultsrMsk  = 0xFFFF;
@@ -194,22 +196,22 @@ namespace stm32::scb {
     constexpr uint32_t MemfaultsrPos  = 0;
     constexpr uint32_t MemfaultsrMsk  = 0xFF;
 
-    constexpr uint32_t MmarvalidPos   = MemfaultactPos + 7;
+    constexpr uint32_t MmarvalidPos   = MemfaultsrPos + 7;
     constexpr uint32_t MmarvalidMsk   = 1;
 
-    constexpr uint32_t MlsperrPos     = MemfaultactPos + 5;
+    constexpr uint32_t MlsperrPos     = MemfaultsrPos + 5;
     constexpr uint32_t MlsperrMsk     = 1;
 
-    constexpr uint32_t MstkerrPos     = MemfaultactPos + 4;
+    constexpr uint32_t MstkerrPos     = MemfaultsrPos + 4;
     constexpr uint32_t MstkerrMsk     = 1;
 
-    constexpr uint32_t MunstkerrPos   = MemfaultactPos + 3;
+    constexpr uint32_t MunstkerrPos   = MemfaultsrPos + 3;
     constexpr uint32_t MunstkerrMsk   = 1;
 
-    constexpr uint32_t DaccviolPos    = MemfaultactPos + 1;
+    constexpr uint32_t DaccviolPos    = MemfaultsrPos + 1;
     constexpr uint32_t DaccviolMsk    = 1;
 
-    constexpr uint32_t IaccviolPos    = MemfaultactPos + 0;
+    constexpr uint32_t IaccviolPos    = MemfaultsrPos + 0;
     constexpr uint32_t IaccviolMsk    = 1;
 
     constexpr uint32_t BfarvalidPos   = BusfaultsrPos + 7;
@@ -253,7 +255,7 @@ namespace stm32::scb {
   }
 
   namespace hfsr {
-    constexpr uint32_t Offset      = 0x2C;
+    constexpr uint32_t Address     = ScbBase + 0x2C;
 
     constexpr uint32_t DebugevtPos = 31;
     constexpr uint32_t DebugevtMsk = 1;
@@ -266,19 +268,19 @@ namespace stm32::scb {
   }
 
   namespace mmar {
-    constexpr uint32_t Offset      = 0x34;
+    constexpr uint32_t Address = ScbBase + 0x34;
   }
 
   namespace bfar {
-    constexpr uint32_t Offset      = 0x38;
+    constexpr uint32_t Address = ScbBase + 0x38;
   }
 
   namespace afsr {
-    constexpr uint32_t Offset      = 0x3C;
+    constexpr uint32_t Address = ScbBase + 0x3C;
   }
 
   namespace actlr {
-    constexpr uint32_t Offset        = 0x8;
+    constexpr uint32_t Address       = ScbBase + 0x8;
 
     constexpr uint32_t DisoofpPos    = 9;
     constexpr uint32_t DisoofpMsk    = 1;
@@ -297,7 +299,7 @@ namespace stm32::scb {
   }
 
   namespace cpacr {
-    constexpr uint32_t Offset    = 0x88;
+    constexpr uint32_t Address = ScbBase + 0x88;
 
     constexpr uint32_t Cp10Pos = 20;
     constexpr uint32_t Cp10Msk = 0x3;

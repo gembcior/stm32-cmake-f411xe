@@ -1,37 +1,53 @@
 #ifndef STM32_F411XE_REG_PWR_H
 #define STM32_F411XE_REG_PWR_H
 
-#include "../../reg_model/reg_model.h"
-#include "../const/general.h"
-#include "../const/pwr.h"
+#include "stm32/register_model/register_model.h"
+#include "stm32/f411xe/const/general.h"
+#include "stm32/f411xe/const/pwr.h"
 
-namespace stm32::pwr {
-  namespace cr {
-    using lpds   = RegisterModel<PwrBase + Offset, LpdsPos,   LpdsMsk,   PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using pdds   = RegisterModel<PwrBase + Offset, PddsPos,   PddsMsk,   PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using cwuf   = RegisterModel<PwrBase + Offset, CwufPos,   CwufMsk,   PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using csbf   = RegisterModel<PwrBase + Offset, CsbfPos,   CsbfMsk,   PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using pvde   = RegisterModel<PwrBase + Offset, PvdePos,   PvdeMsk,   PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using pls    = RegisterModel<PwrBase + Offset, PlsPos,    PlsMsk,    PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using dbp    = RegisterModel<PwrBase + Offset, DbpPos,    DbpMsk,    PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using fpds   = RegisterModel<PwrBase + Offset, FpdsPos,   FpdsMsk,   PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using lplvds = RegisterModel<PwrBase + Offset, LplvdsPos, LplvdsMsk, PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using mrlvds = RegisterModel<PwrBase + Offset, MrlvdsPos, MrlvdsMsk, PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using adcdc1 = RegisterModel<PwrBase + Offset, Adcdc1Pos, Adcdc1Msk, PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using vos    = RegisterModel<PwrBase + Offset, VosPos,    VosMsk,    PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using fmssr  = RegisterModel<PwrBase + Offset, FmssrPos,  FmssrMsk,  PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using fissr  = RegisterModel<PwrBase + Offset, FissrPos,  FissrMsk,  PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-  }
+namespace stm32::regs::pwr {
 
-  namespace csr {
-    using wuf    = RegisterModel<PwrBase + Offset, WufPos,    WufMsk,    PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using sbf    = RegisterModel<PwrBase + Offset, SbfPos,    SbfMsk,    PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using pvdo   = RegisterModel<PwrBase + Offset, PvdoPos,   PvdoMsk,   PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using brr    = RegisterModel<PwrBase + Offset, BrrPos,    BrrMsk,    PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using ewup   = RegisterModel<PwrBase + Offset, EwupPos,   EwupMsk,   PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using bre    = RegisterModel<PwrBase + Offset, BrePos,    BreMsk,    PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-    using vosrdy = RegisterModel<PwrBase + Offset, VosrdyPos, VosrdyMsk, PolicyExecutor<RegisterPolicy::ReadWrite, FieldPolicy::ReadWrite>>;
-  }
+using namespace stm32::constants::pwr;
+
+
+template <uint32_t address, RegisterPolicy regPolicy>
+class CrReg: public RegisterModel<address, regPolicy>
+{
+public:
+  using lpds   = FieldModel<address, cr::LpdsPos,   cr::LpdsMsk,   regPolicy, FieldPolicy::ReadWrite>;
+  using pdds   = FieldModel<address, cr::PddsPos,   cr::PddsMsk,   regPolicy, FieldPolicy::ReadWrite>;
+  using cwuf   = FieldModel<address, cr::CwufPos,   cr::CwufMsk,   regPolicy, FieldPolicy::ReadWrite>;
+  using csbf   = FieldModel<address, cr::CsbfPos,   cr::CsbfMsk,   regPolicy, FieldPolicy::ReadWrite>;
+  using pvde   = FieldModel<address, cr::PvdePos,   cr::PvdeMsk,   regPolicy, FieldPolicy::ReadWrite>;
+  using pls    = FieldModel<address, cr::PlsPos,    cr::PlsMsk,    regPolicy, FieldPolicy::ReadWrite>;
+  using dbp    = FieldModel<address, cr::DbpPos,    cr::DbpMsk,    regPolicy, FieldPolicy::ReadWrite>;
+  using fpds   = FieldModel<address, cr::FpdsPos,   cr::FpdsMsk,   regPolicy, FieldPolicy::ReadWrite>;
+  using lplvds = FieldModel<address, cr::LplvdsPos, cr::LplvdsMsk, regPolicy, FieldPolicy::ReadWrite>;
+  using mrlvds = FieldModel<address, cr::MrlvdsPos, cr::MrlvdsMsk, regPolicy, FieldPolicy::ReadWrite>;
+  using adcdc1 = FieldModel<address, cr::Adcdc1Pos, cr::Adcdc1Msk, regPolicy, FieldPolicy::ReadWrite>;
+  using vos    = FieldModel<address, cr::VosPos,    cr::VosMsk,    regPolicy, FieldPolicy::ReadWrite>;
+  using fmssr  = FieldModel<address, cr::FmssrPos,  cr::FmssrMsk,  regPolicy, FieldPolicy::ReadWrite>;
+  using fissr  = FieldModel<address, cr::FissrPos,  cr::FissrMsk,  regPolicy, FieldPolicy::ReadWrite>;
+};
+
+
+template <uint32_t address, RegisterPolicy regPolicy>
+class CsrReg: public RegisterModel<address, regPolicy>
+{
+public:
+  using wuf    = FieldModel<address, csr::WufPos,    csr::WufMsk,    regPolicy, FieldPolicy::ReadWrite>;
+  using sbf    = FieldModel<address, csr::SbfPos,    csr::SbfMsk,    regPolicy, FieldPolicy::ReadWrite>;
+  using pvdo   = FieldModel<address, csr::PvdoPos,   csr::PvdoMsk,   regPolicy, FieldPolicy::ReadWrite>;
+  using brr    = FieldModel<address, csr::BrrPos,    csr::BrrMsk,    regPolicy, FieldPolicy::ReadWrite>;
+  using ewup   = FieldModel<address, csr::EwupPos,   csr::EwupMsk,   regPolicy, FieldPolicy::ReadWrite>;
+  using bre    = FieldModel<address, csr::BrePos,    csr::BreMsk,    regPolicy, FieldPolicy::ReadWrite>;
+  using vosrdy = FieldModel<address, csr::VosrdyPos, csr::VosrdyMsk, regPolicy, FieldPolicy::ReadWrite>;
+};
+
+
+using cr  = CrReg<cr::Address, RegisterPolicy::ReadWrite>;
+using csr = CsrReg<csr::Address, RegisterPolicy::ReadWrite>;
+
 }
 
 #endif /* STM32_F411XE_REG_PWR_H */

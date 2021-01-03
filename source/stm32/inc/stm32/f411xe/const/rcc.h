@@ -2,10 +2,12 @@
 #define STM32_F411XE_CONST_RCC_H
 
 #include <cstdint>
+#include "stm32/f411xe/const/general.h"
 
-namespace stm32::rcc {
+namespace stm32::constants::rcc {
+
   namespace cr {
-    constexpr uint32_t Offset       = 0x0;
+    constexpr uint32_t Address      = RccBase + 0x0;
 
     constexpr uint32_t HsionPos     = 0;
     constexpr uint32_t HsionMsk     = 0x1;
@@ -45,7 +47,7 @@ namespace stm32::rcc {
   }
 
   namespace pllcfgr {
-    constexpr uint32_t Offset    = 0x4;
+    constexpr uint32_t Address   = RccBase + 0x4;
 
     constexpr uint32_t PllmPos   = 0;
     constexpr uint32_t PllmMsk   = 0x3F;
@@ -64,7 +66,7 @@ namespace stm32::rcc {
   }
 
   namespace cfgr {
-    constexpr uint32_t Offset     = 0x8;
+    constexpr uint32_t Address    = RccBase + 0x8;
 
     constexpr uint32_t SwPos      = 0;
     constexpr uint32_t SwMsk      = 0x3;
@@ -98,10 +100,10 @@ namespace stm32::rcc {
 
     constexpr uint32_t Mco2Pos    = 30;
     constexpr uint32_t Mco2Msk    = 0x3;
-  }
+  };
 
   namespace cir {
-    constexpr uint32_t Offset         = 0xC;
+    constexpr uint32_t Address        = RccBase + 0xC;
 
     constexpr uint32_t LsirdyfPos     = 0;
     constexpr uint32_t LsirdyfMsk     = 0x1;
@@ -165,7 +167,7 @@ namespace stm32::rcc {
   }
 
   namespace ahb1rstr {
-    constexpr uint32_t Offset      = 0x10;
+    constexpr uint32_t Address     = RccBase + 0x10;
 
     constexpr uint32_t GpioarstPos = 0;
     constexpr uint32_t GpioarstMsk = 0x1;
@@ -196,14 +198,14 @@ namespace stm32::rcc {
   }
 
   namespace ahb2rstr {
-    constexpr uint32_t Offset      = 0x14;
+    constexpr uint32_t Address     = RccBase + 0x14;
 
     constexpr uint32_t OtgfsrstPos = 7;
     constexpr uint32_t OtgfsrstMsk = 0x1;
   }
 
   namespace apb1rstr {
-    constexpr uint32_t Offset       = 0x20;
+    constexpr uint32_t Address      = RccBase + 0x20;
 
     constexpr uint32_t Tim2rstPos   = 0;
     constexpr uint32_t Tim2rstMsk   = 0x1;
@@ -243,7 +245,7 @@ namespace stm32::rcc {
   }
 
   namespace apb2rstr {
-    constexpr uint32_t Offset       = 0x24;
+    constexpr uint32_t Address      = RccBase + 0x24;
 
     constexpr uint32_t Tim1rstPos   = 0;
     constexpr uint32_t Tim1rstMsk   = 0x1;
@@ -283,7 +285,7 @@ namespace stm32::rcc {
   }
 
   namespace ahb1enr {
-    constexpr uint32_t Offset     = 0x30;
+    constexpr uint32_t Address    = RccBase + 0x30;
 
     constexpr uint32_t GpioaenPos = 0;
     constexpr uint32_t GpioaenMsk = 0x1;
@@ -314,14 +316,14 @@ namespace stm32::rcc {
   }
 
   namespace ahb2enr {
-    constexpr uint32_t Offset     = 0x34;
+    constexpr uint32_t Address    = RccBase + 0x34;
 
     constexpr uint32_t OtgfsenPos = 7;
     constexpr uint32_t OtgfsenMsk = 0x1;
   }
 
   namespace apb1enr {
-    constexpr uint32_t Offset      = 0x40;
+    constexpr uint32_t Address     = RccBase + 0x40;
 
     constexpr uint32_t Tim2enPos   = 0;
     constexpr uint32_t Tim2enMsk   = 0x1;
@@ -361,7 +363,7 @@ namespace stm32::rcc {
   }
 
   namespace apb2enr {
-    constexpr uint32_t Offset      = 0x44;
+    constexpr uint32_t Address     = RccBase + 0x44;
 
     constexpr uint32_t Tim1enPos   = 0;
     constexpr uint32_t Tim1enMsk   = 0x1;
@@ -401,7 +403,7 @@ namespace stm32::rcc {
   }
 
   namespace ahb1lpenr {
-    constexpr uint32_t Offset       = 0x50;
+    constexpr uint32_t Address      = RccBase + 0x50;
 
     constexpr uint32_t GpioalpenPos = 0;
     constexpr uint32_t GpioalpenMsk = 0x1;
@@ -438,14 +440,14 @@ namespace stm32::rcc {
   }
 
   namespace ahb2lpenr {
-    constexpr uint32_t Offset       = 0x54;
+    constexpr uint32_t Address      = RccBase + 0x54;
 
     constexpr uint32_t OtgfslpenPos = 7;
     constexpr uint32_t OtgfslpenMsk = 0x1;
   }
 
   namespace apb1lpenr {
-    constexpr uint32_t Offset        = 0x60;
+    constexpr uint32_t Address       = RccBase + 0x60;
 
     constexpr uint32_t Tim2lpenPos   = 0;
     constexpr uint32_t Tim2lpenMsk   = 0x1;
@@ -485,7 +487,7 @@ namespace stm32::rcc {
   }
 
   namespace apb2lpenr {
-    constexpr uint32_t Offset        = 0x64;
+    constexpr uint32_t Address       = RccBase + 0x64;
 
     constexpr uint32_t Tim1lpenPos   = 0;
     constexpr uint32_t Tim1lpenMsk   = 0x1;
@@ -525,7 +527,7 @@ namespace stm32::rcc {
   }
 
   namespace bdcr {
-    constexpr uint32_t Offset    = 0x70;
+    constexpr uint32_t Address   = RccBase + 0x70;
 
     constexpr uint32_t LseonPos  = 0;
     constexpr uint32_t LseonMsk  = 0x1;
@@ -550,7 +552,7 @@ namespace stm32::rcc {
   }
 
   namespace csr {
-    constexpr uint32_t Offset      = 0x74;
+    constexpr uint32_t Address     = RccBase + 0x74;
 
     constexpr uint32_t LsionPos    = 0;
     constexpr uint32_t LsionMsk    = 0x1;
@@ -584,7 +586,7 @@ namespace stm32::rcc {
   }
 
   namespace sscgr {
-    constexpr uint32_t Offset       = 0x80;
+    constexpr uint32_t Address      = RccBase + 0x80;
 
     constexpr uint32_t ModperPos    = 0;
     constexpr uint32_t ModperMsk    = 0x1FFF;
@@ -600,7 +602,7 @@ namespace stm32::rcc {
   }
 
   namespace plli2scfgr {
-    constexpr uint32_t Offset     = 0x84;
+    constexpr uint32_t Address    = RccBase + 0x84;
 
     constexpr uint32_t Plli2smPos = 0;
     constexpr uint32_t Plli2smMsk = 0x3F;
@@ -613,11 +615,12 @@ namespace stm32::rcc {
   }
 
   namespace dckcfgr {
-    constexpr uint32_t Offset    = 0x8C;
+    constexpr uint32_t Address   = RccBase + 0x8C;
 
     constexpr uint32_t TimprePos = 24;
     constexpr uint32_t TimpreMsk = 0x1;
   }
+
 }
 
 #endif /* STM32_F411XE_CONST_RCC_H */

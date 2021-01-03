@@ -2,8 +2,10 @@
 #define STM32_F411XE_CONST_GPIO_H
 
 #include <cstdint>
+#include "stm32/f411xe/const/general.h"
 
-namespace stm32::gpio {
+namespace stm32::constants::gpio {
+
   namespace moder {
     constexpr uint32_t Offset     = 0x0;
 
@@ -261,7 +263,7 @@ namespace stm32::gpio {
     constexpr uint32_t Id14Msk = 0x1;
 
     constexpr uint32_t Id15Pos = 15;
-    constexpr uint32_t Id15Msk = 0x1
+    constexpr uint32_t Id15Msk = 0x1;
   }
 
   namespace odr {
@@ -526,6 +528,7 @@ namespace stm32::gpio {
     constexpr uint32_t Afsel15Pos = 28;
     constexpr uint32_t Afsel15Msk = 0xF;
   }
+
 }
 
 #endif /* STM32_F411XE_CONST_GPIO_H */

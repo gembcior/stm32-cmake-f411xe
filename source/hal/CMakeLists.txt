@@ -1,3 +1,4 @@
+add_subdirectory(scb)
 add_subdirectory(rcc)
 add_subdirectory(pwr)
 add_subdirectory(flash)
