@@ -40,7 +40,7 @@
   *
   ******************************************************************************
   */
-    
+ 
   .syntax unified
   .cpu cortex-m4
   .fpu softvfp
@@ -71,11 +71,14 @@ defined in linker script */
  * @retval : None
 */
 
-    .section  .text.Reset_Handler
+  .section  .text.Reset_Handler
   .weak  Reset_Handler
   .type  Reset_Handler, %function
-Reset_Handler:  
-  ldr   sp, =_estack    		 /* set stack pointer */
+Reset_Handler:
+  ldr   sp, =_estack         /* set stack pointer */
+
+/* Call the clock system intitialization function.*/
+  bl  SystemInit
 
 /* Copy the data segment initializers from flash to SRAM */  
   movs  r1, #0
@@ -86,7 +89,7 @@ CopyDataInit:
   ldr  r3, [r3, r1]
   str  r3, [r0, r1]
   adds  r1, r1, #4
-    
+
 LoopCopyDataInit:
   ldr  r0, =_sdata
   ldr  r3, =_edata
@@ -99,19 +102,17 @@ LoopCopyDataInit:
 FillZerobss:
   movs  r3, #0
   str  r3, [r2], #4
-    
+
 LoopFillZerobss:
   ldr  r3, = _ebss
   cmp  r2, r3
   bcc  FillZerobss
 
-/* Call the clock system intitialization function.*/
-  bl  SystemInit
 /* Call static constructors */
-    bl __libc_init_array
+  bl __libc_init_array
 /* Call the application's entry point.*/
   bl  main
-  bx  lr    
+  bx  lr
 .size  Reset_Handler, .-Reset_Handler
 
 /**
@@ -133,10 +134,10 @@ Infinite_Loop:
 * 0x0000.0000.
 * 
 *******************************************************************************/
-   .section  .isr_vector,"a",%progbits
+  .section  .isr_vector,"a",%progbits
   .type  g_pfnVectors, %object
   .size  g_pfnVectors, .-g_pfnVectors
-    
+
 g_pfnVectors:
   .word  _estack
   .word  Reset_Handler
@@ -175,8 +176,8 @@ g_pfnVectors:
   .word     DMA1_Stream5_IRQHandler           /* DMA1 Stream 5                */                   
   .word     DMA1_Stream6_IRQHandler           /* DMA1 Stream 6                */                   
   .word     ADC_IRQHandler                    /* ADC1, ADC2 and ADC3s         */                   
-  .word     0               				  /* Reserved                      */                         
-  .word     0              					  /* Reserved                     */                          
+  .word     0                         /* Reserved                      */                         
+  .word     0                         /* Reserved                     */                          
   .word     0                                 /* Reserved                     */                          
   .word     0                                 /* Reserved                     */                          
   .word     EXTI9_5_IRQHandler                /* External Line[9:5]s          */                          
@@ -195,13 +196,13 @@ g_pfnVectors:
   .word     SPI2_IRQHandler                   /* SPI2                         */                   
   .word     USART1_IRQHandler                 /* USART1                       */                   
   .word     USART2_IRQHandler                 /* USART2                       */                   
-  .word     0               				  /* Reserved                       */                   
+  .word     0                         /* Reserved                       */                   
   .word     EXTI15_10_IRQHandler              /* External Line[15:10]s        */                          
   .word     RTC_Alarm_IRQHandler              /* RTC Alarm (A and B) through EXTI Line */                 
   .word     OTG_FS_WKUP_IRQHandler            /* USB OTG FS Wakeup through EXTI line */                       
-  .word     0                                 /* Reserved     				  */         
-  .word     0                                 /* Reserved       			  */         
-  .word     0                                 /* Reserved 					  */
+  .word     0                                 /* Reserved               */         
+  .word     0                                 /* Reserved               */         
+  .word     0                                 /* Reserved             */
   .word     0                                 /* Reserved                     */                          
   .word     DMA1_Stream7_IRQHandler           /* DMA1 Stream7                 */                          
   .word     0                                 /* Reserved                     */                   
@@ -217,12 +218,12 @@ g_pfnVectors:
   .word     DMA2_Stream2_IRQHandler           /* DMA2 Stream 2                */                   
   .word     DMA2_Stream3_IRQHandler           /* DMA2 Stream 3                */                   
   .word     DMA2_Stream4_IRQHandler           /* DMA2 Stream 4                */                   
-  .word     0                    			  /* Reserved                     */                   
-  .word     0              					  /* Reserved                     */                     
-  .word     0              					  /* Reserved                     */                          
-  .word     0             					  /* Reserved                     */                          
-  .word     0              					  /* Reserved                     */                          
-  .word     0              					  /* Reserved                     */                          
+  .word     0                           /* Reserved                     */                   
+  .word     0                         /* Reserved                     */                     
+  .word     0                         /* Reserved                     */                          
+  .word     0                         /* Reserved                     */                          
+  .word     0                         /* Reserved                     */                          
+  .word     0                         /* Reserved                     */                          
   .word     OTG_FS_IRQHandler                 /* USB OTG FS                   */                   
   .word     DMA2_Stream5_IRQHandler           /* DMA2 Stream 5                */                   
   .word     DMA2_Stream6_IRQHandler           /* DMA2 Stream 6                */                   
@@ -242,7 +243,7 @@ g_pfnVectors:
   .word     0                                 /* Reserved                     */
   .word     SPI4_IRQHandler                   /* SPI4                         */
   .word     SPI5_IRQHandler                   /* SPI5                         */  
-                    
+
 /*******************************************************************************
 *
 * Provide weak aliases for each Exception handler to the Default_Handler. 

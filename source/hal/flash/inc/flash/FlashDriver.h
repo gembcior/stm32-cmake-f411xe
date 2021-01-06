@@ -20,25 +20,25 @@ public:
 };
 
 
-void FlashDriver::enableDataCache()
+inline void FlashDriver::enableDataCache()
 {
   flash::acr::dcen::write(1);
 }
 
 
-void FlashDriver::enableInstructionCache()
+inline void FlashDriver::enableInstructionCache()
 {
   flash::acr::icen::write(1);
 }
 
 
-void FlashDriver::enablePrefetch()
+inline void FlashDriver::enablePrefetch()
 {
   flash::acr::prften::write(1);
 }
 
 
-void FlashDriver::setLatency(uint32_t latency)
+inline void FlashDriver::setLatency(uint32_t latency)
 {
   flash::acr::latency::write(latency);
 }

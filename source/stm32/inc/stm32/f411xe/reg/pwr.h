@@ -35,13 +35,13 @@ template <uint32_t address, RegisterPolicy regPolicy>
 class CsrReg: public RegisterModel<address, regPolicy>
 {
 public:
-  using wuf    = FieldModel<address, csr::WufPos,    csr::WufMsk,    regPolicy, FieldPolicy::ReadWrite>;
-  using sbf    = FieldModel<address, csr::SbfPos,    csr::SbfMsk,    regPolicy, FieldPolicy::ReadWrite>;
-  using pvdo   = FieldModel<address, csr::PvdoPos,   csr::PvdoMsk,   regPolicy, FieldPolicy::ReadWrite>;
-  using brr    = FieldModel<address, csr::BrrPos,    csr::BrrMsk,    regPolicy, FieldPolicy::ReadWrite>;
+  using wuf    = FieldModel<address, csr::WufPos,    csr::WufMsk,    regPolicy, FieldPolicy::ReadOnly>;
+  using sbf    = FieldModel<address, csr::SbfPos,    csr::SbfMsk,    regPolicy, FieldPolicy::ReadOnly>;
+  using pvdo   = FieldModel<address, csr::PvdoPos,   csr::PvdoMsk,   regPolicy, FieldPolicy::ReadOnly>;
+  using brr    = FieldModel<address, csr::BrrPos,    csr::BrrMsk,    regPolicy, FieldPolicy::ReadOnly>;
   using ewup   = FieldModel<address, csr::EwupPos,   csr::EwupMsk,   regPolicy, FieldPolicy::ReadWrite>;
   using bre    = FieldModel<address, csr::BrePos,    csr::BreMsk,    regPolicy, FieldPolicy::ReadWrite>;
-  using vosrdy = FieldModel<address, csr::VosrdyPos, csr::VosrdyMsk, regPolicy, FieldPolicy::ReadWrite>;
+  using vosrdy = FieldModel<address, csr::VosrdyPos, csr::VosrdyMsk, regPolicy, FieldPolicy::ReadOnly>;
 };
 
 

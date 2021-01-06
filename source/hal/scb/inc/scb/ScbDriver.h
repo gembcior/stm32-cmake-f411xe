@@ -1,5 +1,5 @@
-#ifndef SCB_DRIVER_H
-#define SCB_DRIVER_H
+#ifndef STM32_SCB_DRIVER_H
+#define STM32_SCB_DRIVER_H
 
 #include <cstdint>
 #include "stm32/f4xx/reg/scb.h"
@@ -17,18 +17,18 @@ public:
 };
 
 
-void ScbDriver::setCoprocessorAccessPrivileges(uint32_t privilege)
+inline void ScbDriver::setCoprocessorAccessPrivileges(uint32_t privilege)
 {
   uint32_t value = privilege << 22 | privilege << 20;
   scb::cpacr::write(value);
 }
 
 
-void ScbDriver::setVectorTableOffset(uint32_t offset)
+inline void ScbDriver::setVectorTableOffset(uint32_t offset)
 {
   scb::vtor::tbloff::write(offset >> 9);
 }
 
 } // namespace
 
-#endif /* SCB_DRIVER_H */
+#endif /* STM32_SCB_DRIVER_H */

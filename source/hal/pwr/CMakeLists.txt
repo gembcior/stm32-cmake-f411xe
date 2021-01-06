@@ -2,7 +2,7 @@ add_library(pwr STATIC)
 
 target_sources(pwr
   PRIVATE
-    src/pwr_driver.cpp
+    src/PwrDriver.cpp
 )
 
 target_include_directories(pwr

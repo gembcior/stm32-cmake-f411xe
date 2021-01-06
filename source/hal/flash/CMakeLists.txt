@@ -2,7 +2,7 @@ add_library(flash STATIC)
 
 target_sources(flash
   PRIVATE
-    src/flash_driver.cpp
+    src/FlashDriver.cpp
 )
 
 target_include_directories(flash

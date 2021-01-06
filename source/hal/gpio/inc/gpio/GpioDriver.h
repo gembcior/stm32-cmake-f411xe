@@ -69,11 +69,32 @@ enum class PinState {
 };
 
 
+enum class PortAlternateFunction {
+  Af0 = 0,
+  Af1,
+  Af2,
+  Af3,
+  Af4,
+  Af5,
+  Af6,
+  Af7,
+  Af8,
+  Af9,
+  Af10,
+  Af11,
+  Af12,
+  Af13,
+  Af14,
+  Af15,
+};
+
+
 struct PortConfig {
   PortMode mode;
   PortType type;
   PortSpeed speed;
   PortPull pull;
+  PortAlternateFunction af = PortAlternateFunction::Af0;
 };
 
 
@@ -92,6 +113,9 @@ public:
 
   void setPull(PortPull pull);
   void setPull(Pin pin, PortPull pull);
+
+  void setAlternateFunction(PortAlternateFunction af);
+  void setAlternateFunction(Pin pin, PortAlternateFunction af);
 
   void configure(PortConfig config);
   void configure(Pin pin, PortConfig config);
@@ -391,12 +415,77 @@ void GpioDriver<Port>::setPull(Pin pin, PortPull pull)
 
 
 template<typename Port>
+void GpioDriver<Port>::setAlternateFunction(PortAlternateFunction af)
+{
+}
+
+
+template<typename Port>
+void GpioDriver<Port>::setAlternateFunction(Pin pin, PortAlternateFunction af)
+{
+  switch (pin) {
+    case Pin0:
+      Port::afrl::afsel0::write(static_cast<uint32_t>(af));
+      break;
+    case Pin1:
+      Port::afrl::afsel1::write(static_cast<uint32_t>(af));
+      break;
+    case Pin2:
+      Port::afrl::afsel2::write(static_cast<uint32_t>(af));
+      break;
+    case Pin3:
+      Port::afrl::afsel3::write(static_cast<uint32_t>(af));
+      break;
+    case Pin4:
+      Port::afrl::afsel4::write(static_cast<uint32_t>(af));
+      break;
+    case Pin5:
+      Port::afrl::afsel5::write(static_cast<uint32_t>(af));
+      break;
+    case Pin6:
+      Port::afrl::afsel6::write(static_cast<uint32_t>(af));
+      break;
+    case Pin7:
+      Port::afrl::afsel7::write(static_cast<uint32_t>(af));
+      break;
+    case Pin8:
+      Port::afrh::afsel8::write(static_cast<uint32_t>(af));
+      break;
+    case Pin9:
+      Port::afrh::afsel9::write(static_cast<uint32_t>(af));
+      break;
+    case Pin10:
+      Port::afrh::afsel10::write(static_cast<uint32_t>(af));
+      break;
+    case Pin11:
+      Port::afrh::afsel11::write(static_cast<uint32_t>(af));
+      break;
+    case Pin12:
+      Port::afrh::afsel12::write(static_cast<uint32_t>(af));
+      break;
+    case Pin13:
+      Port::afrh::afsel13::write(static_cast<uint32_t>(af));
+      break;
+    case Pin14:
+      Port::afrh::afsel14::write(static_cast<uint32_t>(af));
+      break;
+    case Pin15:
+      Port::afrh::afsel15::write(static_cast<uint32_t>(af));
+      break;
+    default:
+      break;
+  }
+}
+
+
+template<typename Port>
 void GpioDriver<Port>::configure(PortConfig config)
 {
   setMode(config.mode);
   setType(config.type);
   setSpeed(config.speed);
   setPull(config.pull);
+  setAlternateFunction(config.af);
 }
 
 
@@ -407,6 +496,7 @@ void GpioDriver<Port>::configure(Pin pin, PortConfig config)
   setType(pin, config.type);
   setSpeed(pin, config.speed);
   setPull(pin, config.pull);
+  setAlternateFunction(pin, config.af);
 }
 
 

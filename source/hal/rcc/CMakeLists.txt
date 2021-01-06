@@ -2,7 +2,7 @@ add_library(rcc STATIC)
 
 target_sources(rcc
   PRIVATE
-    src/rcc_driver.cpp
+    src/RccDriver.cpp
 )
 
 target_include_directories(rcc

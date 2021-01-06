@@ -48,4 +48,11 @@ ExternalProject_Add_Step(stm32 flash
   EXCLUDE_FROM_MAIN TRUE
 )
 
-ExternalProject_Add_StepTargets(stm32 flash)
+ExternalProject_Add_Step(stm32 openocd
+  COMMAND openocd -f ${CMAKE_CURRENT_LIST_DIR}/utils/openocd.cfg
+  COMMENT "Runnin OpenOCD"
+  ALWAYS TRUE
+  EXCLUDE_FROM_MAIN TRUE
+)
+
+ExternalProject_Add_StepTargets(stm32 flash openocd)

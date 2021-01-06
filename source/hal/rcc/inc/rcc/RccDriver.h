@@ -26,36 +26,10 @@ public:
 private:
   static constexpr uint32_t ApbPrescalerTable[] = {0b000, 0b100, 0b101, 0b110, 0b111};
   static constexpr uint32_t AhbPrescalerTable[] = {0b0000, 0b1000, 0b1001, 0b1010, 0b1011, 0b1100, 0b1101, 0b1110, 0b1111};
-
 };
 
 
-void RccDriver::enableClockSource(ClockSource clockSource)
-{
-  switch (clockSource) {
-    case ClockSource::Hsi:
-      rcc::cr::hsion::write(1);
-      while(rcc::cr::hsirdy::read() != 1)
-      break;
-    case ClockSource::Hse:
-      rcc::cr::hseon::write(1);
-      while(rcc::cr::hserdy::read() != 1)
-      break;
-    case ClockSource::Pll:
-      rcc::cr::pllon::write(1);
-      while(rcc::cr::pllrdy::read() != 1)
-      break;
-    case ClockSource::Plli2s:
-      rcc::cr::plli2son::write(1);
-      while(rcc::cr::plli2srdy::read() != 1)
-      break;
-    default:
-      break;
-  };
-}
-
-
-void RccDriver::disableClockSource(ClockSource clockSource)
+inline void RccDriver::disableClockSource(ClockSource clockSource)
 {
   switch (clockSource) {
     case ClockSource::Hsi:
@@ -72,62 +46,11 @@ void RccDriver::disableClockSource(ClockSource clockSource)
       break;
     default:
       break;
-  };
-}
-
-
-void RccDriver::setSystemClockSource(ClockSource clockSource)
-{
-  uint32_t sw = 0;
-
-  switch (clockSource) {
-    case ClockSource::Hsi:
-      sw = 0;
-      break;
-    case ClockSource::Hse:
-      sw = 1;
-      break;
-    case ClockSource::Pll:
-      sw = 2;
-      break;
-    default:
-      break;
-  };
-
-  rcc::cfgr::sw::write(sw);
-  while (rcc::cfgr::sws::read() != sw);
-}
-
-
-// TODO try different approach
-void RccDriver::setClockDomainPrescaler(ClockDomain clockDomain, ClockPrescaler clockPrescaler)
-{
-  switch (clockDomain) {
-    case ClockDomain::Ahb:
-      rcc::cfgr::hpre::write(AhbPrescalerTable[static_cast<uint32_t>(clockPrescaler)]);
-      break;
-    case ClockDomain::Apb1:
-      rcc::cfgr::ppre1::write(ApbPrescalerTable[static_cast<uint32_t>(clockPrescaler)]);
-      break;
-    case ClockDomain::Apb2:
-      rcc::cfgr::ppre2::write(ApbPrescalerTable[static_cast<uint32_t>(clockPrescaler)]);
-      break;
-    default:
-      break;
   }
 }
 
 
-void RccDriver::configureMainPll(const PllConfiguration config)
-{
-  rcc::pllcfgr::pllm::write(config.pllM);
-  rcc::pllcfgr::plln::write(config.pllN);
-  rcc::pllcfgr::pllp::write(config.pllP);
-  rcc::pllcfgr::pllq::write(config.pllQ);
-  rcc::pllcfgr::pllsrc::write(static_cast<uint32_t>(config.clockSource));
-}
-
-void RccDriver::enablePeripheralClock(Apb1Peripheral peripheral)
+inline void RccDriver::enablePeripheralClock(Apb1Peripheral peripheral)
 {
   switch (peripheral) {
     case Apb1Peripheral::Pwr:
@@ -172,7 +95,7 @@ void RccDriver::enablePeripheralClock(Apb1Peripheral peripheral)
 }
 
 
-void RccDriver::enablePeripheralClock(Apb2Peripheral peripheral)
+inline void RccDriver::enablePeripheralClock(Apb2Peripheral peripheral)
 {
   switch (peripheral) {
     case Apb2Peripheral::Spi5:
@@ -217,7 +140,7 @@ void RccDriver::enablePeripheralClock(Apb2Peripheral peripheral)
 }
 
 
-void RccDriver::enablePeripheralClock(Ahb1Peripheral peripheral)
+inline void RccDriver::enablePeripheralClock(Ahb1Peripheral peripheral)
 {
   switch (peripheral) {
     case Ahb1Peripheral::Dma2:
@@ -253,7 +176,7 @@ void RccDriver::enablePeripheralClock(Ahb1Peripheral peripheral)
 }
 
 
-void RccDriver::enablePeripheralClock(Ahb2Peripheral peripheral)
+inline void RccDriver::enablePeripheralClock(Ahb2Peripheral peripheral)
 {
   switch (peripheral) {
     case Ahb2Peripheral::Otgfs:

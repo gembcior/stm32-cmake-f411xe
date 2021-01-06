@@ -1,4 +1,4 @@
-#include "scb/scb_driver.h"
+#include "scb/ScbDriver.h"
 
 
 namespace stm32::hal::scb {

@@ -23,7 +23,7 @@ public:
 };
 
 
-void PwrDriver::setRegulatorVoltageScaling(RegulatorVoltageScaleMode mode)
+inline void PwrDriver::setRegulatorVoltageScaling(RegulatorVoltageScaleMode mode)
 {
   pwr::cr::vos::write(static_cast<uint32_t>(mode));
 }

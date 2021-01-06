@@ -7,7 +7,7 @@
 namespace stm32::constants::flash {
 
   namespace acr {
-    constexpr uint32_t Address      = FlashBase + 0x0;
+    constexpr uint32_t Address      = FlashRBase + 0x0;
 
     constexpr uint32_t LatencyPos   = 0;
     constexpr uint32_t LatencyMsk   = 0xF;

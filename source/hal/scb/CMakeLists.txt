@@ -2,7 +2,7 @@ add_library(scb STATIC)
 
 target_sources(scb
   PRIVATE
-    src/scb_driver.cpp
+    src/ScbDriver.cpp
 )
 
 target_include_directories(scb

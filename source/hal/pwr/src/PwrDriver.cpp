@@ -1,4 +1,4 @@
-#include "pwr/pwr_driver.h"
+#include "pwr/PwrDriver.h"
 
 
 namespace stm32::hal::pwr {
