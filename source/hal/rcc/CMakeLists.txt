@@ -2,7 +2,7 @@ add_library(rcc STATIC)
 
 target_sources(rcc
   PRIVATE
-    src/RccDriver.cpp
+    src/RccHal.cpp
 )
 
 target_include_directories(rcc
@@ -14,5 +14,5 @@ target_include_directories(rcc
 
 target_link_libraries(rcc
   PRIVATE
-    stm32
+    dral_stm32_f4_f411xe
 )

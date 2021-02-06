@@ -1,17 +1,17 @@
-#ifndef GPIO_DRIVER_H
-#define GPIO_DRIVER_H
+#ifndef GPIO_HAL_H
+#define GPIO_HAL_H
 
 #include <cstdint>
-#include "stm32/f411xe/reg/gpio.h"
+#include "stm32/f4/f411xe/gpio.h"
 
 namespace stm32::hal::gpio {
 
-using PortA = stm32::regs::gpio::a;
-using PortB = stm32::regs::gpio::b;
-using PortC = stm32::regs::gpio::c;
-using PortD = stm32::regs::gpio::d;
-using PortE = stm32::regs::gpio::e;
-using PortH = stm32::regs::gpio::h;
+using PortA = dral::stm32::f4::f411xe::gpio::gpioA;
+using PortB = dral::stm32::f4::f411xe::gpio::gpioB;
+using PortC = dral::stm32::f4::f411xe::gpio::gpioC;
+using PortD = dral::stm32::f4::f411xe::gpio::gpioD;
+using PortE = dral::stm32::f4::f411xe::gpio::gpioE;
+using PortH = dral::stm32::f4::f411xe::gpio::gpioH;
 
 
 enum Pin {
@@ -99,7 +99,7 @@ struct PortConfig {
 
 
 template<typename Port>
-class GpioDriver
+class GpioHal
 {
 public:
   void setMode(PortMode mode);
@@ -133,7 +133,7 @@ private:
 
 
 template<typename Port>
-void GpioDriver<Port>::setMode(PortMode mode)
+void GpioHal<Port>::setMode(PortMode mode)
 {
   switch (mode) {
     case PortMode::Input:
@@ -155,7 +155,7 @@ void GpioDriver<Port>::setMode(PortMode mode)
 
 
 template<typename Port>
-void GpioDriver<Port>::setMode(Pin pin, PortMode mode)
+void GpioHal<Port>::setMode(Pin pin, PortMode mode)
 {
   switch (pin) {
     case Pin0:
@@ -213,7 +213,7 @@ void GpioDriver<Port>::setMode(Pin pin, PortMode mode)
 
 
 template<typename Port>
-void GpioDriver<Port>::setType(PortType type)
+void GpioHal<Port>::setType(PortType type)
 {
   switch (type) {
     case PortType::PushPull:
@@ -229,7 +229,7 @@ void GpioDriver<Port>::setType(PortType type)
 
 
 template<typename Port>
-void GpioDriver<Port>::setType(Pin pin, PortType type)
+void GpioHal<Port>::setType(Pin pin, PortType type)
 {
   switch (pin) {
     case Pin0:
@@ -287,62 +287,62 @@ void GpioDriver<Port>::setType(Pin pin, PortType type)
 
 
 template<typename Port>
-void GpioDriver<Port>::setSpeed(PortSpeed speed)
+void GpioHal<Port>::setSpeed(PortSpeed speed)
 {
 }
 
 
 template<typename Port>
-void GpioDriver<Port>::setSpeed(Pin pin, PortSpeed speed)
+void GpioHal<Port>::setSpeed(Pin pin, PortSpeed speed)
 {
   switch (pin) {
     case Pin0:
-      Port::ospeedr::ospeed0::write(static_cast<uint32_t>(speed));
+      Port::ospeedr::ospeedr0::write(static_cast<uint32_t>(speed));
       break;
     case Pin1:
-      Port::ospeedr::ospeed1::write(static_cast<uint32_t>(speed));
+      Port::ospeedr::ospeedr1::write(static_cast<uint32_t>(speed));
       break;
     case Pin2:
-      Port::ospeedr::ospeed2::write(static_cast<uint32_t>(speed));
+      Port::ospeedr::ospeedr2::write(static_cast<uint32_t>(speed));
       break;
     case Pin3:
-      Port::ospeedr::ospeed3::write(static_cast<uint32_t>(speed));
+      Port::ospeedr::ospeedr3::write(static_cast<uint32_t>(speed));
       break;
     case Pin4:
-      Port::ospeedr::ospeed4::write(static_cast<uint32_t>(speed));
+      Port::ospeedr::ospeedr4::write(static_cast<uint32_t>(speed));
       break;
     case Pin5:
-      Port::ospeedr::ospeed5::write(static_cast<uint32_t>(speed));
+      Port::ospeedr::ospeedr5::write(static_cast<uint32_t>(speed));
       break;
     case Pin6:
-      Port::ospeedr::ospeed6::write(static_cast<uint32_t>(speed));
+      Port::ospeedr::ospeedr6::write(static_cast<uint32_t>(speed));
       break;
     case Pin7:
-      Port::ospeedr::ospeed7::write(static_cast<uint32_t>(speed));
+      Port::ospeedr::ospeedr7::write(static_cast<uint32_t>(speed));
       break;
     case Pin8:
-      Port::ospeedr::ospeed8::write(static_cast<uint32_t>(speed));
+      Port::ospeedr::ospeedr8::write(static_cast<uint32_t>(speed));
       break;
     case Pin9:
-      Port::ospeedr::ospeed9::write(static_cast<uint32_t>(speed));
+      Port::ospeedr::ospeedr9::write(static_cast<uint32_t>(speed));
       break;
     case Pin10:
-      Port::ospeedr::ospeed10::write(static_cast<uint32_t>(speed));
+      Port::ospeedr::ospeedr10::write(static_cast<uint32_t>(speed));
       break;
     case Pin11:
-      Port::ospeedr::ospeed11::write(static_cast<uint32_t>(speed));
+      Port::ospeedr::ospeedr11::write(static_cast<uint32_t>(speed));
       break;
     case Pin12:
-      Port::ospeedr::ospeed12::write(static_cast<uint32_t>(speed));
+      Port::ospeedr::ospeedr12::write(static_cast<uint32_t>(speed));
       break;
     case Pin13:
-      Port::ospeedr::ospeed13::write(static_cast<uint32_t>(speed));
+      Port::ospeedr::ospeedr13::write(static_cast<uint32_t>(speed));
       break;
     case Pin14:
-      Port::ospeedr::ospeed14::write(static_cast<uint32_t>(speed));
+      Port::ospeedr::ospeedr14::write(static_cast<uint32_t>(speed));
       break;
     case Pin15:
-      Port::ospeedr::ospeed15::write(static_cast<uint32_t>(speed));
+      Port::ospeedr::ospeedr15::write(static_cast<uint32_t>(speed));
       break;
     default:
       break;
@@ -351,62 +351,62 @@ void GpioDriver<Port>::setSpeed(Pin pin, PortSpeed speed)
 
 
 template<typename Port>
-void GpioDriver<Port>::setPull(PortPull pull)
+void GpioHal<Port>::setPull(PortPull pull)
 {
 }
 
 
 template<typename Port>
-void GpioDriver<Port>::setPull(Pin pin, PortPull pull)
+void GpioHal<Port>::setPull(Pin pin, PortPull pull)
 {
   switch (pin) {
     case Pin0:
-      Port::pupdr::pupd0::write(static_cast<uint32_t>(pull));
+      Port::pupdr::pupdr0::write(static_cast<uint32_t>(pull));
       break;
     case Pin1:
-      Port::pupdr::pupd1::write(static_cast<uint32_t>(pull));
+      Port::pupdr::pupdr1::write(static_cast<uint32_t>(pull));
       break;
     case Pin2:
-      Port::pupdr::pupd2::write(static_cast<uint32_t>(pull));
+      Port::pupdr::pupdr2::write(static_cast<uint32_t>(pull));
       break;
     case Pin3:
-      Port::pupdr::pupd3::write(static_cast<uint32_t>(pull));
+      Port::pupdr::pupdr3::write(static_cast<uint32_t>(pull));
       break;
     case Pin4:
-      Port::pupdr::pupd4::write(static_cast<uint32_t>(pull));
+      Port::pupdr::pupdr4::write(static_cast<uint32_t>(pull));
       break;
     case Pin5:
-      Port::pupdr::pupd5::write(static_cast<uint32_t>(pull));
+      Port::pupdr::pupdr5::write(static_cast<uint32_t>(pull));
       break;
     case Pin6:
-      Port::pupdr::pupd6::write(static_cast<uint32_t>(pull));
+      Port::pupdr::pupdr6::write(static_cast<uint32_t>(pull));
       break;
     case Pin7:
-      Port::pupdr::pupd7::write(static_cast<uint32_t>(pull));
+      Port::pupdr::pupdr7::write(static_cast<uint32_t>(pull));
       break;
     case Pin8:
-      Port::pupdr::pupd8::write(static_cast<uint32_t>(pull));
+      Port::pupdr::pupdr8::write(static_cast<uint32_t>(pull));
       break;
     case Pin9:
-      Port::pupdr::pupd9::write(static_cast<uint32_t>(pull));
+      Port::pupdr::pupdr9::write(static_cast<uint32_t>(pull));
       break;
     case Pin10:
-      Port::pupdr::pupd10::write(static_cast<uint32_t>(pull));
+      Port::pupdr::pupdr10::write(static_cast<uint32_t>(pull));
       break;
     case Pin11:
-      Port::pupdr::pupd11::write(static_cast<uint32_t>(pull));
+      Port::pupdr::pupdr11::write(static_cast<uint32_t>(pull));
       break;
     case Pin12:
-      Port::pupdr::pupd12::write(static_cast<uint32_t>(pull));
+      Port::pupdr::pupdr12::write(static_cast<uint32_t>(pull));
       break;
     case Pin13:
-      Port::pupdr::pupd13::write(static_cast<uint32_t>(pull));
+      Port::pupdr::pupdr13::write(static_cast<uint32_t>(pull));
       break;
     case Pin14:
-      Port::pupdr::pupd14::write(static_cast<uint32_t>(pull));
+      Port::pupdr::pupdr14::write(static_cast<uint32_t>(pull));
       break;
     case Pin15:
-      Port::pupdr::pupd15::write(static_cast<uint32_t>(pull));
+      Port::pupdr::pupdr15::write(static_cast<uint32_t>(pull));
       break;
     default:
       break;
@@ -415,13 +415,13 @@ void GpioDriver<Port>::setPull(Pin pin, PortPull pull)
 
 
 template<typename Port>
-void GpioDriver<Port>::setAlternateFunction(PortAlternateFunction af)
+void GpioHal<Port>::setAlternateFunction(PortAlternateFunction af)
 {
 }
 
 
 template<typename Port>
-void GpioDriver<Port>::setAlternateFunction(Pin pin, PortAlternateFunction af)
+void GpioHal<Port>::setAlternateFunction(Pin pin, PortAlternateFunction af)
 {
   switch (pin) {
     case Pin0:
@@ -479,7 +479,7 @@ void GpioDriver<Port>::setAlternateFunction(Pin pin, PortAlternateFunction af)
 
 
 template<typename Port>
-void GpioDriver<Port>::configure(PortConfig config)
+void GpioHal<Port>::configure(PortConfig config)
 {
   setMode(config.mode);
   setType(config.type);
@@ -490,7 +490,7 @@ void GpioDriver<Port>::configure(PortConfig config)
 
 
 template<typename Port>
-void GpioDriver<Port>::configure(Pin pin, PortConfig config)
+void GpioHal<Port>::configure(Pin pin, PortConfig config)
 {
   setMode(pin, config.mode);
   setType(pin, config.type);
@@ -501,20 +501,20 @@ void GpioDriver<Port>::configure(Pin pin, PortConfig config)
 
 
 template<typename Port>
-void GpioDriver<Port>::setPort(uint32_t value)
+void GpioHal<Port>::setPort(uint32_t value)
 {
 }
 
 
 template<typename Port>
-uint32_t GpioDriver<Port>::getPort()
+uint32_t GpioHal<Port>::getPort()
 {
   return 0;
 }
 
 
 template<typename Port>
-void GpioDriver<Port>::setPin(Pin pin)
+void GpioHal<Port>::setPin(Pin pin)
 {
   switch (pin) {
     case Pin0:
@@ -572,7 +572,7 @@ void GpioDriver<Port>::setPin(Pin pin)
 
 
 template<typename Port>
-void GpioDriver<Port>::resetPin(Pin pin)
+void GpioHal<Port>::resetPin(Pin pin)
 {
   switch (pin) {
     case Pin0:
@@ -629,7 +629,7 @@ void GpioDriver<Port>::resetPin(Pin pin)
 }
 
 template<typename Port>
-void GpioDriver<Port>::setPin(Pin pin, PinState state)
+void GpioHal<Port>::setPin(Pin pin, PinState state)
 {
   switch (state) {
     case PinState::High:
@@ -645,7 +645,7 @@ void GpioDriver<Port>::setPin(Pin pin, PinState state)
 
 
 template<typename Port>
-PinState GpioDriver<Port>::getPin(Pin pin)
+PinState GpioHal<Port>::getPin(Pin pin)
 {
   uint32_t state = 0;
 
@@ -707,4 +707,4 @@ PinState GpioDriver<Port>::getPin(Pin pin)
 
 } // namespace
 
-#endif /* GPIO_DRIVER_H */
+#endif /* GPIO_HAL_H */

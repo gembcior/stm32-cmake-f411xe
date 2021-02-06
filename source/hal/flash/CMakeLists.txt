@@ -2,7 +2,7 @@ add_library(flash STATIC)
 
 target_sources(flash
   PRIVATE
-    src/FlashDriver.cpp
+    src/FlashHal.cpp
 )
 
 target_include_directories(flash
@@ -14,5 +14,5 @@ target_include_directories(flash
 
 target_link_libraries(flash
   PRIVATE
-    stm32
+    dral_stm32_f4_f411xe
 )

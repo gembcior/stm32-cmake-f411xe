@@ -16,7 +16,6 @@ target_include_directories(main
 target_link_libraries(main
   PRIVATE
     crt
-    stm32
     scb
     rcc
     pwr

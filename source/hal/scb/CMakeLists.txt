@@ -2,7 +2,7 @@ add_library(scb STATIC)
 
 target_sources(scb
   PRIVATE
-    src/ScbDriver.cpp
+    src/ScbHal.cpp
 )
 
 target_include_directories(scb
@@ -14,5 +14,5 @@ target_include_directories(scb
 
 target_link_libraries(scb
   PRIVATE
-    stm32
+    dral_stm32_f4_f411xe
 )

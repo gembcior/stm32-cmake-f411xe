@@ -2,7 +2,7 @@ add_library(gpio STATIC)
 
 target_sources(gpio
   PRIVATE
-    src/GpioDriver.cpp
+    src/GpioHal.cpp
 )
 
 target_include_directories(gpio
@@ -13,6 +13,6 @@ target_include_directories(gpio
 )
 
 target_link_libraries(gpio
-  PRIVATE
-    stm32
+  PUBLIC
+    dral_stm32_f4_f411xe
 )
