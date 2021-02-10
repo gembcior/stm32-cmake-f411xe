@@ -2,22 +2,22 @@
 #define RCC_HAL_H
 
 #include <cstdint>
-#include "rcc.h"
+#include "rcc/IRccHal.h"
 
 namespace stm32::hal::rcc {
 
-class RccHal
+class RccHal : public IRccHal
 {
 public:
-  void enableClockSource(ClockSource clockSource);
-  void disableClockSource(ClockSource clockSource);
-  void setSystemClockSource(ClockSource clockSource);
-  void setClockDomainPrescaler(ClockDomain clockDomain, ClockPrescaler clockPrescaler);
-  void configureMainPll(const PllConfiguration config);
-  void enablePeripheralClock(Apb1Peripheral peripheral);
-  void enablePeripheralClock(Apb2Peripheral peripheral);
-  void enablePeripheralClock(Ahb1Peripheral peripheral);
-  void enablePeripheralClock(Ahb2Peripheral peripheral);
+  void enableClockSource(ClockSource clockSource) final;
+  void disableClockSource(ClockSource clockSource) final;
+  void setSystemClockSource(ClockSource clockSource) final;
+  void setClockDomainPrescaler(ClockDomain clockDomain, ClockPrescaler clockPrescaler) final;
+  void configureMainPll(const PllConfiguration config) final;
+  void enablePeripheralClock(Apb1Peripheral peripheral) final;
+  void enablePeripheralClock(Apb2Peripheral peripheral) final;
+  void enablePeripheralClock(Ahb1Peripheral peripheral) final;
+  void enablePeripheralClock(Ahb2Peripheral peripheral) final;
 
 private:
   static constexpr uint32_t ApbPrescalerTable[] = {0b000, 0b100, 0b101, 0b110, 0b111};

@@ -6,9 +6,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
 
-set(STM32_CHIP "STM32F411xE")
-add_compile_definitions(${STM32_CHIP})
-
 include(FetchContent)
 
 FetchContent_Declare(stm32-dral
@@ -29,3 +26,6 @@ add_subdirectory(main)
 add_subdirectory(crt)
 add_subdirectory(irq)
 add_subdirectory(hal)
+add_subdirectory(system)
+add_subdirectory(objects)
+add_subdirectory(flasher)

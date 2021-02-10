@@ -2,10 +2,11 @@
 #define FLASH_HAL_H
 
 #include <cstdint>
+#include "flash/IFlashHal.h"
 
 namespace stm32::hal::flash {
 
-class FlashHal
+class FlashHal : public IFlashHal
 {
 public:
   void enableDataCache();

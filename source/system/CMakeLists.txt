@@ -13,8 +13,9 @@ target_include_directories(system
 )
 
 target_link_libraries(system
-  PRIVATE
+  PUBLIC
     flash
     pwr
     rcc
+    gpio
 )

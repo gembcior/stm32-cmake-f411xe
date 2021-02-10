@@ -1,11 +1,12 @@
-#ifndef STM32_SCB_HAL_H
-#define STM32_SCB_HAL_H
+#ifndef SCB_HAL_H
+#define SCB_HAL_H
 
 #include <cstdint>
+#include "scb/IScbHal.h"
 
 namespace stm32::hal::scb {
 
-class ScbHal
+class ScbHal : public IScbHal
 {
 public:
   void setCoprocessorAccessPrivileges(uint32_t privilege);
@@ -14,4 +15,4 @@ public:
 
 } // namespace
 
-#endif /* STM32_SCB_HAL_H */
+#endif /* SCB_HAL_H */

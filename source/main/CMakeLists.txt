@@ -16,11 +16,9 @@ target_include_directories(main
 target_link_libraries(main
   PRIVATE
     crt
-    scb
-    rcc
-    pwr
-    flash
-    gpio
+    system
+    objects
+    flasher
 )
 
 stm32_target_app_release(main)
