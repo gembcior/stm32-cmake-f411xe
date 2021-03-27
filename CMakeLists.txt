@@ -40,14 +40,6 @@ ExternalProject_Add(stm32
 
 ExternalProject_Get_Property(stm32 INSTALL_DIR)
 
-ExternalProject_Add_Step(stm32 flash
-  COMMAND ${STM32_CUBE_PROGRAMMER} -c port=SWD -w ${INSTALL_DIR}/${CMAKE_BUILD_TYPE}/bin/main.elf
-  COMMENT "Flashing application to the device"
-  DEPENDS ${INSTALL_DIR}/${CMAKE_BUILD_TYPE}/bin/main.elf
-  ALWAYS TRUE
-  EXCLUDE_FROM_MAIN TRUE
-)
-
 ExternalProject_Add_Step(stm32 openocd
   COMMAND openocd -f ${CMAKE_CURRENT_LIST_DIR}/utils/openocd.cfg
   COMMENT "Runnin OpenOCD"
@@ -55,4 +47,4 @@ ExternalProject_Add_Step(stm32 openocd
   EXCLUDE_FROM_MAIN TRUE
 )
 
-ExternalProject_Add_StepTargets(stm32 flash openocd)
+ExternalProject_Add_StepTargets(stm32 openocd)

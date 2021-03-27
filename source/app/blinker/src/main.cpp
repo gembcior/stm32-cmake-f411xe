@@ -1,7 +1,6 @@
 #include <cstdint>
-#include "main/main.h"
 #include "system/System.h"
-#include "objects/objects.h"
+#include "objects.h"
 #include "system/constants.h"
 
 

@@ -1,0 +1,6 @@
+STM32_CUBE_PROGRAMMER=~/tools/STM32/STM32CubeProgrammer/bin/STM32_Programmer_CLI
+INSTALL_DIR=./build/artifacts
+BUILD_TYPE=Release
+FLASH_TARGET=$1
+
+${STM32_CUBE_PROGRAMMER} -c port=SWD -w ${INSTALL_DIR}/${BUILD_TYPE}/bin/${FLASH_TARGET}.elf
