@@ -11,6 +11,5 @@ target_include_directories(blinker
 target_link_libraries(blinker
   PRIVATE
     crt
-    system
     flasher
 )

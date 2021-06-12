@@ -1,11 +1,11 @@
 #include "objects.h"
-#include "gpio/gpio.h"
+#include "BlinkerSystem.h"
 
 namespace stm32::objects {
 
 system::System& getSystem()
 {
-  static system::System system(getRccHal(), getFlashHal(), getPwrHal(), getGpioDriver());
+  static system::BlinkerSystem system(getRccHal(), getFlashHal(), getPwrHal(), getSysTickHal(), getGpioDriver());
   return system;
 }
 

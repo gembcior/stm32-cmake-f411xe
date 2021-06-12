@@ -1,7 +1,7 @@
 target_sources(blinker
   PRIVATE
     hal.cpp
-    flasher.cpp
+    lib.cpp
     system.cpp
 )
 
@@ -12,10 +12,12 @@ target_include_directories(blinker
 
 target_link_libraries(blinker
   PRIVATE
-    system
     flash
     gpio
     pwr
     rcc
+    systick
+    nvic
     flasher
+    ticktack
 )

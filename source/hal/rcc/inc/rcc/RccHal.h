@@ -4,7 +4,7 @@
 #include <cstdint>
 #include "rcc/IRccHal.h"
 
-namespace stm32::hal::rcc {
+namespace stm32::hal {
 
 class RccHal : public IRccHal
 {

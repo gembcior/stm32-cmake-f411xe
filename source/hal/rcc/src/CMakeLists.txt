@@ -10,5 +10,5 @@ target_include_directories(rcc
 
 target_link_libraries(rcc
   PRIVATE
-    dral_stm32_f4_f411xe
+    dral
 )

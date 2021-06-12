@@ -2,11 +2,11 @@
 #define GPIO_DRIVER_H
 
 #include <cstdint>
-#include "gpio/gpio.h"
+#include "gpio/types.h"
 #include "gpio/IGpioDriver.h"
 #include "gpio/IGpioHal.h"
 
-namespace stm32::hal::gpio {
+namespace stm32::hal {
 
 class GpioDriver : public IGpioDriver
 {

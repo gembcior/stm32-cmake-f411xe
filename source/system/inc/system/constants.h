@@ -1,45 +1,47 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
-#include "gpio/gpio.h"
+#include "gpio/types.h"
 
 namespace stm32::system {
 
-namespace gpio = stm32::hal::gpio;
+constexpr uint32_t SystemClock = 96e6;
+constexpr uint32_t SysTickClock = 1e3;
 
-constexpr gpio::GpioPin UserLed4 = {
+
+constexpr hal::GpioPin UserLed4 = {
   .config = {
-    .mode = gpio::PortMode::Output,
-    .type = gpio::PortType::PushPull,
-    .speed = gpio::PortSpeed::Low,
-    .pull = gpio::PortPull::NoPull,
+    .mode = hal::PortMode::Output,
+    .type = hal::PortType::PushPull,
+    .speed = hal::PortSpeed::Low,
+    .pull = hal::PortPull::NoPull,
   },
-  .port = gpio::Port::PortC,
-  .pin = gpio::Pin::Pin5,
+  .port = hal::Port::PortC,
+  .pin = hal::Pin::Pin5,
 };
 
 
-constexpr gpio::GpioPin UserLed3 = {
+constexpr hal::GpioPin UserLed3 = {
   .config = {
-    .mode = gpio::PortMode::Output,
-    .type = gpio::PortType::PushPull,
-    .speed = gpio::PortSpeed::Low,
-    .pull = gpio::PortPull::NoPull,
+    .mode = hal::PortMode::Output,
+    .type = hal::PortType::PushPull,
+    .speed = hal::PortSpeed::Low,
+    .pull = hal::PortPull::NoPull,
   },
-  .port = gpio::Port::PortC,
-  .pin = gpio::Pin::Pin8,
+  .port = hal::Port::PortC,
+  .pin = hal::Pin::Pin8,
 };
 
 
-constexpr gpio::GpioPin UserLed2 = {
+constexpr hal::GpioPin UserLed2 = {
   .config = {
-    .mode = gpio::PortMode::Output,
-    .type = gpio::PortType::PushPull,
-    .speed = gpio::PortSpeed::Low,
-    .pull = gpio::PortPull::NoPull,
+    .mode = hal::PortMode::Output,
+    .type = hal::PortType::PushPull,
+    .speed = hal::PortSpeed::Low,
+    .pull = hal::PortPull::NoPull,
   },
-  .port = gpio::Port::PortC,
-  .pin = gpio::Pin::Pin9,
+  .port = hal::Port::PortC,
+  .pin = hal::Pin::Pin9,
 };
 
 } // namespace

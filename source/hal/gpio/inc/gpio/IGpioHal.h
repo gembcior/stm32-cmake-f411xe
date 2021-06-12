@@ -2,9 +2,9 @@
 #define IGPIO_HAL_H
 
 #include <cstdint>
-#include "gpio/gpio.h"
+#include "gpio/types.h"
 
-namespace stm32::hal::gpio {
+namespace stm32::hal {
 
 class IGpioHal
 {

@@ -1,14 +1,9 @@
 #ifndef IPWR_HAL_H
 #define IPWR_HAL_H
 
-namespace stm32::hal::pwr {
+#include "pwr/types.h"
 
-enum class RegulatorVoltageScaleMode {
-  Mode3 = 1,
-  Mode2 = 2,
-  Mode1 = 3,
-};
-
+namespace stm32::hal {
 
 class IPwrHal
 {

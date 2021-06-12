@@ -4,15 +4,15 @@
 #include <cstdint>
 #include "flash/IFlashHal.h"
 
-namespace stm32::hal::flash {
+namespace stm32::hal {
 
 class FlashHal : public IFlashHal
 {
 public:
-  void enableDataCache();
-  void enableInstructionCache();
-  void enablePrefetch();
-  void setLatency(uint32_t latency);
+  void enableDataCache() final;
+  void enableInstructionCache() final;
+  void enablePrefetch() final;
+  void setLatency(uint32_t latency) final;
 
 };
 

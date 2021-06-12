@@ -1,36 +1,32 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-#include "system/ISystem.h"
-#include "flash/FlashHal.h"
+#include "flash/IFlashHal.h"
 #include "rcc/IRccHal.h"
-#include "pwr/PwrHal.h"
-#include "gpio/GpioDriver.h"
+#include "pwr/IPwrHal.h"
+#include "systick/ISysTickHal.h"
 
 namespace stm32::system {
 
-namespace rcc   = stm32::hal::rcc;
-namespace flash = stm32::hal::flash;
-namespace pwr   = stm32::hal::pwr;
-namespace gpio  = stm32::hal::gpio;
 
-
-class System : public ISystem
+class System
 {
 public:
-  System(rcc::IRccHal& rccHal, flash::IFlashHal& flashHal, pwr::IPwrHal& pwrHal, gpio::IGpioDriver& gpioDriver);
-  void initialize() final;
+  System(hal::IRccHal& rccHal, hal::IFlashHal& flashHal, hal::IPwrHal& pwrHal, hal::ISysTickHal& sysTickHal);
+  void initialize();
 
-private:
-  void setupClock();
-  void enablePeripherals();
-  void setupGpio();
+protected:
+  virtual void setupClock();
+  virtual void enableInterrupts();
+  virtual void setupSysTick();
+  virtual void enablePeripherals();
+  virtual void setupGpio();
 
-private:
-  rcc::IRccHal& m_rccHal;
-  flash::IFlashHal& m_flashHal;
-  pwr::IPwrHal& m_pwrHal;
-  gpio::IGpioDriver& m_gpioDriver;
+protected:
+  hal::IRccHal& m_rccHal;
+  hal::IFlashHal& m_flashHal;
+  hal::IPwrHal& m_pwrHal;
+  hal::ISysTickHal& m_sysTickHal;
 };
 
 } // namespace

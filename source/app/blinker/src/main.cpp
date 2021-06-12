@@ -1,19 +1,11 @@
 #include <cstdint>
-#include "system/System.h"
+#include "BlinkerSystem.h"
 #include "objects.h"
 #include "system/constants.h"
 
 
 using namespace stm32::objects;
 using namespace stm32::system;
-
-void delay(uint32_t delay)
-{
-  for (volatile uint32_t i = 0; i < 100000; i++) {
-    for (volatile uint32_t j = 0; j < delay; j++) {
-    }
-  }
-}
 
 
 int main(void)
@@ -23,6 +15,7 @@ int main(void)
 
   auto& flasher = getFlasher();
 
+  flasher.setPeriod(500);
   flasher.setPin(UserLed2.port, UserLed2.pin);
 
   while (1)

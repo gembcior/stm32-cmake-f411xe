@@ -1,10 +1,10 @@
 #include "rcc/RccHal.h"
-#include "stm32/f4/f411xe/rcc.h"
+#include "dral/rcc.h"
 
 
-namespace stm32::hal::rcc {
+namespace stm32::hal {
 
-namespace rcc = dral::stm32::f4::f411xe::rcc;
+using namespace dral::stm32f411;
 
 void RccHal::enableClockSource(ClockSource clockSource)
 {
@@ -70,12 +70,12 @@ void RccHal::setSystemClockSource(ClockSource clockSource)
       break;
   }
 
-  rcc::cfgr::sw::write(sw);
-  while (rcc::cfgr::sws::read() != sw);
+  rcc::cfgr::sw0::write(sw);
+  rcc::cfgr::sw1::write(sw >> 1);
+  while ((rcc::cfgr::sws0::read() | (rcc::cfgr::sws1::read() << 1)) != sw);
 }
 
 
-// TODO try different approach
 void RccHal::setClockDomainPrescaler(ClockDomain clockDomain, ClockPrescaler clockPrescaler)
 {
   switch (clockDomain) {
@@ -97,10 +97,31 @@ void RccHal::setClockDomainPrescaler(ClockDomain clockDomain, ClockPrescaler clo
 void RccHal::configureMainPll(const PllConfiguration config)
 {
   rcc::pllcfgr::pllsrc::write(static_cast<uint32_t>(config.clockSource));
-  rcc::pllcfgr::pllp::write(config.pllP);
-  rcc::pllcfgr::plln::write(config.pllN);
-  rcc::pllcfgr::pllm::write(config.pllM);
-  rcc::pllcfgr::pllq::write(config.pllQ);
+
+  rcc::pllcfgr::pllp0::write(config.pllP);
+  rcc::pllcfgr::pllp1::write(config.pllP >> 1);
+
+  rcc::pllcfgr::plln0::write(config.pllN);
+  rcc::pllcfgr::plln1::write(config.pllN >> 1);
+  rcc::pllcfgr::plln2::write(config.pllN >> 2);
+  rcc::pllcfgr::plln3::write(config.pllN >> 3);
+  rcc::pllcfgr::plln4::write(config.pllN >> 4);
+  rcc::pllcfgr::plln5::write(config.pllN >> 5);
+  rcc::pllcfgr::plln6::write(config.pllN >> 6);
+  rcc::pllcfgr::plln7::write(config.pllN >> 7);
+  rcc::pllcfgr::plln8::write(config.pllN >> 8);
+
+  rcc::pllcfgr::pllm0::write(config.pllM);
+  rcc::pllcfgr::pllm1::write(config.pllM >> 1);
+  rcc::pllcfgr::pllm2::write(config.pllM >> 2);
+  rcc::pllcfgr::pllm3::write(config.pllM >> 3);
+  rcc::pllcfgr::pllm4::write(config.pllM >> 4);
+  rcc::pllcfgr::pllm5::write(config.pllM >> 5);
+
+  rcc::pllcfgr::pllq0::write(config.pllQ);
+  rcc::pllcfgr::pllq1::write(config.pllQ >> 1);
+  rcc::pllcfgr::pllq2::write(config.pllQ >> 2);
+  rcc::pllcfgr::pllq3::write(config.pllQ >> 3);
 }
 
 
@@ -152,9 +173,6 @@ void RccHal::enablePeripheralClock(Apb1Peripheral peripheral)
 void RccHal::enablePeripheralClock(Apb2Peripheral peripheral)
 {
   switch (peripheral) {
-    case Apb2Peripheral::Spi5:
-      rcc::apb2enr::spi5en::write(1);
-      break;
     case Apb2Peripheral::Tim11:
       rcc::apb2enr::tim11en::write(1);
       break;

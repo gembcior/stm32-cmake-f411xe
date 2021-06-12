@@ -3,41 +3,42 @@
 
 namespace stm32::flasher {
 
-Flasher::Flasher(gpio::IGpioDriver& gpioDriver)
+using namespace stm32::hal;
+using namespace stm32::ticktack;
+
+Flasher::Flasher(IGpioDriver& gpioDriver, ITickTack& tickTack, uint32_t tickFrequency)
   : m_gpioDriver(gpioDriver)
-  , m_port(gpio::Port::PortA)
-  , m_pin(gpio::Pin::Pin0)
+  , m_tickTack(tickTack)
+  , m_tickFrequency(tickFrequency)
+  , m_port(Port::PortA)
+  , m_pin(Pin::Pin0)
   , m_ledState(false)
 {
 }
 
 
-void Flasher::setPin(gpio::Port port, gpio::Pin pin)
+void Flasher::setPin(Port port, Pin pin)
 {
   m_port = port;
   m_pin = pin;
 }
 
 
-void Flasher::delay(uint32_t delay)
+void Flasher::setPeriod(uint32_t period)
 {
-  for (volatile uint32_t i = 0; i < 100000; i++) {
-    for (volatile uint32_t j = 0; j < delay; j++) {
-    }
-  }
+  m_tickTack.setPeriod((period * m_tickFrequency) / 1000);
 }
 
 
 void Flasher::blink()
 {
+  m_ledState = m_tickTack.getTick();
+
   if (m_ledState) {
-    m_ledState = false;
-    m_gpioDriver.setPin(m_port, m_pin, gpio::PinState::High);
+    m_gpioDriver.setPin(m_port, m_pin, PinState::High);
   } else {
-    m_ledState = true;
-    m_gpioDriver.setPin(m_port, m_pin, gpio::PinState::Low);
+    m_gpioDriver.setPin(m_port, m_pin, PinState::Low);
   }
-  delay(1);
 }
 
 } // namespace

@@ -2,7 +2,7 @@
 #include "gpio/GpioDriver.h"
 
 
-namespace stm32::hal::gpio {
+namespace stm32::hal {
 
 GpioDriver::GpioDriver(IGpioHal** gpioHal)
   : m_gpioHal(gpioHal)

@@ -1,10 +1,10 @@
 #include "pwr/PwrHal.h"
-#include "stm32/f4/f411xe/pwr.h"
+#include "dral/pwr.h"
 
 
-namespace stm32::hal::pwr {
+namespace stm32::hal {
 
-namespace pwr = dral::stm32::f4::f411xe::pwr;
+using namespace dral::stm32f411;
 
 void PwrHal::setRegulatorVoltageScaling(RegulatorVoltageScaleMode mode)
 {

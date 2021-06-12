@@ -2,31 +2,31 @@
 
 namespace stm32::objects {
 
-hal::rcc::RccHal& getRccHal()
+using namespace stm32::hal;
+
+RccHal& getRccHal()
 {
-  static hal::rcc::RccHal rccHal;
+  static RccHal rccHal;
   return rccHal;
 }
 
 
-hal::flash::FlashHal& getFlashHal()
+FlashHal& getFlashHal()
 {
-  static hal::flash::FlashHal flashHal;
+  static FlashHal flashHal;
   return flashHal;
 }
 
 
-hal::pwr::PwrHal& getPwrHal()
+PwrHal& getPwrHal()
 {
-  static hal::pwr::PwrHal pwrHal;
+  static PwrHal pwrHal;
   return pwrHal;
 }
 
 
-hal::gpio::GpioDriver& getGpioDriver()
+GpioDriver& getGpioDriver()
 {
-  using namespace stm32::hal::gpio;
-
   static IGpioHal* gpioHal[] = {
     nullptr,
     nullptr,
@@ -38,6 +38,20 @@ hal::gpio::GpioDriver& getGpioDriver()
 
   static GpioDriver gpioDriver(gpioHal);
   return gpioDriver;
+}
+
+
+SysTickHal& getSysTickHal()
+{
+  static SysTickHal sysTickHal;
+  return sysTickHal;
+}
+
+
+NvicHal& getNvicHal()
+{
+  static NvicHal nvicHal;
+  return nvicHal;
 }
 
 } // namespace

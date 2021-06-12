@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16)
+cmake_minimum_required(VERSION 3.20)
 
 include(FetchContent)
 
@@ -15,34 +15,37 @@ set(TOOLCHAIN_FILES_PATH ${stm32-cmake-utils_SOURCE_DIR}/toolchains)
 
 project(stm32-cmake-f411re-template)
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake/defaults)
-
 if (NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release)
+  set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type." FORCE)
 endif()
 
-include(stm32_tools)
+if (NOT STM32_TOOLCHAIN)
+  set(STM32_TOOLCHAIN $ENV{HOME}/tools/toolchains/gcc-arm-none-eabi-10-2020-q4-major CACHE PATH "ARM GCC toolchain." FORCE)
+endif()
+
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+  set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/artifacts CACHE PATH "Install path prefix." FORCE)
+endif()
+
 include(ExternalProject)
 
 ExternalProject_Add(stm32
   PREFIX            stm32
   SOURCE_DIR        ${CMAKE_CURRENT_SOURCE_DIR}/source
-  INSTALL_DIR       ${CMAKE_CURRENT_BINARY_DIR}/artifacts
+  INSTALL_DIR       ${CMAKE_INSTALL_PREFIX}
   TEST_COMMAND      ""
   STEP_TARGETS      configure install
   BUILD_ALWAYS      TRUE
-  CMAKE_ARGS        -C ${CMAKE_CURRENT_SOURCE_DIR}/cmake/defaults/stm32_tools.cmake
+  CMAKE_ARGS        -D STM32_TOOLCHAIN:PATH=${STM32_TOOLCHAIN}
                     -D CMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
                     -D CMAKE_MODULE_PATH:PATH=${CMAKE_MODULE_PATH}
                     -D CMAKE_TOOLCHAIN_FILE:PATH=${TOOLCHAIN_FILES_PATH}/gcc_stm32f411xe.cmake
                     -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
 )
 
-ExternalProject_Get_Property(stm32 INSTALL_DIR)
-
 ExternalProject_Add_Step(stm32 openocd
   COMMAND openocd -f ${CMAKE_CURRENT_LIST_DIR}/utils/openocd.cfg
-  COMMENT "Runnin OpenOCD"
+  COMMENT "Running OpenOCD"
   ALWAYS TRUE
   EXCLUDE_FROM_MAIN TRUE
 )

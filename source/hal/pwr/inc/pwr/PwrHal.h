@@ -3,12 +3,12 @@
 
 #include "pwr/IPwrHal.h"
 
-namespace stm32::hal::pwr {
+namespace stm32::hal {
 
 class PwrHal : public IPwrHal
 {
 public:
-  void setRegulatorVoltageScaling(RegulatorVoltageScaleMode mode);
+  void setRegulatorVoltageScaling(RegulatorVoltageScaleMode mode) final;
 };
 
 } // namespace

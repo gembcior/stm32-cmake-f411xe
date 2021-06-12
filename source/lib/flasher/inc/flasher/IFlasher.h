@@ -1,14 +1,15 @@
 #ifndef IFLASHER_H
 #define IFLASHER_H
 
-#include "gpio/gpio.h"
+#include "gpio/types.h"
 
 namespace stm32::flasher {
 
 class IFlasher
 {
 public:
-  virtual void setPin(hal::gpio::Port port, hal::gpio::Pin pin) = 0;
+  virtual void setPin(hal::Port port, hal::Pin pin) = 0;
+  virtual void setPeriod(uint32_t period) = 0;
   virtual void blink() = 0;
 };
 

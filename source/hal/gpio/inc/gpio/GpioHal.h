@@ -2,17 +2,22 @@
 #define GPIO_HAL_H
 
 #include <cstdint>
-#include "stm32/f4/f411xe/gpio.h"
 #include "gpio/IGpioHal.h"
+#include "dral/gpioa.h"
+#include "dral/gpiob.h"
+#include "dral/gpioc.h"
+#include "dral/gpiod.h"
+#include "dral/gpioe.h"
+#include "dral/gpioh.h"
 
-namespace stm32::hal::gpio {
+namespace stm32::hal {
 
-using PortA = dral::stm32::f4::f411xe::gpio::gpioA;
-using PortB = dral::stm32::f4::f411xe::gpio::gpioB;
-using PortC = dral::stm32::f4::f411xe::gpio::gpioC;
-using PortD = dral::stm32::f4::f411xe::gpio::gpioD;
-using PortE = dral::stm32::f4::f411xe::gpio::gpioE;
-using PortH = dral::stm32::f4::f411xe::gpio::gpioH;
+using PortA = dral::stm32f411::gpioa;
+using PortB = dral::stm32f411::gpiob;
+using PortC = dral::stm32f411::gpioc;
+using PortD = dral::stm32f411::gpiod;
+using PortE = dral::stm32f411::gpioe;
+using PortH = dral::stm32f411::gpioh;
 
 
 template<typename Port>
@@ -274,52 +279,52 @@ void GpioHal<Port>::setAlternateFunction(Pin pin, PortAlternateFunction af)
 {
   switch (pin) {
     case Pin::Pin0:
-      Port::afrl::afsel0::write(static_cast<uint32_t>(af));
+      Port::afrl::afrl0::write(static_cast<uint32_t>(af));
       break;
     case Pin::Pin1:
-      Port::afrl::afsel1::write(static_cast<uint32_t>(af));
+      Port::afrl::afrl1::write(static_cast<uint32_t>(af));
       break;
     case Pin::Pin2:
-      Port::afrl::afsel2::write(static_cast<uint32_t>(af));
+      Port::afrl::afrl2::write(static_cast<uint32_t>(af));
       break;
     case Pin::Pin3:
-      Port::afrl::afsel3::write(static_cast<uint32_t>(af));
+      Port::afrl::afrl3::write(static_cast<uint32_t>(af));
       break;
     case Pin::Pin4:
-      Port::afrl::afsel4::write(static_cast<uint32_t>(af));
+      Port::afrl::afrl4::write(static_cast<uint32_t>(af));
       break;
     case Pin::Pin5:
-      Port::afrl::afsel5::write(static_cast<uint32_t>(af));
+      Port::afrl::afrl5::write(static_cast<uint32_t>(af));
       break;
     case Pin::Pin6:
-      Port::afrl::afsel6::write(static_cast<uint32_t>(af));
+      Port::afrl::afrl6::write(static_cast<uint32_t>(af));
       break;
     case Pin::Pin7:
-      Port::afrl::afsel7::write(static_cast<uint32_t>(af));
+      Port::afrl::afrl7::write(static_cast<uint32_t>(af));
       break;
     case Pin::Pin8:
-      Port::afrh::afsel8::write(static_cast<uint32_t>(af));
+      Port::afrh::afrh8::write(static_cast<uint32_t>(af));
       break;
     case Pin::Pin9:
-      Port::afrh::afsel9::write(static_cast<uint32_t>(af));
+      Port::afrh::afrh9::write(static_cast<uint32_t>(af));
       break;
     case Pin::Pin10:
-      Port::afrh::afsel10::write(static_cast<uint32_t>(af));
+      Port::afrh::afrh10::write(static_cast<uint32_t>(af));
       break;
     case Pin::Pin11:
-      Port::afrh::afsel11::write(static_cast<uint32_t>(af));
+      Port::afrh::afrh11::write(static_cast<uint32_t>(af));
       break;
     case Pin::Pin12:
-      Port::afrh::afsel12::write(static_cast<uint32_t>(af));
+      Port::afrh::afrh12::write(static_cast<uint32_t>(af));
       break;
     case Pin::Pin13:
-      Port::afrh::afsel13::write(static_cast<uint32_t>(af));
+      Port::afrh::afrh13::write(static_cast<uint32_t>(af));
       break;
     case Pin::Pin14:
-      Port::afrh::afsel14::write(static_cast<uint32_t>(af));
+      Port::afrh::afrh14::write(static_cast<uint32_t>(af));
       break;
     case Pin::Pin15:
-      Port::afrh::afsel15::write(static_cast<uint32_t>(af));
+      Port::afrh::afrh15::write(static_cast<uint32_t>(af));
       break;
     default:
       break;
@@ -479,52 +484,52 @@ PinState GpioHal<Port>::getPin(Pin pin)
 
   switch (pin) {
     case Pin::Pin0:
-      state = Port::idr::id0::read();
+      state = Port::idr::idr0::read();
       break;
     case Pin::Pin1:
-      state = Port::idr::id1::read();
+      state = Port::idr::idr1::read();
       break;
     case Pin::Pin2:
-      state = Port::idr::id2::read();
+      state = Port::idr::idr2::read();
       break;
     case Pin::Pin3:
-      state = Port::idr::id3::read();
+      state = Port::idr::idr3::read();
       break;
     case Pin::Pin4:
-      state = Port::idr::id4::read();
+      state = Port::idr::idr4::read();
       break;
     case Pin::Pin5:
-      state = Port::idr::id5::read();
+      state = Port::idr::idr5::read();
       break;
     case Pin::Pin6:
-      state = Port::idr::id6::read();
+      state = Port::idr::idr6::read();
       break;
     case Pin::Pin7:
-      state = Port::idr::id7::read();
+      state = Port::idr::idr7::read();
       break;
     case Pin::Pin8:
-      state = Port::idr::id8::read();
+      state = Port::idr::idr8::read();
       break;
     case Pin::Pin9:
-      state = Port::idr::id9::read();
+      state = Port::idr::idr9::read();
       break;
     case Pin::Pin10:
-      state = Port::idr::id10::read();
+      state = Port::idr::idr10::read();
       break;
     case Pin::Pin11:
-      state = Port::idr::id11::read();
+      state = Port::idr::idr11::read();
       break;
     case Pin::Pin12:
-      state = Port::idr::id12::read();
+      state = Port::idr::idr12::read();
       break;
     case Pin::Pin13:
-      state = Port::idr::id13::read();
+      state = Port::idr::idr13::read();
       break;
     case Pin::Pin14:
-      state = Port::idr::id14::read();
+      state = Port::idr::idr14::read();
       break;
     case Pin::Pin15:
-      state = Port::idr::id15::read();
+      state = Port::idr::idr15::read();
       break;
     default:
       break;

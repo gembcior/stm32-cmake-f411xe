@@ -4,7 +4,7 @@
 #include <cstdint>
 #include "scb/IScbHal.h"
 
-namespace stm32::hal::scb {
+namespace stm32::hal {
 
 class ScbHal : public IScbHal
 {

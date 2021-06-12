@@ -1,27 +1,39 @@
 #ifndef OBJECTS_H
 #define OBJECTS_H
 
+#include "system/System.h"
+
 #include "rcc/RccHal.h"
 #include "flash/FlashHal.h"
 #include "pwr/PwrHal.h"
 #include "gpio/GpioHal.h"
 #include "gpio/GpioDriver.h"
-#include "system/System.h"
+#include "systick/SysTickHal.h"
+#include "nvic/NvicHal.h"
+
 #include "flasher/Flasher.h"
+#include "ticktack/TickTack.h"
+
 
 namespace stm32::objects {
 
-hal::rcc::RccHal& getRccHal();
-hal::flash::FlashHal& getFlashHal();
-hal::pwr::PwrHal& getPwrHal();
 system::System& getSystem();
+
+hal::RccHal& getRccHal();
+hal::FlashHal& getFlashHal();
+hal::PwrHal& getPwrHal();
+hal::SysTickHal& getSysTickHal();
+hal::GpioDriver& getGpioDriver();
+hal::NvicHal& getNvicHal();
+
 flasher::Flasher& getFlasher();
-hal::gpio::GpioDriver& getGpioDriver();
+ticktack::TickTack& getTickTack();
+
 
 template<typename Port>
-hal::gpio::GpioHal<Port>& getGpioHal()
+hal::GpioHal<Port>& getGpioHal()
 {
-  static hal::gpio::GpioHal<Port> gpioHal;
+  static hal::GpioHal<Port> gpioHal;
   return gpioHal;
 }
 

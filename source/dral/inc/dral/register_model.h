@@ -1,0 +1,45 @@
+#ifndef DRAL_REGISTER_MODEL_H
+#define DRAL_REGISTER_MODEL_H
+
+#include <cstdint>
+
+namespace dral {
+
+template <uint32_t address>
+class RegisterModel
+{
+public:
+  static uint32_t read()
+  {
+    volatile uint32_t* reg = reinterpret_cast<volatile uint32_t*>(address);
+    return *reg;
+  }
+
+  static void write(uint32_t value)
+  {
+    volatile uint32_t* reg = reinterpret_cast<volatile uint32_t*>(address);
+    *reg = value;
+  }
+};
+
+
+template <uint32_t address, uint32_t offset, uint32_t mask>
+class FieldModel
+{
+public:
+  static void write(uint32_t value)
+  {
+    volatile uint32_t* reg = reinterpret_cast<volatile uint32_t*>(address);
+    *reg = (*reg & ~(mask << offset)) | ((value & mask) << offset);
+  }
+
+  static uint32_t read()
+  {
+    volatile uint32_t* reg = reinterpret_cast<volatile uint32_t*>(address);
+    return (*reg >> offset) & mask;
+  }
+};
+
+} // namespace
+
+#endif /* DRAL_REGISTER_MODEL_H */

@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-namespace stm32::hal::flash {
+namespace stm32::hal {
 
 class IFlashHal
 {

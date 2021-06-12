@@ -108,8 +108,11 @@ SECTIONS
     PROVIDE_HIDDEN (__fini_array_end = .);
   } > FLASH
 
-  /* Used by the startup to initialize data */
-  _sidata = LOADADDR(.data);
+  .runtime_isr_vector :
+  {
+    . = ALIGN(512);
+    *(.runtime_isr_vector)
+  } > RAM
 
   .data :
   {
@@ -121,6 +124,9 @@ SECTIONS
     . = ALIGN(4);
     _edata = .;
   } > RAM AT > FLASH
+
+  /* Used by the startup to initialize data */
+  _sidata = LOADADDR(.data);
 
   . = ALIGN(4);
   .bss :

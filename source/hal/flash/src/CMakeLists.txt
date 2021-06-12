@@ -10,5 +10,5 @@ target_include_directories(flash
 
 target_link_libraries(flash
   PRIVATE
-    dral_stm32_f4_f411xe
+    dral
 )

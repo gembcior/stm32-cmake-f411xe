@@ -7,7 +7,6 @@ target_sources(crt
 
 target_link_libraries(crt
   INTERFACE
-    irq
     "-T ${CMAKE_CURRENT_SOURCE_DIR}/linker_script.ld"
 )
 

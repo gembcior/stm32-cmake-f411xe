@@ -10,5 +10,5 @@ target_include_directories(gpio
 
 target_link_libraries(gpio
   PUBLIC
-    dral_stm32_f4_f411xe
+    dral
 )

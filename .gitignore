@@ -11,3 +11,4 @@ build/**
 # CTags
 tags
 
+.cache

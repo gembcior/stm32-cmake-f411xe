@@ -1,10 +1,10 @@
 #include "flash/FlashHal.h"
-#include "stm32/f4/f411xe/flash.h"
+#include "dral/flash.h"
 
 
-namespace stm32::hal::flash {
+namespace stm32::hal {
 
-namespace flash = dral::stm32::f4::f411xe::flash;
+using namespace dral::stm32f411;
 
 void FlashHal::enableDataCache()
 {

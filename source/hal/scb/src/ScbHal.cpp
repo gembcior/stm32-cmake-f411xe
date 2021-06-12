@@ -1,15 +1,16 @@
 #include "scb/ScbHal.h"
-#include "stm32/f4/f411xe/scb.h"
+#include "dral/scb.h"
+#include "dral/fpu_cpacr.h"
 
 
-namespace stm32::hal::scb {
+namespace stm32::hal {
 
-namespace scb = dral::stm32::f4::f411xe::scb;
+using namespace dral::stm32f411;
 
 void ScbHal::setCoprocessorAccessPrivileges(uint32_t privilege)
 {
   uint32_t value = privilege << 22 | privilege << 20;
-  scb::cpacr::write(value);
+  fpu_cpacr::cpacr::write(value);
 }
 
 

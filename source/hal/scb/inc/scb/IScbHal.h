@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-namespace stm32::hal::scb {
+namespace stm32::hal {
 
 class IScbHal
 {
