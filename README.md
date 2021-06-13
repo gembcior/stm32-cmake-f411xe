@@ -6,7 +6,7 @@ As build system, this project use CMake.
 Project also show how Googletest framework can be integrated into project for unit testing.
 
 ## Development platform
-Project is develop on XNUCLEO-F411RE board from Waveshare manufacturer.
+Project is develop on **XNUCLEO-F411RE** board from Waveshare manufacturer.
 For build purpose Linux base system is used.
 
 ## Dependencies
@@ -23,7 +23,7 @@ List of the external software and frameworks:
 ## How to build
 Clone repository
 ```
-git clone
+git clone https://github.com/gembcior/stm32-cmake-f411xe.git
 ```
 
 Make build workspace directory
@@ -31,7 +31,7 @@ Make build workspace directory
 mkdir -p build
 ```
 
-Go to build workspace
+Go to build workspace directory
 ```
 cd build
 ```
