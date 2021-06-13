@@ -6,3 +6,7 @@ target_include_directories(flasher
 )
 
 add_subdirectory(src)
+
+if (UNIT_TEST)
+  add_subdirectory(test)
+endif()
