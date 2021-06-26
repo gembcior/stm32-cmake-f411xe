@@ -1,4 +1,5 @@
 #include "objects.h"
+#include "system/constants.h"
 
 namespace stm32::objects {
 
@@ -28,7 +29,7 @@ PwrHal& getPwrHal()
 GpioDriver& getGpioDriver()
 {
   static IGpioHal* gpioHal[] = {
-    nullptr,
+    &getGpioHal<PortA>(),
     nullptr,
     &getGpioHal<PortC>(),
     nullptr,
@@ -52,6 +53,13 @@ NvicHal& getNvicHal()
 {
   static NvicHal nvicHal;
   return nvicHal;
+}
+
+
+UartDriver& getUartDriver()
+{
+  static UartDriver uartDriver(getUartHal<UART2>(), system::SystemClock / 2);
+  return uartDriver;
 }
 
 } // namespace
