@@ -15,6 +15,7 @@
 
 #include "flasher/Flasher.h"
 #include "ticktack/TickTack.h"
+#include "logger/Logger.h"
 
 
 namespace stm32::objects {
@@ -31,6 +32,7 @@ hal::UartDriver& getUartDriver();
 
 flasher::Flasher& getFlasher();
 ticktack::TickTack& getTickTack();
+logger::Logger& getLogger();
 
 
 template<typename Port>

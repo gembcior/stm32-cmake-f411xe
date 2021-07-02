@@ -38,6 +38,14 @@ void UartDriver::write(const uint8_t* data, uint32_t size)
 }
 
 
+void UartDriver::write(const char data)
+{
+  while (!m_uartHal.isTxEmpty());
+  m_uartHal.writeData(data);
+  while (!m_uartHal.isTxComplete());
+}
+
+
 void UartDriver::read(uint8_t* buffer, uint32_t size)
 {
 }

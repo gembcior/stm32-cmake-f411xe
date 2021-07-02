@@ -14,6 +14,7 @@ public:
   UartDriver(IUartHal& uartHal, uint32_t clk);
 
   void write(const uint8_t* data, uint32_t size) final;
+  void write(const char data);
   void read(uint8_t* buffer, uint32_t size) final;
 
   void enable() final;

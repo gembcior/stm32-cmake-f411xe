@@ -10,6 +10,13 @@ using namespace stm32::system;
 using namespace stm32::hal;
 
 
+void writeUart(const char character)
+{
+  auto& uart = getUartDriver();
+  uart.write(character);
+}
+
+
 int main(void)
 {
   auto& system = getSystem();
@@ -32,10 +39,13 @@ int main(void)
   uart.enable();
   uart.configure(uartConfig);
 
+  auto& logger = getLogger();
+  logger.registerOutput(writeUart);
+
   while (1)
   {
     flasher.blink();
-    const char hello[] = "HelloWorld!\n\r";
-    uart.write(reinterpret_cast<const uint8_t*>(hello), 13);
+    logger.info("Hello World! {}", 1236);
+    logger.warning("{} {}!", "Hello", "World");
   }
 }

@@ -10,6 +10,7 @@ class IUartDriver
 {
 public:
   virtual void write(const uint8_t* data, uint32_t size) = 0;
+  virtual void write(const char data) = 0;
   virtual void read(uint8_t* buffer, uint32_t size) = 0;
 
   virtual void enable() = 0;

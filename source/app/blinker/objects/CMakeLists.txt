@@ -21,4 +21,5 @@ target_link_libraries(blinker
     flasher
     ticktack
     uart
+    logger
 )
