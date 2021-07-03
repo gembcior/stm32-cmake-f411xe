@@ -42,10 +42,22 @@ int main(void)
   auto& logger = getLogger();
   logger.registerOutput(writeUart);
 
+  auto& gpio = getGpioDriver();
+
+  logger.info("Blinker application started");
+
+  bool buttonLock = false;
+
   while (1)
   {
     flasher.blink();
-    logger.info("Hello World! {}", 1236);
-    logger.warning("{} {}!", "Hello", "World");
+
+    if (gpio.getPin(UserButton) == PinState::Low && !buttonLock) {
+      logger.info("User Button pushed");
+      buttonLock = true;
+    } else if (gpio.getPin(UserButton) == PinState::High && buttonLock) {
+      logger.info("User Button released");
+      buttonLock = false;
+    }
   }
 }

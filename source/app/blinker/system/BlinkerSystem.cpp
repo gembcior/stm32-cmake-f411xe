@@ -31,6 +31,7 @@ void BlinkerSystem::setupGpio()
   m_gpioDriver.configure(UserLed3);
   m_gpioDriver.configure(UserLed4);
   m_gpioDriver.configure(Uart2Tx);
+  m_gpioDriver.configure(UserButton);
 }
 
 } // namespace

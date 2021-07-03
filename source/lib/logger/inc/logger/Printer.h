@@ -51,15 +51,12 @@ public:
 
   void registerOutput(OutputFunction out);
 
-
-protected:
-  void printBuffer(const char* buffer);
-
 private:
   template<typename Arg, typename ... Args>
   void mainPrint(const char*& text, Arg argument, Args ... arguments);
   void mainPrint(const char* text);
 
+  void printBuffer(const char* buffer);
 
   template<typename T>
   void printArgument(T argument);
@@ -72,7 +69,7 @@ private:
   static constexpr char ArgumentEndMark = '}';
   static constexpr char ArgumentFormatMark = ':';
 
-private:
+protected:
   OutputFunction m_out;
 };
 

@@ -32,21 +32,19 @@ void Printer::mainPrint(const char* text)
 
 void Printer::printEscCharacter()
 {
-  constexpr char escCharacter[] = "\033";
-  printBuffer(escCharacter);
+  if (m_out) m_out(0x1B);
 }
 
 
 void Printer::printColorMark(PrinterColorMark mark, PrinterColorType type)
 {
   printEscCharacter();
-  const char colorMark[] = {
-    '[',
-    static_cast<char>(type),
-    static_cast<char>(mark),
-    'm'
-  };
-  printBuffer(colorMark);
+  if (m_out) {
+    m_out('[');
+    m_out(static_cast<char>(type));
+    m_out(static_cast<char>(mark));
+    m_out('m');
+  }
 }
 
 

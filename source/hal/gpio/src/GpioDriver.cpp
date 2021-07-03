@@ -55,13 +55,13 @@ void GpioDriver::setPin(GpioPin pin, PinState state)
 
 PinState GpioDriver::getPin(Port port, Pin pin)
 {
-  return PinState::High;
+  return m_gpioHal[static_cast<uint32_t>(port)]->getPin(pin);
 }
 
 
 PinState GpioDriver::getPin(GpioPin pin)
 {
-  return PinState::High;
+  return m_gpioHal[static_cast<uint32_t>(pin.port)]->getPin(pin.pin);
 }
 
 } // namespace

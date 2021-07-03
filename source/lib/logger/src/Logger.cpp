@@ -16,13 +16,11 @@ void Logger::registerCallback(LoggerCallbackId id, ILoggerCallback* callback)
 
 void Logger::printLevel(LoggerLevel level)
 {
-  const char levelText[] = {
-    static_cast<char>(level),
-    ':',
-    ' '
-  };
-
-  printBuffer(levelText);
+  if (m_out) {
+    m_out(static_cast<char>(level));
+    m_out(':');
+    m_out(' ');
+  }
 }
 
 } // namespace
