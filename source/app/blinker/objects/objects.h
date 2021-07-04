@@ -10,9 +10,12 @@
 #include "gpio/GpioDriver.h"
 #include "systick/SysTickHal.h"
 #include "nvic/NvicHal.h"
+#include "uart/UartHal.h"
+#include "uart/UartDriver.h"
 
 #include "flasher/Flasher.h"
 #include "ticktack/TickTack.h"
+#include "logger/Logger.h"
 
 
 namespace stm32::objects {
@@ -25,9 +28,11 @@ hal::PwrHal& getPwrHal();
 hal::SysTickHal& getSysTickHal();
 hal::GpioDriver& getGpioDriver();
 hal::NvicHal& getNvicHal();
+hal::UartDriver& getUartDriver();
 
 flasher::Flasher& getFlasher();
 ticktack::TickTack& getTickTack();
+logger::Logger& getLogger();
 
 
 template<typename Port>
@@ -35,6 +40,14 @@ hal::GpioHal<Port>& getGpioHal()
 {
   static hal::GpioHal<Port> gpioHal;
   return gpioHal;
+}
+
+
+template<typename Uart>
+hal::UartHal<Uart>& getUartHal()
+{
+  static hal::UartHal<Uart> uartHal;
+  return uartHal;
 }
 
 } // namespace

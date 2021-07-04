@@ -17,4 +17,11 @@ ticktack::TickTack& getTickTack()
   return tickTack;
 }
 
+
+logger::Logger& getLogger()
+{
+  static logger::Logger logger;
+  return logger;
+}
+
 } // namespace

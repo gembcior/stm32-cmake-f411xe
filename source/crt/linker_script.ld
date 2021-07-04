@@ -31,7 +31,6 @@
 ENTRY(Reset_Handler)
 
 _estack          = 0x20020000;
-_Min_Heap_Size   = 0x000;
 _Min_Stack_Size  = 0x400;
 _Flash_Base_Addr = 0x08000000;
 
@@ -140,17 +139,6 @@ SECTIONS
     . = ALIGN(4);
     _ebss = .;
     __bss_end__ = _ebss;
-  } > RAM
-
-  /* User_heap_stack section, used to check that there is enough RAM left */
-  ._user_heap_stack :
-  {
-    . = ALIGN(4);
-    PROVIDE ( end = . );
-    PROVIDE ( _end = . );
-    . = . + _Min_Heap_Size;
-    . = . + _Min_Stack_Size;
-    . = ALIGN(4);
   } > RAM
 
   /* Remove information from the standard libraries */

@@ -44,6 +44,31 @@ constexpr hal::GpioPin UserLed2 = {
   .pin = hal::Pin::Pin9,
 };
 
+
+constexpr hal::GpioPin Uart2Tx = {
+  .config = {
+    .mode = hal::PortMode::AlternateFunction,
+    .type = hal::PortType::PushPull,
+    .speed = hal::PortSpeed::Fast,
+    .pull = hal::PortPull::NoPull,
+    .af = hal::PortAlternateFunction::Af7,
+  },
+  .port = hal::Port::PortA,
+  .pin = hal::Pin::Pin2,
+};
+
+
+constexpr hal::GpioPin UserButton = {
+  .config = {
+    .mode = hal::PortMode::Input,
+    .type = hal::PortType::PushPull,
+    .speed = hal::PortSpeed::Low,
+    .pull = hal::PortPull::PullUp,
+  },
+  .port = hal::Port::PortC,
+  .pin = hal::Pin::Pin13,
+};
+
 } // namespace
 
 #endif /* CONSTANTS_H */

@@ -20,4 +20,6 @@ target_link_libraries(blinker
     nvic
     flasher
     ticktack
+    uart
+    logger
 )

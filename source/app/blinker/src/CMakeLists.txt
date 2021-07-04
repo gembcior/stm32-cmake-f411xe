@@ -12,4 +12,7 @@ target_link_libraries(blinker
   PRIVATE
     crt
     flasher
+    uart
+    etl
+    logger
 )
