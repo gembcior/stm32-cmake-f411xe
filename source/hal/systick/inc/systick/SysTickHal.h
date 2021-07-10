@@ -17,6 +17,7 @@ public:
   uint32_t getReloadValue() final;
   uint32_t getCurrentValue() final;
   void clear() final;
+  bool wasCountedToZero() final;
 };
 
 } // namespace

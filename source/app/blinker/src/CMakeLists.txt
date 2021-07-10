@@ -15,4 +15,5 @@ target_link_libraries(blinker
     uart
     etl
     logger
+    freertos
 )

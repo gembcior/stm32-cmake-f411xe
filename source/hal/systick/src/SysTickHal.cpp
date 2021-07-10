@@ -59,4 +59,10 @@ void SysTickHal::clear()
   stk::val::current::write(0);
 }
 
+
+bool SysTickHal::wasCountedToZero()
+{
+  return stk::ctrl::countflag::read();
+}
+
 } // namespace

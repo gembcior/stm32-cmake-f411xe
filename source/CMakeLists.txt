@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(source CXX ASM)
+project(source CXX C ASM)
 enable_testing()
 
 set(CMAKE_CXX_STANDARD 17)
@@ -22,6 +22,7 @@ if (NOT UNIT_TEST)
   add_subdirectory(app)
   add_subdirectory(crt)
   add_subdirectory(system)
+  add_subdirectory(os)
 endif()
 
 add_subdirectory(dral)
