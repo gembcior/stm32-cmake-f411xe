@@ -23,8 +23,6 @@ target_sources(freertos
     ${freertos_SOURCE_DIR}/stream_buffer.c
     ${freertos_SOURCE_DIR}/tasks.c
     ${freertos_SOURCE_DIR}/timers.c
-
-  PUBLIC
     ${freertos_SOURCE_DIR}/portable/GCC/ARM_CM4F/port.c
     ${freertos_SOURCE_DIR}/portable/MemMang/heap_4.c
 )
@@ -34,7 +32,6 @@ target_include_directories(freertos
     ${freertos_SOURCE_DIR}/include
     ${freertos_SOURCE_DIR}/portable/GCC/ARM_CM4F
     inc/freertos
-    inc
 )
 
 add_subdirectory(src)

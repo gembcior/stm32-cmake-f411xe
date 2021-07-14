@@ -2,7 +2,7 @@ add_library(logger STATIC)
 
 target_include_directories(logger
   PUBLIC
-    ${CMAKE_CURRENT_SOURCE_DIR}/inc
+    inc
 )
 
 add_subdirectory(src)
