@@ -7,7 +7,7 @@
 #define configCPU_CLOCK_HZ                      96000000
 #define configTICK_RATE_HZ                      1000
 #define configMAX_PRIORITIES                    56
-#define configMINIMAL_STACK_SIZE                128
+#define configMINIMAL_STACK_SIZE                256
 #define configMAX_TASK_NAME_LEN                 16
 #define configUSE_16_BIT_TICKS                  0
 #define configIDLE_SHOULD_YIELD                 0
@@ -19,17 +19,17 @@
 #define configUSE_ALTERNATIVE_API               0
 #define configQUEUE_REGISTRY_SIZE               8
 #define configUSE_QUEUE_SETS                    0
-#define configUSE_TIME_SLICING                  0
+#define configUSE_TIME_SLICING                  1
 #define configUSE_NEWLIB_REENTRANT              0
 #define configENABLE_BACKWARD_COMPATIBILITY     0
 #define configNUM_THREAD_LOCAL_STORAGE_POINTERS 5
-#define configSTACK_DEPTH_TYPE                  uint16_t
+#define configSTACK_DEPTH_TYPE                  uint32_t
 #define configMESSAGE_BUFFER_LENGTH_TYPE        size_t
 
 /* Memory allocation related definitions. */
 #define configSUPPORT_STATIC_ALLOCATION             1
-#define configSUPPORT_DYNAMIC_ALLOCATION            1
-#define configTOTAL_HEAP_SIZE                       10240
+#define configSUPPORT_DYNAMIC_ALLOCATION            0
+#define configTOTAL_HEAP_SIZE                       0
 #define configAPPLICATION_ALLOCATED_HEAP            0
 #define configSTACK_ALLOCATION_FROM_SEPARATE_HEAP   0
 
@@ -53,7 +53,7 @@
 #define configUSE_TIMERS                        1
 #define configTIMER_TASK_PRIORITY               3
 #define configTIMER_QUEUE_LENGTH                10
-#define configTIMER_TASK_STACK_DEPTH            configMINIMAL_STACK_SIZE
+#define configTIMER_TASK_STACK_DEPTH            configMINIMAL_STACK_SIZE * 2
 
 /* Interrupt nesting behaviour configuration. */
 #define configPRIO_BITS         4
@@ -65,7 +65,7 @@
 #define configMAX_API_CALL_INTERRUPT_PRIORITY ( configLIBRARY_MAX_SYSCALL_INTERRUPT_PRIORITY << (8 - configPRIO_BITS) )
 
 /* Define to trap errors during development. */
-#define configASSERT( x ) if( ( x ) == 0 ); //vAssertCalled( __FILE__, __LINE__ )
+#define configASSERT( x ) if( ( x ) == 0 ) { for( ;; ); }
 
 /* FreeRTOS MPU specific definitions. */
 #define configINCLUDE_APPLICATION_DEFINED_PRIVILEGED_FUNCTIONS 0

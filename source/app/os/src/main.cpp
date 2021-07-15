@@ -28,22 +28,22 @@ StackType_t blinkerTaskStack[blinkerTaskStackSize];
 class BlinkerTask : public os::StaticTask
 {
 public:
-  BlinkerTask(StackType_t* stack) : StaticTask("BlinkerTask", blinkerTaskStackSize, 4, stack)
+  BlinkerTask(StackType_t* stack) : StaticTask("BlinkerTask", blinkerTaskStackSize, 24, stack)
   {}
 
   void run() final
   {
+    auto& logger = getLogger();
     auto& flasher = getFlasher();
+
+    logger.info("Blinker Task Started");
+
     flasher.setPeriod(500);
     flasher.setPin(UserLed2.port, UserLed2.pin);
-
-    auto& logger = getLogger();
-    logger.info("Blinker Task Started");
 
     while(1)
     {
       flasher.blink();
-      vTaskDelay(10);
     }
   }
 };
@@ -56,7 +56,7 @@ StackType_t uartTaskStack[uartTaskStackSize];
 class UartTask : public os::StaticTask
 {
 public:
-  UartTask(StackType_t* stack) : StaticTask("UartTask", uartTaskStackSize, 4, stack)
+  UartTask(StackType_t* stack) : StaticTask("UartTask", uartTaskStackSize, 24, stack)
   {}
 
   void run() final
@@ -76,7 +76,6 @@ public:
         logger.info("User Button released");
         buttonLock = false;
       }
-      vTaskDelay(10);
     }
   }
 };
@@ -88,7 +87,6 @@ int main(void)
   system.initialize();
 
   auto& uart = getUartDriver();
-
   UartConfiguration uartConfig = {
     .mode = UartMode::Tx,
     .baudRate = 115200,
@@ -97,18 +95,17 @@ int main(void)
     .stopBits = UartStopBits::OneStopBit
   };
 
-  uart.enable();
   uart.configure(uartConfig);
+  uart.enable();
 
   auto& logger = getLogger();
   logger.registerOutput(writeUart);
-
   logger.info("Blinker application started!");
 
-  auto& scheduler = getScheduler();
-  BlinkerTask blinkerTask(blinkerTaskStack);
-  UartTask uartTask(uartTaskStack);
+  static BlinkerTask blinkerTask(blinkerTaskStack);
+  static UartTask uartTask(uartTaskStack);
 
+  auto& scheduler = getScheduler();
   if (!scheduler.addTask(blinkerTask)) logger.error("Blinker Task create failed!");
   if (!scheduler.addTask(uartTask)) logger.error("Uart Task create failed");
 

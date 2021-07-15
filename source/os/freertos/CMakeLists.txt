@@ -24,7 +24,7 @@ target_sources(freertos
     ${freertos_SOURCE_DIR}/tasks.c
     ${freertos_SOURCE_DIR}/timers.c
     ${freertos_SOURCE_DIR}/portable/GCC/ARM_CM4F/port.c
-    ${freertos_SOURCE_DIR}/portable/MemMang/heap_4.c
+    #${freertos_SOURCE_DIR}/portable/MemMang/heap_4.c
 )
 
 target_include_directories(freertos
