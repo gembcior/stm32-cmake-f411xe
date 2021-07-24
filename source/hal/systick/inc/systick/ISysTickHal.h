@@ -18,6 +18,7 @@ public:
   virtual uint32_t getReloadValue() = 0;
   virtual uint32_t getCurrentValue() = 0;
   virtual void clear() = 0;
+  virtual bool wasCountedToZero() = 0;
 };
 
 } // namespace
