@@ -23,12 +23,14 @@ void writeUart(const char character)
 
 constexpr uint32_t blinkerTaskStackSize = 1024;
 StackType_t blinkerTaskStack[blinkerTaskStackSize];
+StaticTask_t blinkerTaskBuffer;
 
 
 class BlinkerTask : public os::StaticTask
 {
 public:
-  BlinkerTask(StackType_t* stack) : StaticTask("BlinkerTask", blinkerTaskStackSize, 24, stack)
+  BlinkerTask(StackType_t* stackBuffer, StaticTask_t* taskBuffer) :
+    StaticTask("BlinkerTask", blinkerTaskStackSize, 24, stackBuffer, taskBuffer)
   {}
 
   void run() final
@@ -51,12 +53,14 @@ public:
 
 constexpr uint32_t uartTaskStackSize = 1024;
 StackType_t uartTaskStack[uartTaskStackSize];
+StaticTask_t uartTaskBuffer;
 
 
 class UartTask : public os::StaticTask
 {
 public:
-  UartTask(StackType_t* stack) : StaticTask("UartTask", uartTaskStackSize, 24, stack)
+  UartTask(StackType_t* stackBuffer, StaticTask_t* taskBuffer) :
+    StaticTask("UartTask", uartTaskStackSize, 24, stackBuffer, taskBuffer)
   {}
 
   void run() final
@@ -102,8 +106,8 @@ int main(void)
   logger.registerOutput(writeUart);
   logger.info("Blinker application started!");
 
-  static BlinkerTask blinkerTask(blinkerTaskStack);
-  static UartTask uartTask(uartTaskStack);
+  BlinkerTask blinkerTask(blinkerTaskStack, &blinkerTaskBuffer);
+  UartTask uartTask(uartTaskStack, &uartTaskBuffer);
 
   auto& scheduler = getScheduler();
   if (!scheduler.addTask(blinkerTask)) logger.error("Blinker Task create failed!");
