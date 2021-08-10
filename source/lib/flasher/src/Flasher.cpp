@@ -1,10 +1,10 @@
 #include "flasher/Flasher.h"
 
 
-namespace stm32::flasher {
+namespace stm32::lib {
 
 using namespace stm32::hal;
-using namespace stm32::ticktack;
+using namespace stm32::lib;
 
 Flasher::Flasher(IGpioDriver& gpioDriver, ITickTack& tickTack, uint32_t tickFrequency)
   : m_gpioDriver(gpioDriver)

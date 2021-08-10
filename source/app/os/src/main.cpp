@@ -5,6 +5,7 @@
 #include "objects.h"
 #include "system/constants.h"
 #include "uart/types.h"
+#include "logger/Logger.h"
 
 #include "os/StaticTask.h"
 #include "os/Scheduler.h"
@@ -12,11 +13,13 @@
 using namespace stm32::objects;
 using namespace stm32::system;
 using namespace stm32::hal;
+using namespace stm32::lib;
+using namespace os;
 
 
 void writeUart(const char character)
 {
-  auto& uart = getUartDriver();
+  auto& uart = getObject<UartDriver>();
   uart.write(character);
 }
 
@@ -35,8 +38,8 @@ public:
 
   void run() final
   {
-    auto& logger = getLogger();
-    auto& flasher = getFlasher();
+    auto& logger = getObject<Logger>();
+    auto& flasher = getObject<Flasher>();
 
     logger.info("Blinker Task Started");
 
@@ -65,8 +68,8 @@ public:
 
   void run() final
   {
-    auto& logger = getLogger();
-    auto& gpio = getGpioDriver();
+    auto& logger = getObject<Logger>();
+    auto& gpio = getObject<GpioDriver>();
 
     logger.info("Uart Task Started");
 
@@ -87,10 +90,12 @@ public:
 
 int main(void)
 {
-  auto& system = getSystem();
+  auto& system = getObject<System>();
+  auto& uart = getObject<UartDriver>();
+  auto& logger = getObject<Logger>();
+
   system.initialize();
 
-  auto& uart = getUartDriver();
   UartConfiguration uartConfig = {
     .mode = UartMode::Tx,
     .baudRate = 115200,
@@ -102,14 +107,13 @@ int main(void)
   uart.configure(uartConfig);
   uart.enable();
 
-  auto& logger = getLogger();
   logger.registerOutput(writeUart);
   logger.info("Blinker application started!");
 
   BlinkerTask blinkerTask(blinkerTaskStack, &blinkerTaskBuffer);
   UartTask uartTask(uartTaskStack, &uartTaskBuffer);
 
-  auto& scheduler = getScheduler();
+  auto& scheduler = getObject<Scheduler>();
   if (!scheduler.addTask(blinkerTask)) logger.error("Blinker Task create failed!");
   if (!scheduler.addTask(uartTask)) logger.error("Uart Task create failed");
 

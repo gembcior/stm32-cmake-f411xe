@@ -2,7 +2,7 @@
 #define PRINTER_H
 
 
-namespace stm32::logger {
+namespace stm32::lib {
 
 enum class PrinterColorMark : char {
   Black   = '0',

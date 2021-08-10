@@ -3,7 +3,7 @@
 
 
 using namespace ::testing;
-using namespace stm32::ticktack;
+using namespace stm32::lib;
 
 
 class TickTackTest : public Test

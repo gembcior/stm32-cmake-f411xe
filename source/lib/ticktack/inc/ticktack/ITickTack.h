@@ -3,7 +3,7 @@
 
 #include <cstdint>
 
-namespace stm32::ticktack {
+namespace stm32::lib {
 
 class ITickTack
 {

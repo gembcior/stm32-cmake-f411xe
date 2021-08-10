@@ -3,7 +3,7 @@
 
 #include "gpio/types.h"
 
-namespace stm32::flasher {
+namespace stm32::lib {
 
 class IFlasher
 {

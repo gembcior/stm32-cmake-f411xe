@@ -4,29 +4,37 @@
 #include "system/constants.h"
 #include "uart/types.h"
 
+#include "objects/objects.h"
+#include "logger/Logger.h"
+#include "flasher/Flasher.h"
+
 
 using namespace stm32::objects;
 using namespace stm32::system;
 using namespace stm32::hal;
+using namespace stm32::lib;
 
 
 void writeUart(const char character)
 {
-  auto& uart = getUartDriver();
+  auto& uart = getObject<UartDriver>();
   uart.write(character);
 }
 
 
 int main(void)
 {
-  auto& system = getSystem();
+  auto& system = getObject<System>();
+  auto& flasher = getObject<Flasher>();
+  auto& uart = getObject<UartDriver>();
+  auto& logger = getObject<Logger>();
+  auto& gpio = getObject<GpioDriver>();
+
   system.initialize();
 
-  auto& flasher = getFlasher();
   flasher.setPeriod(500);
   flasher.setPin(UserLed2.port, UserLed2.pin);
 
-  auto& uart = getUartDriver();
 
   UartConfiguration uartConfig = {
     .mode = UartMode::Tx,
@@ -39,11 +47,7 @@ int main(void)
   uart.enable();
   uart.configure(uartConfig);
 
-  auto& logger = getLogger();
   logger.registerOutput(writeUart);
-
-  auto& gpio = getGpioDriver();
-
   logger.info("Blinker application started");
 
   bool buttonLock = false;

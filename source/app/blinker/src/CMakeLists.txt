@@ -1,18 +1,25 @@
 target_sources(blinker
   PRIVATE
     main.cpp
-)
-
-target_include_directories(blinker
-  PRIVATE
-    ${CMAKE_CURRENT_SOURCE_DIR}
+    objects.cpp
+    BlinkerSystem.cpp
 )
 
 target_link_libraries(blinker
   PRIVATE
     crt
-    flasher
+    objects
+    system
+    irq
     uart
-    etl
+    flasher
     logger
+    scb
+    flash
+    gpio
+    pwr
+    rcc
+    systick
+    nvic
+    uart
 )

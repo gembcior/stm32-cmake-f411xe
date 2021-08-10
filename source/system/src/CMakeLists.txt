@@ -10,6 +10,7 @@ target_include_directories(system
 
 target_link_libraries(system
   PUBLIC
+    scb
     flash
     pwr
     rcc

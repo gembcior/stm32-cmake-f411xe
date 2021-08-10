@@ -1,4 +1,5 @@
 #include "system/System.h"
+#include "scb/IScbHal.h"
 #include "rcc/RccHal.h"
 #include "pwr/PwrHal.h"
 #include "flash/FlashHal.h"
@@ -25,6 +26,7 @@ void System::initialize()
   setupSysTick();
   enablePeripherals();
   setupGpio();
+  setupInterrupts();
   enableInterrupts();
 }
 
@@ -65,6 +67,11 @@ void System::setupClock()
   m_rccHal.setClockDomainPrescaler(ClockDomain::Apb2, ClockPrescaler::Div1);
 
   m_rccHal.disableClockSource(ClockSource::Hsi);
+}
+
+
+void System::setupInterrupts()
+{
 }
 
 

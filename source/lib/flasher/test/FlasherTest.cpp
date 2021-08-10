@@ -6,7 +6,7 @@
 
 
 using namespace ::testing;
-using namespace stm32::flasher;
+using namespace stm32::lib;
 using namespace stm32::hal;
 
 

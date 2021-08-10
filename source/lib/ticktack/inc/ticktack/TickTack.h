@@ -3,7 +3,7 @@
 
 #include "ticktack/ITickTack.h"
 
-namespace stm32::ticktack {
+namespace stm32::lib {
 
 class TickTack : public ITickTack
 {

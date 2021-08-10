@@ -2,7 +2,7 @@
 #include <charconv>
 
 
-namespace stm32::logger {
+namespace stm32::lib {
 
 Printer::Printer() : m_out(nullptr)
 {

@@ -30,14 +30,14 @@
 
 ENTRY(Reset_Handler)
 
-_estack          = 0x20020000;
-_Min_Stack_Size  = 0x400;
 _Flash_Base_Addr = 0x08000000;
+_Ram_Base_Addr   = 0x20000000;
+_estack          = 0x20020000; /* End of the RAM memory */
 
 MEMORY
 {
   FLASH (rx) : ORIGIN = _Flash_Base_Addr, LENGTH = 512K
-  RAM (xrw)  : ORIGIN = 0x20000000, LENGTH = 128K
+  RAM (xrw)  : ORIGIN = _Ram_Base_Addr, LENGTH = 128K
 }
 
 SECTIONS
@@ -109,8 +109,9 @@ SECTIONS
 
   .runtime_isr_vector :
   {
-    . = ALIGN(512);
+    . = ALIGN(4);
     *(.runtime_isr_vector)
+    . = ALIGN(4);
   } > RAM
 
   .data :

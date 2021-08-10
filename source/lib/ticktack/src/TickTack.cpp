@@ -1,7 +1,7 @@
 #include "ticktack/TickTack.h"
 
 
-namespace stm32::ticktack {
+namespace stm32::lib {
 
 TickTack::TickTack()
   : m_counter(0)

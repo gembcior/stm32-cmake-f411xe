@@ -1,6 +1,8 @@
 target_sources(os_app
   PRIVATE
     main.cpp
+    objects.cpp
+    OsSystem.cpp
 )
 
 target_include_directories(os_app
@@ -11,9 +13,19 @@ target_include_directories(os_app
 target_link_libraries(os_app
   PRIVATE
     crt
-    flasher
+    objects
+    system
+    irq
     uart
-    etl
+    flasher
     logger
+    scb
+    flash
+    gpio
+    pwr
+    rcc
+    systick
+    nvic
+    uart
     os
 )

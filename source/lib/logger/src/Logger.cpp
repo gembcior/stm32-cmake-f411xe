@@ -1,7 +1,7 @@
 #include "logger/Logger.h"
 
 
-namespace stm32::logger {
+namespace stm32::lib {
 
 Logger::Logger()
 {

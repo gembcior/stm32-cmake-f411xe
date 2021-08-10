@@ -3,7 +3,7 @@
 
 
 using namespace ::testing;
-using namespace stm32::logger;
+using namespace stm32::lib;
 
 
 class LoggerTest : public Test

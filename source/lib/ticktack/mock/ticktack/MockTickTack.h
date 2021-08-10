@@ -5,7 +5,7 @@
 #include "ticktack/ITickTack.h"
 
 
-class MockTickTack : public stm32::ticktack::ITickTack
+class MockTickTack : public stm32::lib::ITickTack
 {
  public:
   MOCK_METHOD(void, tick, (), (override));

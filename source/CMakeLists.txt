@@ -23,6 +23,7 @@ if (NOT UNIT_TEST)
   add_subdirectory(crt)
   add_subdirectory(system)
   add_subdirectory(os)
+  add_subdirectory(objects)
 endif()
 
 add_subdirectory(dral)

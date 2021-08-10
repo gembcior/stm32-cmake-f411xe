@@ -4,7 +4,7 @@
 #include "logger/Printer.h"
 #include "logger/ILoggerCallback.h"
 
-namespace stm32::logger {
+namespace stm32::lib {
 
 enum class LoggerLevel : char {
   Info = 'I',

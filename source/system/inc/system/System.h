@@ -1,13 +1,14 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
+#include "scb/IScbHal.h"
 #include "flash/IFlashHal.h"
 #include "rcc/IRccHal.h"
 #include "pwr/IPwrHal.h"
 #include "systick/ISysTickHal.h"
 
-namespace stm32::system {
 
+namespace stm32::system {
 
 class System
 {
@@ -18,6 +19,7 @@ public:
 protected:
   virtual void setupClock();
   virtual void enableInterrupts();
+  virtual void setupInterrupts();
   virtual void setupSysTick();
   virtual void enablePeripherals();
   virtual void setupGpio();
