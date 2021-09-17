@@ -10,6 +10,7 @@
 #include "gpio/IGpioDriver.h"
 #include "systick/ISysTickHal.h"
 #include "irq/IrqManager.h"
+#include "irq.h"
 
 
 namespace stm32::system {
@@ -24,7 +25,7 @@ public:
       hal::IPwrHal& pwrHal,
       hal::ISysTickHal& sysTickHal,
       hal::IGpioDriver& gpioDriver,
-      irq::IrqManager<MaxIrqNumber>& irqManager);
+      irq::IrqManager<irq::IrqNumber>& irqManager);
 
   void initialize();
 
@@ -36,7 +37,7 @@ private:
 private:
   hal::IScbHal& m_scbHal;
   hal::IGpioDriver& m_gpioDriver;
-  irq::IrqManager<MaxIrqNumber>& m_irqManager;
+  irq::IrqManager<irq::IrqNumber>& m_irqManager;
 };
 
 } // namespace

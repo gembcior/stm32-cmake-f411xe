@@ -93,8 +93,8 @@
 #define INCLUDE_xTaskGetHandle                  0
 #define INCLUDE_xTaskResumeFromISR              1
 
-#define vPortSVCHandler    SVC_Handler
-#define xPortPendSVHandler PendSV_Handler
+//#define vPortSVCHandler    SVC_Handler
+//#define xPortPendSVHandler PendSV_Handler
 /* A header file that defines trace macro can be included here. */
 
 #endif /* FREERTOS_CONFIG_H */

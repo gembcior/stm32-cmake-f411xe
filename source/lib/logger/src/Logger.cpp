@@ -3,11 +3,6 @@
 
 namespace stm32::lib {
 
-Logger::Logger()
-{
-}
-
-
 void Logger::registerCallback(LoggerCallbackId id, ILoggerCallback* callback)
 {
   m_callback[static_cast<unsigned int>(id)] = callback;

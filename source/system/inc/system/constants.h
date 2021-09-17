@@ -7,7 +7,6 @@ namespace stm32::system {
 
 constexpr uint32_t SystemClock = 96e6;
 constexpr uint32_t SysTickClock = 1e3;
-constexpr uint32_t MaxIrqNumber = 128;
 
 
 constexpr hal::GpioPin UserLed4 = {

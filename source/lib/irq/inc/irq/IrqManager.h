@@ -7,46 +7,25 @@
 
 namespace stm32::irq {
 
-template<uint32_t MaxIrqNumber>
+template<uint32_t IrqNumber>
 class IrqManager
 {
 public:
-  static IrqHandler* IrqHandlerList[MaxIrqNumber];
+  static IrqHandler* IrqHandlerList[IrqNumber];
 
 public:
-  IrqManager(uint32_t* irqVectorTable);
-
   void registerIrqHandler(Irq irq);
-  uint32_t getIrqVectorTableAddress();
-
-private:
-  uint32_t* m_irqVectorTable;
 };
 
 
-template<uint32_t MaxIrqNumber>
-IrqHandler* IrqManager<MaxIrqNumber>::IrqHandlerList[] = {};
+template<uint32_t IrqNumber>
+IrqHandler* IrqManager<IrqNumber>::IrqHandlerList[] = {};
 
 
-template<uint32_t MaxIrqNumber>
-IrqManager<MaxIrqNumber>::IrqManager(uint32_t* irqVectorTable) :
-  m_irqVectorTable(irqVectorTable)
-{
-}
-
-
-template<uint32_t MaxIrqNumber>
-void IrqManager<MaxIrqNumber>::registerIrqHandler(Irq irq)
+template<uint32_t IrqNumber>
+void IrqManager<IrqNumber>::registerIrqHandler(Irq irq)
 {
   IrqHandlerList[irq.position] = irq.handler;
-  m_irqVectorTable[irq.position] = reinterpret_cast<uint32_t>(irq.adapter);
-}
-
-
-template<uint32_t MaxIrqNumber>
-uint32_t IrqManager<MaxIrqNumber>::getIrqVectorTableAddress()
-{
-  return reinterpret_cast<uint32_t>(m_irqVectorTable);
 }
 
 } // namespace

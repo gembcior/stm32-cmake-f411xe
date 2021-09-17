@@ -6,14 +6,17 @@
 #include "system/constants.h"
 #include "uart/types.h"
 #include "logger/Logger.h"
+#include "ticktack/TickTack.h"
 
 #include "os/StaticTask.h"
 #include "os/Scheduler.h"
+
 
 using namespace stm32::objects;
 using namespace stm32::system;
 using namespace stm32::hal;
 using namespace stm32::lib;
+using namespace stm32::irq;
 using namespace os;
 
 
@@ -43,7 +46,7 @@ public:
 
     logger.info("Blinker Task Started");
 
-    flasher.setPeriod(500);
+    flasher.setPeriod(0);
     flasher.setPin(UserLed2.port, UserLed2.pin);
 
     while(1)
@@ -79,6 +82,7 @@ public:
       if (gpio.getPin(UserButton) == PinState::Low && !buttonLock) {
         logger.info("User Button pushed");
         buttonLock = true;
+        getObject<TickTack>().tick();
       } else if (gpio.getPin(UserButton) == PinState::High && buttonLock) {
         logger.info("User Button released");
         buttonLock = false;
@@ -90,6 +94,7 @@ public:
 
 int main(void)
 {
+  getIrqVectorTable();
   auto& system = getObject<System>();
   auto& uart = getObject<UartDriver>();
   auto& logger = getObject<Logger>();

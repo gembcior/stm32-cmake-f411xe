@@ -26,9 +26,6 @@ enum class LoggerCallbackId {
 class Logger : public Printer
 {
 public:
-  Logger();
-
-public:
   void registerCallback(LoggerCallbackId id, ILoggerCallback* callback);
 
   template<typename ... Args>
@@ -58,6 +55,7 @@ template<typename ... Args>
 void Logger::info(const char* text, Args ... args)
 {
   print(text, args...);
+  printEndLine();
 
   if (m_callback[static_cast<unsigned int>(LoggerCallbackId::InfoExit)]) {
     m_callback[static_cast<unsigned int>(LoggerCallbackId::InfoExit)]->call();
@@ -72,6 +70,7 @@ void Logger::warning(const char* text, Args ... args)
   printLevel(LoggerLevel::Warning);
   print(text, args...);
   printColorMark(PrinterColorMark::Default);
+  printEndLine();
 
   if (m_callback[static_cast<unsigned int>(LoggerCallbackId::WarningExit)]) {
     m_callback[static_cast<unsigned int>(LoggerCallbackId::WarningExit)]->call();
@@ -86,6 +85,7 @@ void Logger::error(const char* text, Args ... args)
   printLevel(LoggerLevel::Error);
   print(text, args...);
   printColorMark(PrinterColorMark::Default);
+  printEndLine();
 
   if (m_callback[static_cast<unsigned int>(LoggerCallbackId::ErrorExit)]) {
     m_callback[static_cast<unsigned int>(LoggerCallbackId::ErrorExit)]->call();
@@ -102,6 +102,7 @@ void Logger::fatal(const char* text, Args ... args)
   print(text, args...);
   printColorMark(PrinterColorMark::Default, PrinterColorType::Background);
   printColorMark(PrinterColorMark::Default);
+  printEndLine();
 
   if (m_callback[static_cast<unsigned int>(LoggerCallbackId::FatalExit)]) {
     m_callback[static_cast<unsigned int>(LoggerCallbackId::FatalExit)]->call();

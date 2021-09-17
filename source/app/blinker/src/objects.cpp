@@ -9,6 +9,9 @@
 #include "pwr/PwrHal.h"
 #include "gpio/GpioDriver.h"
 #include "systick/SysTickHal.h"
+#include <array>
+#include "irq/IrqAdapterTable.h"
+#include "irq.h"
 
 
 
@@ -29,10 +32,19 @@ system::System& getObject<system::System>()
       getObject<PwrHal>(),
       getObject<SysTickHal>(),
       getObject<GpioDriver>(),
-      getObject<IrqManager<MaxIrqNumber>>()
+      getObject<IrqManager<IrqNumber>>()
   );
 
   return system;
+}
+
+
+const IrqAdapterPointer* getIrqVectorTable()
+{
+  __attribute__ (( section (".irq_vector_table")))
+  static const std::array<IrqAdapterPointer, IrqNumber> IrqVectorTable = IrqAdapterTable<IrqNumber>::Table;
+
+  return reinterpret_cast<IrqAdapterPointer const*>(IrqVectorTable.data());
 }
 
 } // namespace

@@ -24,6 +24,7 @@ void writeUart(const char character)
 
 int main(void)
 {
+  getIrqVectorTable();
   auto& system = getObject<System>();
   auto& flasher = getObject<Flasher>();
   auto& uart = getObject<UartDriver>();

@@ -4,6 +4,7 @@
 #include "uart/UartDriver.h"
 #include "ticktack/TickTack.h"
 #include "gpio/GpioHal.h"
+#include "irq/IrqManager.h"
 
 
 namespace stm32::objects {
@@ -19,11 +20,11 @@ hal::GpioDriver& getObject<hal::GpioDriver>()
 {
   static IGpioHal* gpioHal[] = {
     &getObject<GpioHal<PortA>>(),
-    nullptr,
+    &getObject<GpioHal<PortB>>(),
     &getObject<GpioHal<PortC>>(),
-    nullptr,
-    nullptr,
-    nullptr
+    &getObject<GpioHal<PortD>>(),
+    &getObject<GpioHal<PortE>>(),
+    &getObject<GpioHal<PortH>>(),
   };
 
   static GpioDriver gpioDriver(gpioHal);
@@ -44,15 +45,6 @@ Flasher& getObject<Flasher>()
 {
   static Flasher flasher(getObject<GpioDriver>(), getObject<TickTack>(), SysTickClock);
   return flasher;
-}
-
-
-template<>
-IrqManager<MaxIrqNumber>& getObject<IrqManager<MaxIrqNumber>>()
-{
-  static uint32_t irqVectorTable[MaxIrqNumber] __attribute__ ((section (".runtime_isr_vector")));
-  static IrqManager<MaxIrqNumber> irqManager(irqVectorTable);
-  return irqManager;
 }
 
 } // namespace

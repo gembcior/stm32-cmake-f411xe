@@ -7,6 +7,8 @@ namespace stm32::lib {
 Printer::Printer() : m_out(nullptr)
 {
 }
+
+
 void Printer::registerOutput(OutputFunction out)
 {
   m_out = out;
@@ -25,8 +27,6 @@ void Printer::printBuffer(const char* buffer)
 void Printer::mainPrint(const char* text)
 {
   printBuffer(text);
-  if (m_out) m_out('\n');
-  if (m_out) m_out('\r');
 }
 
 
@@ -57,6 +57,13 @@ void Printer::printAttributeMark(PrinterAttributeMark mark)
     'm'
   };
   printBuffer(attributeMark);
+}
+
+
+void Printer::printEndLine()
+{
+  if (m_out) m_out('\n');
+  if (m_out) m_out('\r');
 }
 
 

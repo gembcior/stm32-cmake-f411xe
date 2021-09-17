@@ -9,10 +9,7 @@ namespace stm32::irq {
 
 struct Irq
 {
-  using AdapterFunction = void(*)();
-
   uint32_t position;
-  AdapterFunction adapter;
   IrqHandler* handler;
 };
 

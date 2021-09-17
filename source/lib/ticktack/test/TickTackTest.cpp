@@ -30,9 +30,3 @@ TEST_F(TickTackTest, tickAndTack) {
 
   EXPECT_EQ(m_tickTack.getTick(), false);
 }
-
-
-int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}

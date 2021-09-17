@@ -1,6 +1,7 @@
 include(Testing)
 
 stm32_target_add_test(flasher
+  main.cpp
   FlasherTest.cpp
 )
 

@@ -57,7 +57,7 @@ ExternalProject_Add(unittests
   SOURCE_DIR        ${CMAKE_CURRENT_SOURCE_DIR}/source
   INSTALL_DIR       ${CMAKE_INSTALL_PREFIX}
   INSTALL_COMMAND   ""
-  STEP_TARGETS      ctest
+  TEST_COMMAND      ctest
   BUILD_ALWAYS      TRUE
   CMAKE_ARGS        -D CMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
                     -D CMAKE_MODULE_PATH:PATH=${CMAKE_MODULE_PATH}
@@ -65,15 +65,3 @@ ExternalProject_Add(unittests
                     -D CMAKE_BUILD_TYPE:STRING="Debug"
                     -D UNIT_TEST:BOOL=ON
 )
-
-ExternalProject_Get_property(unittests BINARY_DIR)
-
-ExternalProject_Add_Step(unittests ctest
-  COMMAND ctest
-  COMMENT "Running Unit Tests"
-  DEPENDEES build
-  WORKING_DIRECTORY ${BINARY_DIR}
-  ALWAYS TRUE
-)
-
-ExternalProject_Add_StepTargets(unittests ctest)

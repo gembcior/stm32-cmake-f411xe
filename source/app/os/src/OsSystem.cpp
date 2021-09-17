@@ -14,7 +14,7 @@ using namespace stm32::hal;
 using namespace stm32::irq;
 
 
-OsSystem::OsSystem(IScbHal& scbHal, IRccHal& rccHal, IFlashHal& flashHal, IPwrHal& pwrHal, ISysTickHal& sysTickHal, IGpioDriver& gpioDriver, IrqManager<MaxIrqNumber>& irqManager)
+OsSystem::OsSystem(IScbHal& scbHal, IRccHal& rccHal, IFlashHal& flashHal, IPwrHal& pwrHal, ISysTickHal& sysTickHal, IGpioDriver& gpioDriver, IrqManager<IrqNumber>& irqManager)
   : System(rccHal, flashHal, pwrHal, sysTickHal)
   , m_scbHal(scbHal)
   , m_gpioDriver(gpioDriver)
@@ -48,11 +48,13 @@ void OsSystem::setupInterrupts()
   m_irqManager.registerIrqHandler(MemManageIrq);
   m_irqManager.registerIrqHandler(BusFaultIrq);
   m_irqManager.registerIrqHandler(UsageFaultIrq);
-  m_irqManager.registerIrqHandler(SvcIrq);
   m_irqManager.registerIrqHandler(DebugMonIrq);
-  m_irqManager.registerIrqHandler(PendSvIrq);
-  m_irqManager.registerIrqHandler(SysTickIrq);
-  m_scbHal.setVectorTableOffset(m_irqManager.getIrqVectorTableAddress());
+}
+
+
+void OsSystem::setupSysTick()
+{
+  // Allow RTOS to setup SysTick
 }
 
 } // namespace

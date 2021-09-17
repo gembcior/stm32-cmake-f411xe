@@ -42,18 +42,18 @@ public:
 
 public:
   Printer();
-
-public:
   template<typename ... Args>
   void print(const char* text, Args ... arguments);
+  void registerOutput(OutputFunction out);
+
+protected:
   void printColorMark(PrinterColorMark mark, PrinterColorType type = PrinterColorType::Foreground);
   void printAttributeMark(PrinterAttributeMark mark);
-
-  void registerOutput(OutputFunction out);
+  void printEndLine();
 
 private:
   template<typename Arg, typename ... Args>
-  void mainPrint(const char*& text, Arg argument, Args ... arguments);
+  void mainPrint(const char* text, Arg argument, Args ... arguments);
   void mainPrint(const char* text);
 
   void printBuffer(const char* buffer);
@@ -82,7 +82,7 @@ void Printer::print(const char* text, Args ... arguments)
 
 
 template<typename Arg, typename ... Args>
-void Printer::mainPrint(const char*& text, Arg argument, Args ... arguments)
+void Printer::mainPrint(const char* text, Arg argument, Args ... arguments)
 {
   while (*text) {
     if (*text == ArgumentStartMark) {

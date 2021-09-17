@@ -1,8 +1,10 @@
-add_library(irq STATIC)
+add_library(irq INTERFACE)
 
 target_include_directories(irq
-  PUBLIC
+  INTERFACE
     inc
 )
 
-add_subdirectory(src)
+if (UNIT_TEST)
+  add_subdirectory(test)
+endif()

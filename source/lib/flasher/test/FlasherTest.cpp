@@ -60,9 +60,3 @@ TEST_F(FlasherTest, setPin) {
   m_flasher.setPin(port, pin);
   m_flasher.blink();
 }
-
-
-int main(int argc, char **argv) {
-  ::testing::InitGoogleTest(&argc, argv);
-  return RUN_ALL_TESTS();
-}

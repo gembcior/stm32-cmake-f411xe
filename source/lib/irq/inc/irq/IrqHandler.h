@@ -6,7 +6,7 @@ namespace stm32::irq {
 class IrqHandler
 {
 public:
-  virtual void onInterrupt() = 0;
+  virtual inline void onInterrupt() = 0;
 };
 
 } // namespace

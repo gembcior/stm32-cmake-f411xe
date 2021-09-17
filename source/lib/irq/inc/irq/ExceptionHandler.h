@@ -9,7 +9,10 @@ namespace stm32::irq {
 class ExceptionHandler : public IrqHandler
 {
 public:
-  void onInterrupt() final;
+  void onInterrupt() final
+  {
+    while (true);
+  }
 };
 
 }

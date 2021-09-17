@@ -9,7 +9,7 @@ namespace stm32::irq {
 class DefaultIrqHandler : public IrqHandler
 {
 public:
-  void onInterrupt() final;
+  void onInterrupt() final {};
 };
 
 }

@@ -28,53 +28,48 @@
 *****************************************************************************
 */
 
-ENTRY(Reset_Handler)
+ENTRY(ResetHandler)
 
-_Flash_Base_Addr = 0x08000000;
-_Ram_Base_Addr   = 0x20000000;
-_estack          = 0x20020000; /* End of the RAM memory */
+_FlashBaseAddr = 0x08000000;
+_RamBaseAddr   = 0x20000000;
+_EndStackAddr  = 0x20020000;
 
 MEMORY
 {
-  FLASH (rx) : ORIGIN = _Flash_Base_Addr, LENGTH = 512K
-  RAM (xrw)  : ORIGIN = _Ram_Base_Addr, LENGTH = 128K
+  FLASH (rx) : ORIGIN = _FlashBaseAddr, LENGTH = 512K
+  RAM (xrw)  : ORIGIN = _RamBaseAddr, LENGTH = 128K
 }
 
 SECTIONS
 {
-  .isr_vector :
-  {
+  .isr_vector : {
     . = ALIGN(4);
-    KEEP(*(.isr_vector))
+    KEEP(*(.entry_vector))
+    KEEP(*(.irq_vector_table))
     . = ALIGN(4);
   } > FLASH
 
-  .text :
-  {
+  .text : {
     . = ALIGN(4);
     *(.text)
     *(.text*)
     *(.glue_7)
     *(.glue_7t)
     *(.eh_frame)
-
     KEEP (*(.init))
     KEEP (*(.fini))
-
     . = ALIGN(4);
     _etext = .;
   } > FLASH
 
-  .rodata :
-  {
+  .rodata : {
     . = ALIGN(4);
     *(.rodata)
     *(.rodata*)
     . = ALIGN(4);
   } > FLASH
 
-  .ARM.extab :
-  {
+  .ARM.extab : {
     *(.ARM.extab* .gnu.linkonce.armextab.*)
   } > FLASH
 
@@ -84,67 +79,49 @@ SECTIONS
     __exidx_end = .;
   } > FLASH
 
-  .preinit_array :
-  {
+  .preinit_array : {
     PROVIDE_HIDDEN (__preinit_array_start = .);
     KEEP (*(.preinit_array*))
     PROVIDE_HIDDEN (__preinit_array_end = .);
   } > FLASH
 
-  .init_array :
-  {
+  .init_array : {
     PROVIDE_HIDDEN (__init_array_start = .);
     KEEP (*(SORT(.init_array.*)))
     KEEP (*(.init_array*))
     PROVIDE_HIDDEN (__init_array_end = .);
   } > FLASH
 
-  .fini_array :
-  {
+  .fini_array : {
     PROVIDE_HIDDEN (__fini_array_start = .);
     KEEP (*(SORT(.fini_array.*)))
     KEEP (*(.fini_array*))
     PROVIDE_HIDDEN (__fini_array_end = .);
   } > FLASH
 
-  .runtime_isr_vector :
-  {
-    . = ALIGN(4);
-    *(.runtime_isr_vector)
-    . = ALIGN(4);
-  } > RAM
-
-  .data :
-  {
+  .data : {
     . = ALIGN(4);
     _sdata = .;
     *(.data)
     *(.data*)
-
     . = ALIGN(4);
     _edata = .;
   } > RAM AT > FLASH
 
-  /* Used by the startup to initialize data */
   _sidata = LOADADDR(.data);
 
-  . = ALIGN(4);
-  .bss :
-  {
+  .bss : {
+    . = ALIGN(4);
     _sbss = .;
-    __bss_start__ = _sbss;
     *(.bss)
     *(.bss*)
     *(COMMON)
-
     . = ALIGN(4);
     _ebss = .;
-    __bss_end__ = _ebss;
   } > RAM
 
   /* Remove information from the standard libraries */
-  /DISCARD/ :
-  {
+  /DISCARD/ : {
     libc.a ( * )
     libm.a ( * )
     libgcc.a ( * )

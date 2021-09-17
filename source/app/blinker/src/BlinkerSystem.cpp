@@ -6,7 +6,7 @@ namespace stm32::system {
 using namespace stm32::hal;
 using namespace stm32::irq;
 
-BlinkerSystem::BlinkerSystem(IScbHal& scbHal, IRccHal& rccHal, IFlashHal& flashHal, IPwrHal& pwrHal, ISysTickHal& sysTickHal, IGpioDriver& gpioDriver, IrqManager<MaxIrqNumber>& irqManager)
+BlinkerSystem::BlinkerSystem(IScbHal& scbHal, IRccHal& rccHal, IFlashHal& flashHal, IPwrHal& pwrHal, ISysTickHal& sysTickHal, IGpioDriver& gpioDriver, IrqManager<IrqNumber>& irqManager)
   : System(rccHal, flashHal, pwrHal, sysTickHal)
   , m_scbHal(scbHal)
   , m_gpioDriver(gpioDriver)
@@ -44,7 +44,6 @@ void BlinkerSystem::setupInterrupts()
   m_irqManager.registerIrqHandler(DebugMonIrq);
   m_irqManager.registerIrqHandler(PendSvIrq);
   m_irqManager.registerIrqHandler(SysTickIrq);
-  m_scbHal.setVectorTableOffset(m_irqManager.getIrqVectorTableAddress());
 }
 
 } // namespace
