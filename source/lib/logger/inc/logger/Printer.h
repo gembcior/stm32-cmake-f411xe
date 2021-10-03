@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <type_traits>
 #include <charconv>
+#include <cstring>
 
 namespace stm32::lib {
 
@@ -12,6 +13,15 @@ class Printer
 public:
   using OutputFunction = void(*)(const char);
 
+public:
+  Printer(bool endLine = false);
+
+  void registerOutput(OutputFunction out);
+  void printEndLine(bool endLine);
+  template<typename ... Args>
+  void print(const char* text, Args ... arguments);
+
+protected:
   enum Color : char {
     Black   = '0',
     Red     = '1',
@@ -29,15 +39,8 @@ public:
     Background = '4',
   };
 
-public:
-  Printer(bool endLine = false);
-
-  void registerOutput(OutputFunction out);
-  template<typename ... Args>
-  void print(const char* text, Args ... arguments);
-
 protected:
-  void printColorMark(char mark, char type = Foreground);
+  void printColorMark(char mark, char type = ColorType::Foreground);
   void printAttributeMark(char mark);
   void printEndLine();
 
@@ -45,15 +48,14 @@ protected:
   OutputFunction m_out;
 
 private:
-  enum FormatType {
-    None,
-    Dec,
-    Hex,
-    Bin,
-    Float,
+  enum FormatType : uint32_t {
+    Dec = 10,
+    Hex = 16,
+    Bin = 2,
+    Oct = 8,
   };
 
-  enum AlignDirection {
+  enum Align {
     Start,
     End,
   };
@@ -69,13 +71,11 @@ private:
 
 private:
   struct ArgumentFormat {
-    FormatType type = None;
-    AlignDirection alignDirection = End;
+    FormatType type = FormatType::Dec;
+    Align align = Align::Start;
     uint32_t width = 0;
-    uint32_t precision = 0;
     bool padding = false;
-    bool alternateForm = false;
-    bool dot = false;
+    bool alternateFormat = false;
   };
 
 private:
@@ -91,9 +91,6 @@ private:
   template<typename Arg>
   void printArgument(Arg argument, ArgumentFormat format,
       std::enable_if_t<std::is_integral_v<Arg>>* = nullptr);
-  template<typename Arg>
-  void printArgument(Arg argument, ArgumentFormat format,
-      std::enable_if_t<std::is_floating_point_v<Arg>>* = nullptr);
   template<typename Arg>
   void printArgument(Arg argument, ArgumentFormat format,
       std::enable_if_t<std::is_same_v<Arg, char*> || std::is_same_v<Arg, const char*>>* = nullptr);
@@ -159,31 +156,56 @@ void Printer::printArgument(Arg argument, ArgumentFormat format,
 {
   char buffer[MaxDigits] = {};
 
-  uint32_t base;
-  switch (format.type) {
-    case Dec:
-      base = 10;
-      break;
-    case Hex:
-      base = 16;
-      break;
-    case Bin:
-      base = 2;
-      break;
-    default:
-      base = 10;
-      break;
+  uint32_t base = static_cast<uint32_t>(format.type);
+  std::to_chars(buffer, buffer + MaxDigits, argument, base);
+  uint32_t size = std::strlen(buffer);
+
+  auto printAlign = [&](char character) 
+  { 
+    if (format.width > size) {
+      for (uint32_t i = 0; i < (format.width - size); i++) {
+        if (m_out) m_out(character);
+      }
+    }
+  };
+
+  if ((format.align == Align::Start) && !format.padding) {
+    printAlign(' ');
   }
 
-  std::to_chars(buffer, buffer + MaxDigits, argument, base);
+  if (format.alternateFormat) {
+    switch (format.type) {
+      case FormatType::Hex:
+        size += 2;
+        if (m_out) {
+          m_out('0');
+          m_out('x');
+        }
+        break;
+      case FormatType::Bin:
+        size += 2;
+        if (m_out) {
+          m_out('0');
+          m_out('b');
+        }
+        break;
+      case FormatType::Oct:
+        size += 1;
+        if (m_out) m_out('0');
+      default:
+        break;
+    }
+  }
+
+  if (format.padding && format.align != Align::End) {
+    printAlign('0');
+  }
+
   printBuffer(buffer);
-}
 
-
-template<typename Arg>
-void Printer::printArgument(Arg argument, ArgumentFormat format,
-    std::enable_if_t<std::is_floating_point_v<Arg>>*)
-{
+  if (format.align == Align::End) {
+    printAlign(' ');
+  }
 }
 
 
@@ -191,7 +213,26 @@ template<typename Arg>
 void Printer::printArgument(Arg argument, ArgumentFormat format,
     std::enable_if_t<std::is_same_v<Arg, char*> || std::is_same_v<Arg, const char*>>*)
 {
+  uint32_t size = std::strlen(argument);
+
+  auto printAlign = [&](char character) 
+  { 
+    if (format.width > size) {
+      for (uint32_t i = 0; i < (format.width - size); i++) {
+        if (m_out) m_out(character);
+      }
+    }
+  };
+
+  if (format.align == Align::Start) {
+    printAlign(' ');
+  }
+
   printBuffer(argument);
+
+  if (format.align == Align::End) {
+    printAlign(' ');
+  }
 }
 
 }; // namespace

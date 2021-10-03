@@ -17,6 +17,12 @@ void Printer::registerOutput(OutputFunction out)
 }
 
 
+void Printer::printEndLine(bool endLine)
+{
+  m_endLine = endLine;
+}
+
+
 void Printer::printColorMark(char mark, char type)
 {
   if (m_out) {
@@ -55,18 +61,18 @@ void Printer::parseColorMark(const char* &text)
     text++;
     if (*text == ColorNumberMark) {
       text++;
-      char colorMark = Default;
-      char colorType = Foreground;
+      char colorMark = Color::Default;
+      char colorType = ColorType::Foreground;
       while (*text != ColorEndMark) {
         if (*text == 'f') {
-          colorType = Foreground;
+          colorType = ColorType::Foreground;
         } else if (*text == 'b') {
-          colorType = Background;
+          colorType = ColorType::Background;
         } else if (*text >= Black && *text <= Default) {
           colorMark = *text;
         } else {
-          colorMark = Default;
-          colorType = Foreground;
+          colorMark = Color::Default;
+          colorType = ColorType::Foreground;
         }
         text++;
       }
@@ -85,26 +91,22 @@ void Printer::parseColorMark(const char* &text)
 void Printer::updateFormat(char text, ArgumentFormat& format)
 {
   if (text == '#') {
-    format.alternateForm = true;
+    format.alternateFormat = true;
   } else if (text == '>') {
-    format.alignDirection = End;
+    format.align = Align::End;
   } else if (text == '<') {
-    format.alignDirection = Start;
+    format.align = Align::Start;
   } else if (text == 'x') {
-    format.type = Hex;
+    format.type = FormatType::Hex;
   } else if (text == 'b') {
-    format.type = Bin;
+    format.type = FormatType::Bin;
   } else if (text == 'd') {
-    format.type = Dec;
-  } else if (text == 'f') {
-    format.type = Float;
-  } else if (text == '0') {
-    format.padding = true;
-  } else if (text == '.') {
-    format.dot = true;
-  } else if (text >= '1' && text <= '9') {
-    if (format.dot) {
-      format.precision = (format.precision * 10) + (text - '0');
+    format.type = FormatType::Dec;
+  } else if (text == 'o') {
+    format.type = FormatType::Oct;
+  } else if (text >= '0' && text <= '9') {
+    if (text == '0' && format.width == 0) {
+      format.padding = true;
     } else {
       format.width = (format.width * 10) + (text - '0');
     }
@@ -130,59 +132,5 @@ void Printer::printBuffer(const char* buffer)
     buffer++;
   }
 }
-
-
-//template<>
-//void Printer::printArgument(int argument, ArgumentFormat format)
-//{
-//  printIntArgument(argument, format);
-//}
-
-
-//template<>
-//void Printer::printArgument(unsigned int argument, ArgumentFormat format)
-//{
-//  char buffer[MaxDigits] = {};
-//
-//  uint32_t base;
-//  switch (format.type) {
-//    case Dec:
-//      base = 10;
-//      break;
-//    case Hex:
-//      base = 16;
-//      break;
-//    case Bin:
-//      base = 2;
-//      break;
-//    default:
-//      base = 10;
-//      break;
-//  }
-//
-//  std::to_chars(buffer, buffer + MaxDigits, argument, base);
-//  printBuffer(buffer);
-//}
-
-
-//template<>
-//void Printer::printArgument(const char* argument, ArgumentFormat format)
-//{
-//  printBuffer(argument);
-//}
-//
-//
-//template<>
-//void Printer::printArgument(const char* &argument, ArgumentFormat format)
-//{
-//  printBuffer(argument);
-//}
-//
-//
-//template<>
-//void Printer::printArgument(char* argument, ArgumentFormat format)
-//{
-//  printBuffer(argument);
-//}
 
 } // namespace

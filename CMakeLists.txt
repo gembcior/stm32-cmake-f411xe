@@ -29,28 +29,28 @@ endif()
 
 include(ExternalProject)
 
-#ExternalProject_Add(stm32
-#  PREFIX            stm32
-#  SOURCE_DIR        ${CMAKE_CURRENT_SOURCE_DIR}/source
-#  INSTALL_DIR       ${CMAKE_INSTALL_PREFIX}
-#  TEST_COMMAND      ""
-#  BUILD_ALWAYS      TRUE
-#  CMAKE_ARGS        -D STM32_TOOLCHAIN:PATH=${STM32_TOOLCHAIN}
-#                    -D CMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
-#                    -D CMAKE_MODULE_PATH:PATH=${CMAKE_MODULE_PATH}
-#                    -D CMAKE_TOOLCHAIN_FILE:PATH=${TOOLCHAIN_FILES_PATH}/gcc_stm32f411xe.cmake
-#                    -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
-#                    -D UNIT_TEST:BOOL=OFF
-#)
-#
-#ExternalProject_Add_Step(stm32 openocd
-#  COMMAND openocd -f ${CMAKE_CURRENT_LIST_DIR}/utils/openocd.cfg
-#  COMMENT "Running OpenOCD"
-#  ALWAYS TRUE
-#  EXCLUDE_FROM_MAIN TRUE
-#)
-#
-#ExternalProject_Add_StepTargets(stm32 openocd)
+ExternalProject_Add(stm32
+  PREFIX            stm32
+  SOURCE_DIR        ${CMAKE_CURRENT_SOURCE_DIR}/source
+  INSTALL_DIR       ${CMAKE_INSTALL_PREFIX}
+  TEST_COMMAND      ""
+  BUILD_ALWAYS      TRUE
+  CMAKE_ARGS        -D STM32_TOOLCHAIN:PATH=${STM32_TOOLCHAIN}
+                    -D CMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
+                    -D CMAKE_MODULE_PATH:PATH=${CMAKE_MODULE_PATH}
+                    -D CMAKE_TOOLCHAIN_FILE:PATH=${TOOLCHAIN_FILES_PATH}/gcc_stm32f411xe.cmake
+                    -D CMAKE_BUILD_TYPE:STRING=${CMAKE_BUILD_TYPE}
+                    -D UNIT_TEST:BOOL=OFF
+)
+
+ExternalProject_Add_Step(stm32 openocd
+  COMMAND openocd -f ${CMAKE_CURRENT_LIST_DIR}/utils/openocd.cfg
+  COMMENT "Running OpenOCD"
+  ALWAYS TRUE
+  EXCLUDE_FROM_MAIN TRUE
+)
+
+ExternalProject_Add_StepTargets(stm32 openocd)
 
 ExternalProject_Add(unittests
   PREFIX            unittests

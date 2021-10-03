@@ -6,27 +6,21 @@
 
 namespace stm32::lib {
 
-enum class LoggerLevel : char {
-  Info = 'I',
-  Warning = 'W',
-  Error = 'E',
-  Fatal = 'F',
-};
-
-
-enum class LoggerCallbackId {
-  InfoExit,
-  WarningExit,
-  ErrorExit,
-  FatalExit,
-  Count,
-};
-
-
 class Logger : public Printer
 {
 public:
-  void registerCallback(LoggerCallbackId id, ILoggerCallback* callback);
+  enum class CallbackId {
+    InfoExit,
+    WarningExit,
+    ErrorExit,
+    FatalExit,
+    Count,
+  };
+
+public:
+  Logger();
+
+  void registerCallback(CallbackId id, ILoggerCallback* callback);
 
   template<typename ... Args>
   void info(const char* text, Args ... args);
@@ -41,10 +35,18 @@ public:
   void fatal(const char* text, Args ... args);
 
 private:
-  void printLevel(LoggerLevel level);
+  enum class Level : char {
+    Info = 'I',
+    Warning = 'W',
+    Error = 'E',
+    Fatal = 'F',
+  };
 
 private:
-  static constexpr unsigned int callbackCount = static_cast<unsigned int>(LoggerCallbackId::Count);
+  static constexpr unsigned int callbackCount = static_cast<unsigned int>(CallbackId::Count);
+
+private:
+  void printLevel(Level level);
 
 private:
   ILoggerCallback* m_callback[callbackCount] = {};
@@ -55,10 +57,9 @@ template<typename ... Args>
 void Logger::info(const char* text, Args ... args)
 {
   print(text, args...);
-  printEndLine();
 
-  if (m_callback[static_cast<unsigned int>(LoggerCallbackId::InfoExit)]) {
-    m_callback[static_cast<unsigned int>(LoggerCallbackId::InfoExit)]->call();
+  if (m_callback[static_cast<unsigned int>(CallbackId::InfoExit)]) {
+    m_callback[static_cast<unsigned int>(CallbackId::InfoExit)]->call();
   }
 }
 
@@ -66,14 +67,13 @@ void Logger::info(const char* text, Args ... args)
 template<typename ... Args>
 void Logger::warning(const char* text, Args ... args)
 {
-  printColorMark(Printer::Yellow);
-  printLevel(LoggerLevel::Warning);
+  printColorMark(Color::Yellow);
+  printLevel(Level::Warning);
   print(text, args...);
-  printColorMark(Printer::Default);
-  printEndLine();
+  printColorMark(Color::Default);
 
-  if (m_callback[static_cast<unsigned int>(LoggerCallbackId::WarningExit)]) {
-    m_callback[static_cast<unsigned int>(LoggerCallbackId::WarningExit)]->call();
+  if (m_callback[static_cast<unsigned int>(CallbackId::WarningExit)]) {
+    m_callback[static_cast<unsigned int>(CallbackId::WarningExit)]->call();
   }
 }
 
@@ -81,14 +81,13 @@ void Logger::warning(const char* text, Args ... args)
 template<typename ... Args>
 void Logger::error(const char* text, Args ... args)
 {
-  printColorMark(Printer::Red);
-  printLevel(LoggerLevel::Error);
+  printColorMark(Color::Red);
+  printLevel(Level::Error);
   print(text, args...);
-  printColorMark(Printer::Default);
-  printEndLine();
+  printColorMark(Color::Default);
 
-  if (m_callback[static_cast<unsigned int>(LoggerCallbackId::ErrorExit)]) {
-    m_callback[static_cast<unsigned int>(LoggerCallbackId::ErrorExit)]->call();
+  if (m_callback[static_cast<unsigned int>(CallbackId::ErrorExit)]) {
+    m_callback[static_cast<unsigned int>(CallbackId::ErrorExit)]->call();
   }
 }
 
@@ -96,16 +95,15 @@ void Logger::error(const char* text, Args ... args)
 template<typename ... Args>
 void Logger::fatal(const char* text, Args ... args)
 {
-  printColorMark(Printer::Black);
-  printColorMark(Printer::Red, Printer::Background);
-  printLevel(LoggerLevel::Fatal);
+  printColorMark(Color::Black);
+  printColorMark(Color::Red, ColorType::Background);
+  printLevel(Level::Fatal);
   print(text, args...);
-  printColorMark(Printer::Default, Printer::Background);
-  printColorMark(Printer::Default);
-  printEndLine();
+  printColorMark(Color::Default, ColorType::Background);
+  printColorMark(Color::Default);
 
-  if (m_callback[static_cast<unsigned int>(LoggerCallbackId::FatalExit)]) {
-    m_callback[static_cast<unsigned int>(LoggerCallbackId::FatalExit)]->call();
+  if (m_callback[static_cast<unsigned int>(CallbackId::FatalExit)]) {
+    m_callback[static_cast<unsigned int>(CallbackId::FatalExit)]->call();
   }
 }
 
