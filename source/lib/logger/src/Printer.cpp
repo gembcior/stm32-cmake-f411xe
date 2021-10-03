@@ -4,7 +4,9 @@
 
 namespace stm32::lib {
 
-Printer::Printer() : m_out(nullptr)
+Printer::Printer(bool endLine) :
+  m_out(nullptr),
+  m_endLine(endLine)
 {
 }
 
@@ -12,6 +14,112 @@ Printer::Printer() : m_out(nullptr)
 void Printer::registerOutput(OutputFunction out)
 {
   m_out = out;
+}
+
+
+void Printer::printColorMark(char mark, char type)
+{
+  if (m_out) {
+    m_out(EscCharacter);
+    m_out('[');
+    m_out(type);
+    m_out(mark);
+    m_out('m');
+  }
+}
+
+
+void Printer::printAttributeMark(char mark)
+{
+  if (m_out) {
+    m_out(EscCharacter);
+    m_out('[');
+    m_out(mark);
+    m_out('m');
+  }
+}
+
+
+void Printer::printEndLine()
+{
+  if (m_out) {
+    m_out('\n');
+    m_out('\r');
+  }
+}
+
+
+void Printer::parseColorMark(const char* &text)
+{
+  if (*text == ColorStartMark) {
+    text++;
+    if (*text == ColorNumberMark) {
+      text++;
+      char colorMark = Default;
+      char colorType = Foreground;
+      while (*text != ColorEndMark) {
+        if (*text == 'f') {
+          colorType = Foreground;
+        } else if (*text == 'b') {
+          colorType = Background;
+        } else if (*text >= Black && *text <= Default) {
+          colorMark = *text;
+        } else {
+          colorMark = Default;
+          colorType = Foreground;
+        }
+        text++;
+      }
+      text++;
+      printColorMark(colorMark, colorType);
+    } else if (*text == ColorEndMark) {
+      text++;
+      printColorMark(Default);
+    } else {
+      text--;
+    }
+  }
+}
+
+
+void Printer::updateFormat(char text, ArgumentFormat& format)
+{
+  if (text == '#') {
+    format.alternateForm = true;
+  } else if (text == '>') {
+    format.alignDirection = End;
+  } else if (text == '<') {
+    format.alignDirection = Start;
+  } else if (text == 'x') {
+    format.type = Hex;
+  } else if (text == 'b') {
+    format.type = Bin;
+  } else if (text == 'd') {
+    format.type = Dec;
+  } else if (text == 'f') {
+    format.type = Float;
+  } else if (text == '0') {
+    format.padding = true;
+  } else if (text == '.') {
+    format.dot = true;
+  } else if (text >= '1' && text <= '9') {
+    if (format.dot) {
+      format.precision = (format.precision * 10) + (text - '0');
+    } else {
+      format.width = (format.width * 10) + (text - '0');
+    }
+  }
+}
+
+
+void Printer::mainPrint(const char* text)
+{
+  while (*text) {
+    parseColorMark(text);
+    if (m_out) m_out(*text);
+    text++;
+  }
+  if (m_endLine) printEndLine();
 }
 
 
@@ -24,78 +132,57 @@ void Printer::printBuffer(const char* buffer)
 }
 
 
-void Printer::mainPrint(const char* text)
-{
-  printBuffer(text);
-}
+//template<>
+//void Printer::printArgument(int argument, ArgumentFormat format)
+//{
+//  printIntArgument(argument, format);
+//}
 
 
-void Printer::printEscCharacter()
-{
-  if (m_out) m_out(0x1B);
-}
+//template<>
+//void Printer::printArgument(unsigned int argument, ArgumentFormat format)
+//{
+//  char buffer[MaxDigits] = {};
+//
+//  uint32_t base;
+//  switch (format.type) {
+//    case Dec:
+//      base = 10;
+//      break;
+//    case Hex:
+//      base = 16;
+//      break;
+//    case Bin:
+//      base = 2;
+//      break;
+//    default:
+//      base = 10;
+//      break;
+//  }
+//
+//  std::to_chars(buffer, buffer + MaxDigits, argument, base);
+//  printBuffer(buffer);
+//}
 
 
-void Printer::printColorMark(PrinterColorMark mark, PrinterColorType type)
-{
-  printEscCharacter();
-  if (m_out) {
-    m_out('[');
-    m_out(static_cast<char>(type));
-    m_out(static_cast<char>(mark));
-    m_out('m');
-  }
-}
-
-
-void Printer::printAttributeMark(PrinterAttributeMark mark)
-{
-  printEscCharacter();
-  const char attributeMark[] = {
-    '[',
-    static_cast<char>(mark),
-    'm'
-  };
-  printBuffer(attributeMark);
-}
-
-
-void Printer::printEndLine()
-{
-  if (m_out) m_out('\n');
-  if (m_out) m_out('\r');
-}
-
-
-template<>
-void Printer::printArgument(int argument)
-{
-  char buffer[MaxDigits] = {};
-  std::to_chars(buffer, buffer + MaxDigits, argument, 10);
-  printBuffer(buffer);
-}
-
-
-template<>
-void Printer::printArgument(unsigned int argument)
-{
-  char buffer[MaxDigits] = {};
-  std::to_chars(buffer, buffer + MaxDigits, argument, 10);
-  printBuffer(buffer);
-}
-
-
-template<>
-void Printer::printArgument(const char* argument)
-{
-  printBuffer(argument);
-}
-
-
-template<>
-void Printer::printArgument(char* argument)
-{
-  printBuffer(argument);
-}
+//template<>
+//void Printer::printArgument(const char* argument, ArgumentFormat format)
+//{
+//  printBuffer(argument);
+//}
+//
+//
+//template<>
+//void Printer::printArgument(const char* &argument, ArgumentFormat format)
+//{
+//  printBuffer(argument);
+//}
+//
+//
+//template<>
+//void Printer::printArgument(char* argument, ArgumentFormat format)
+//{
+//  printBuffer(argument);
+//}
 
 } // namespace

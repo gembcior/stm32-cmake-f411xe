@@ -1,7 +1,9 @@
 #include "gtest/gtest.h"
 #include "logger/Logger.h"
 #include "logger/MockLoggerCallback.h"
+#include "LoggerOutputBuffer.h"
 #include <string>
+
 
 using namespace ::testing;
 using namespace stm32::lib;
@@ -13,25 +15,17 @@ class LoggerTest : public testing::TestWithParam<LoggerCallbackId>
 public:
   LoggerTest()
   {
-    m_logger.registerOutput(loggerOutputFunction);
-  }
-
-  static void loggerOutputFunction(const char character)
-  {
-    m_message += character;
+    m_logger.registerOutput(LoggerOutputBuffer::outputFunction);
   }
 
   void checkMessage(const string expectedMessage)
   {
-    ASSERT_STREQ(expectedMessage.c_str(), m_message.c_str());
+    ASSERT_STREQ(expectedMessage.c_str(), LoggerOutputBuffer::getPointer());
   }
 
 protected:
   Logger m_logger;
-  static string m_message;
 };
-
-string LoggerTest::m_message;
 
 
 TEST_F(LoggerTest, info) {
@@ -104,7 +98,7 @@ INSTANTIATE_TEST_SUITE_P(LoggerCallback, LoggerTest,
     callbackIdToString);
 
 
-TEST_P(LoggerTest, callback) {
+TEST_P(LoggerTest, callbackCall) {
   const string testMessage = "This is a test fatal message";
   NiceMock<MockLoggerCallback> callback;
   auto id = GetParam();
@@ -112,6 +106,32 @@ TEST_P(LoggerTest, callback) {
   m_logger.registerCallback(id, &callback);
 
   EXPECT_CALL(callback, call);
+
+  switch (id) {
+    case LoggerCallbackId::InfoExit:
+      m_logger.info(testMessage.c_str());
+      break;
+    case LoggerCallbackId::WarningExit:
+      m_logger.warning(testMessage.c_str());
+      break;
+    case LoggerCallbackId::ErrorExit:
+      m_logger.error(testMessage.c_str());
+      break;
+    case LoggerCallbackId::FatalExit:
+      m_logger.fatal(testMessage.c_str());
+      break;
+    default:
+      break;
+  };
+}
+
+
+TEST_P(LoggerTest, noCallbackCall) {
+  const string testMessage = "This is a test fatal message";
+  NiceMock<MockLoggerCallback> callback;
+  auto id = GetParam();
+
+  EXPECT_CALL(callback, call).Times(0);
 
   switch (id) {
     case LoggerCallbackId::InfoExit:

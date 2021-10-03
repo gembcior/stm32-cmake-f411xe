@@ -66,10 +66,10 @@ void Logger::info(const char* text, Args ... args)
 template<typename ... Args>
 void Logger::warning(const char* text, Args ... args)
 {
-  printColorMark(PrinterColorMark::Yellow);
+  printColorMark(Printer::Yellow);
   printLevel(LoggerLevel::Warning);
   print(text, args...);
-  printColorMark(PrinterColorMark::Default);
+  printColorMark(Printer::Default);
   printEndLine();
 
   if (m_callback[static_cast<unsigned int>(LoggerCallbackId::WarningExit)]) {
@@ -81,10 +81,10 @@ void Logger::warning(const char* text, Args ... args)
 template<typename ... Args>
 void Logger::error(const char* text, Args ... args)
 {
-  printColorMark(PrinterColorMark::Red);
+  printColorMark(Printer::Red);
   printLevel(LoggerLevel::Error);
   print(text, args...);
-  printColorMark(PrinterColorMark::Default);
+  printColorMark(Printer::Default);
   printEndLine();
 
   if (m_callback[static_cast<unsigned int>(LoggerCallbackId::ErrorExit)]) {
@@ -96,12 +96,12 @@ void Logger::error(const char* text, Args ... args)
 template<typename ... Args>
 void Logger::fatal(const char* text, Args ... args)
 {
-  printColorMark(PrinterColorMark::Black);
-  printColorMark(PrinterColorMark::Red, PrinterColorType::Background);
+  printColorMark(Printer::Black);
+  printColorMark(Printer::Red, Printer::Background);
   printLevel(LoggerLevel::Fatal);
   print(text, args...);
-  printColorMark(PrinterColorMark::Default, PrinterColorType::Background);
-  printColorMark(PrinterColorMark::Default);
+  printColorMark(Printer::Default, Printer::Background);
+  printColorMark(Printer::Default);
   printEndLine();
 
   if (m_callback[static_cast<unsigned int>(LoggerCallbackId::FatalExit)]) {
