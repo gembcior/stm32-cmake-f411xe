@@ -92,9 +92,9 @@ void Printer::updateFormat(char text, ArgumentFormat& format)
 {
   if (text == '#') {
     format.alternateFormat = true;
-  } else if (text == '>') {
-    format.align = Align::End;
   } else if (text == '<') {
+    format.align = Align::End;
+  } else if (text == '>') {
     format.align = Align::Start;
   } else if (text == 'x') {
     format.type = FormatType::Hex;

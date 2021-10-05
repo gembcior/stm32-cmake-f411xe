@@ -90,7 +90,10 @@ private:
 
   template<typename Arg>
   void printArgument(Arg argument, ArgumentFormat format,
-      std::enable_if_t<std::is_integral_v<Arg>>* = nullptr);
+      std::enable_if_t<std::is_same_v<Arg, bool>>* = nullptr);
+  template<typename Arg>
+  void printArgument(Arg argument, ArgumentFormat format,
+      std::enable_if_t<std::is_integral_v<Arg> && !std::is_same_v<Arg, bool>>* = nullptr);
   template<typename Arg>
   void printArgument(Arg argument, ArgumentFormat format,
       std::enable_if_t<std::is_same_v<Arg, char*> || std::is_same_v<Arg, const char*>>* = nullptr);
@@ -152,13 +155,44 @@ bool Printer::parseArgumentMark(const char* &text, Arg argument)
 
 template<typename Arg>
 void Printer::printArgument(Arg argument, ArgumentFormat format,
-    std::enable_if_t<std::is_integral_v<Arg>>*)
+    std::enable_if_t<std::is_same_v<Arg, bool>>*)
+{
+  if (argument) {
+    if (m_out) {
+      m_out('t');
+      m_out('r');
+      m_out('u');
+      m_out('e');
+    }
+  } else {
+    if (m_out) {
+      m_out('f');
+      m_out('a');
+      m_out('l');
+      m_out('s');
+      m_out('e');
+    }
+  }
+}
+
+
+template<typename Arg>
+void Printer::printArgument(Arg argument, ArgumentFormat format,
+    std::enable_if_t<std::is_integral_v<Arg> && !std::is_same_v<Arg, bool>>*)
 {
   char buffer[MaxDigits] = {};
+  bool lessThanZero = false;
 
   uint32_t base = static_cast<uint32_t>(format.type);
+
+  if (argument < 0) {
+    argument *= -1;
+    lessThanZero = true;
+  }
+
   std::to_chars(buffer, buffer + MaxDigits, argument, base);
   uint32_t size = std::strlen(buffer);
+  if (lessThanZero) size++;
 
   auto printAlign = [&](char character) 
   { 
@@ -171,6 +205,10 @@ void Printer::printArgument(Arg argument, ArgumentFormat format,
 
   if ((format.align == Align::Start) && !format.padding) {
     printAlign(' ');
+  }
+
+  if (lessThanZero) {
+    if (m_out) m_out('-');
   }
 
   if (format.alternateFormat) {

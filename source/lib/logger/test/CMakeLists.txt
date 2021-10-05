@@ -7,6 +7,9 @@ stm32_target_add_test(logger
   LoggerTest.cpp
 )
 
+stm32_target_test_link_libraries(logger
+  fmt
+)
 
 stm32_target_test_link_mock_libraries(logger
   logger
@@ -24,4 +27,5 @@ target_include_directories(logger_app
 target_link_libraries(logger_app
   PRIVATE
     logger
+    fmt
 )

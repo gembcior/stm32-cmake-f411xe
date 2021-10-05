@@ -3,6 +3,7 @@
 
 #include "logger/Printer.h"
 #include "logger/Logger.h"
+#include <fmt/core.h>
 
 using namespace stm32::lib;
 
@@ -24,10 +25,10 @@ int main()
   printer.print("Test ] lonely [mark {}", 3345);
   printer.print("Test hex {:#x} number", 1234);
   printer.print("Test bin {:#b} number", 1234);
-  printer.print("Test padding hex {:08x} number", 0x34);
+  printer.print("Test padding hex {:#08x} number", -0x34);
   printer.print("Test extra padding hex {:#08x} number", 0x34);
   printer.print("Test big padding hex {:018x} number", 0x34);
-  printer.print("Test align start {:<8} number", 0x34);
+  printer.print("Test align start {:<8} number", -0x34);
   printer.print("Test align end {:>6} number", 34);
   printer.print("Test align {:#7x} number", 12);
   printer.print("Test {:x} char", '0');
@@ -41,6 +42,10 @@ int main()
   printer.print("Test {} char pointer", "masakra");
   printer.print("Test {:19} align char pointer", "masakra");
   printer.print("Test {:>19} align char pointer", "masakra");
+  printer.print("Test {} bool", true);
+  printer.print("Test {} bool", false);
+  fmt::print("Test {} bool\n", true);
+  fmt::print("Nullptr {}\n", nullptr);
 
   Logger logger;
   logger.registerOutput(putChar);
