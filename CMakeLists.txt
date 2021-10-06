@@ -20,7 +20,7 @@ if (NOT CMAKE_BUILD_TYPE)
 endif()
 
 if (NOT STM32_TOOLCHAIN)
-  set(STM32_TOOLCHAIN $ENV{HOME}/tools/toolchains/gcc-arm-none-eabi-10-2020-q4-major CACHE PATH "ARM GCC toolchain." FORCE)
+  set(STM32_TOOLCHAIN $ENV{HOME}/tools/toolchains/gcc-arm-none-eabi-10.3-2021.07 CACHE PATH "ARM GCC toolchain." FORCE)
 endif()
 
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)

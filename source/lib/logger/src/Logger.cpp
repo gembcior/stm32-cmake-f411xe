@@ -3,13 +3,17 @@
 
 namespace stm32::lib {
 
-void Logger::registerCallback(LoggerCallbackId id, ILoggerCallback* callback)
+Logger::Logger() : Printer(true)
+{}
+
+
+void Logger::registerCallback(CallbackId id, ILoggerCallback* callback)
 {
   m_callback[static_cast<unsigned int>(id)] = callback;
 }
 
 
-void Logger::printLevel(LoggerLevel level)
+void Logger::printLevel(Level level)
 {
   if (m_out) {
     m_out(static_cast<char>(level));

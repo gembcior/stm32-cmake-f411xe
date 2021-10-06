@@ -1,37 +1,31 @@
 #include "gtest/gtest.h"
 #include "logger/Logger.h"
 #include "logger/MockLoggerCallback.h"
+#include "LoggerOutputBuffer.h"
 #include <string>
+
 
 using namespace ::testing;
 using namespace stm32::lib;
 using namespace std;
 
 
-class LoggerTest : public testing::TestWithParam<LoggerCallbackId>
+class LoggerTest : public testing::TestWithParam<Logger::CallbackId>
 {
 public:
   LoggerTest()
   {
-    m_logger.registerOutput(loggerOutputFunction);
-  }
-
-  static void loggerOutputFunction(const char character)
-  {
-    m_message += character;
+    m_logger.registerOutput(LoggerOutputBuffer::outputFunction);
   }
 
   void checkMessage(const string expectedMessage)
   {
-    ASSERT_STREQ(expectedMessage.c_str(), m_message.c_str());
+    ASSERT_STREQ(expectedMessage.c_str(), LoggerOutputBuffer::getPointer());
   }
 
 protected:
   Logger m_logger;
-  static string m_message;
 };
-
-string LoggerTest::m_message;
 
 
 TEST_F(LoggerTest, info) {
@@ -45,7 +39,7 @@ TEST_F(LoggerTest, info) {
 
 TEST_F(LoggerTest, warning) {
   const string testMessage = "This is a test warning message";
-  string expectedMessage = "\x1B[33mW: " + testMessage + "\x1B[39m\n\r";
+  string expectedMessage = "\x1B[33mW: " + testMessage + "\n\r\x1B[39m";
 
 
   m_logger.warning(testMessage.c_str());
@@ -55,7 +49,7 @@ TEST_F(LoggerTest, warning) {
 
 TEST_F(LoggerTest, error) {
   const string testMessage = "This is a test error message";
-  string expectedMessage = "\x1B[31mE: "+ testMessage + "\x1B[39m\n\r";
+  string expectedMessage = "\x1B[31mE: "+ testMessage + "\n\r\x1B[39m";
 
   m_logger.error(testMessage.c_str());
   checkMessage(expectedMessage);
@@ -64,7 +58,7 @@ TEST_F(LoggerTest, error) {
 
 TEST_F(LoggerTest, fatal) {
   const string testMessage = "This is a test fatal message";
-  string expectedMessage = "\x1B[30m\x1B[41mF: " + testMessage + "\x1B[49m\x1B[39m\n\r";
+  string expectedMessage = "\x1B[30m\x1B[41mF: " + testMessage + "\n\r\x1B[49m\x1B[39m";
 
   m_logger.fatal(testMessage.c_str());
   checkMessage(expectedMessage);
@@ -76,16 +70,16 @@ string callbackIdToString(const TestParamInfo<LoggerTest::ParamType>& id)
   string name;
 
   switch (id.param) {
-    case LoggerCallbackId::InfoExit:
+    case Logger::CallbackId::InfoExit:
       name = "Info";
       break;
-    case LoggerCallbackId::WarningExit:
+    case Logger::CallbackId::WarningExit:
       name = "Warning";
       break;
-    case LoggerCallbackId::ErrorExit:
+    case Logger::CallbackId::ErrorExit:
       name = "Error";
       break;
-    case LoggerCallbackId::FatalExit:
+    case Logger::CallbackId::FatalExit:
       name = "Fatal";
       break;
     default:
@@ -97,14 +91,14 @@ string callbackIdToString(const TestParamInfo<LoggerTest::ParamType>& id)
 
 
 INSTANTIATE_TEST_SUITE_P(LoggerCallback, LoggerTest,
-    Values(LoggerCallbackId::InfoExit,
-           LoggerCallbackId::WarningExit,
-           LoggerCallbackId::ErrorExit,
-           LoggerCallbackId::FatalExit),
+    Values(Logger::CallbackId::InfoExit,
+           Logger::CallbackId::WarningExit,
+           Logger::CallbackId::ErrorExit,
+           Logger::CallbackId::FatalExit),
     callbackIdToString);
 
 
-TEST_P(LoggerTest, callback) {
+TEST_P(LoggerTest, callbackCall) {
   const string testMessage = "This is a test fatal message";
   NiceMock<MockLoggerCallback> callback;
   auto id = GetParam();
@@ -114,16 +108,42 @@ TEST_P(LoggerTest, callback) {
   EXPECT_CALL(callback, call);
 
   switch (id) {
-    case LoggerCallbackId::InfoExit:
+    case Logger::CallbackId::InfoExit:
       m_logger.info(testMessage.c_str());
       break;
-    case LoggerCallbackId::WarningExit:
+    case Logger::CallbackId::WarningExit:
       m_logger.warning(testMessage.c_str());
       break;
-    case LoggerCallbackId::ErrorExit:
+    case Logger::CallbackId::ErrorExit:
       m_logger.error(testMessage.c_str());
       break;
-    case LoggerCallbackId::FatalExit:
+    case Logger::CallbackId::FatalExit:
+      m_logger.fatal(testMessage.c_str());
+      break;
+    default:
+      break;
+  };
+}
+
+
+TEST_P(LoggerTest, noCallbackCall) {
+  const string testMessage = "This is a test fatal message";
+  NiceMock<MockLoggerCallback> callback;
+  auto id = GetParam();
+
+  EXPECT_CALL(callback, call).Times(0);
+
+  switch (id) {
+    case Logger::CallbackId::InfoExit:
+      m_logger.info(testMessage.c_str());
+      break;
+    case Logger::CallbackId::WarningExit:
+      m_logger.warning(testMessage.c_str());
+      break;
+    case Logger::CallbackId::ErrorExit:
+      m_logger.error(testMessage.c_str());
+      break;
+    case Logger::CallbackId::FatalExit:
       m_logger.fatal(testMessage.c_str());
       break;
     default:
