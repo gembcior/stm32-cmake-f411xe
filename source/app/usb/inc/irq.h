@@ -1,5 +1,5 @@
-#ifndef BLINKER_IRQ_H
-#define BLINKER_IRQ_H
+#ifndef USB_IRQ_H
+#define USB_IRQ_H
 
 #include "system/constants.h"
 #include "objects/objects.h"
@@ -98,6 +98,18 @@ const Irq SysTickIrq = {
   .handlerPosition = getIrqHandlerPosition(0x3C),
 };
 
+
+constexpr Irq OtgFsIrq = {
+  .number = getIrqNumber(0x14C),
+  .handler = nullptr,
+  .handlerPosition = getIrqHandlerPosition(0x14C),
+  .priority = 0,
+};
+
+template<uint32_t Size, IrqAdapterPointer ... adapters>
+struct IrqAdapterTable<Size, OtgFsIrq.handlerPosition, adapters...> :
+  IrqAdapterTable<Size, OtgFsIrq.handlerPosition + 1, adapters..., UsbIrqHandler> { };
+
 } // namespace
 
-#endif /* BLINKER_IRQ_H */
+#endif /* USB_IRQ_H */

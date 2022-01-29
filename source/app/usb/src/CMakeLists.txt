@@ -1,6 +1,6 @@
-target_sources(os_app
+target_sources(usb
   PRIVATE
     main.cpp
     objects.cpp
-    OsSystem.cpp
+    UsbSystem.cpp
 )

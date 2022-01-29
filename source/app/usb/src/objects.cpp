@@ -1,7 +1,7 @@
 #include "objects.h"
 #include "objects/objects.h"
 
-#include "OsSystem.h"
+#include "UsbSystem.h"
 
 #include "scb/ScbHal.h"
 #include "rcc/RccHal.h"
@@ -12,6 +12,9 @@
 #include <array>
 #include "irq/IrqAdapterTable.h"
 #include "irq.h"
+#include "nvic/NvicHal.h"
+
+
 
 namespace stm32::objects {
 
@@ -23,7 +26,7 @@ using namespace stm32::system;
 template<>
 system::System& getObject<system::System>()
 {
-  static system::OsSystem system(
+  static system::UsbSystem system(
       getObject<ScbHal>(),
       getObject<RccHal>(),
       getObject<FlashHal>(),
