@@ -581,6 +581,31 @@ private:
 public:
   using bkp19r = Bkp19rReg<BaseAddress + 0x009C>;
 
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class AlrmxssrBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using maskss = FieldModel<address, 24, 0x0000000F, bankOffset>;
+    using ss = FieldModel<address,  0, 0x00007FFF, bankOffset>;
+
+  };
+
+public:
+  using alrmxssr = AlrmxssrBankReg<BaseAddress + 0x0044, 0x0004>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class BkpxrBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using bkp = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
+
+  };
+
+public:
+  using bkpxr = BkpxrBankReg<BaseAddress + 0x0050, 0x0004>;
+
 
 };
 

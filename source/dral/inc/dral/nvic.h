@@ -490,6 +490,81 @@ private:
 public:
   using ipr19 = Ipr19Reg<BaseAddress + 0x034C>;
 
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class IserxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using setena = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
+
+  };
+
+public:
+  using iserx = IserxBankReg<BaseAddress + 0x0000, 0x0004>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class IcerxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using clrena = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
+
+  };
+
+public:
+  using icerx = IcerxBankReg<BaseAddress + 0x0080, 0x0004>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class IsprxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using setpend = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
+
+  };
+
+public:
+  using isprx = IsprxBankReg<BaseAddress + 0x0100, 0x0004>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class IcprxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using clrpend = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
+
+  };
+
+public:
+  using icprx = IcprxBankReg<BaseAddress + 0x0180, 0x0004>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class IabrxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using active = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
+
+  };
+
+public:
+  using iabrx = IabrxBankReg<BaseAddress + 0x0200, 0x0004>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class IprxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using ipr_n0 = FieldModel<address,  0, 0x000000FF, bankOffset>;
+    using ipr_n1 = FieldModel<address,  8, 0x000000FF, bankOffset>;
+    using ipr_n2 = FieldModel<address, 16, 0x000000FF, bankOffset>;
+    using ipr_n3 = FieldModel<address, 24, 0x000000FF, bankOffset>;
+
+  };
+
+public:
+  using iprx = IprxBankReg<BaseAddress + 0x0300, 0x0004>;
+
 
 };
 

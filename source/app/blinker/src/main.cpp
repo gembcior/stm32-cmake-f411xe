@@ -8,6 +8,8 @@
 #include "logger/Logger.h"
 #include "flasher/Flasher.h"
 
+#include "otg_fs/OtgFsDeviceHal.h"
+#include "tusb.h"
 
 using namespace stm32::objects;
 using namespace stm32::system;
@@ -22,6 +24,46 @@ void writeUart(const char character)
 }
 
 
+extern "C" {
+
+void _putchar(char character)
+{
+  writeUart(character);
+}
+
+void cdc_task(void)
+{
+  if ( tud_cdc_available() )
+  {
+    char buf[64];
+    uint32_t count = tud_cdc_read(buf, sizeof(buf));
+
+    tud_cdc_write(buf, count);
+    tud_cdc_write_flush();
+  }
+}
+
+void tud_cdc_line_state_cb(uint8_t itf, bool dtr, bool rts)
+{
+  (void) itf;
+  (void) rts;
+  auto& logger = getObject<Logger>();
+
+  if (dtr) {
+    logger.info("Terminal connected");
+  } else {
+    logger.info("Terminal disconnected");
+  }
+}
+
+void UsbIrqHandler() {
+  tud_int_handler(BOARD_DEVICE_RHPORT_NUM);
+  auto& logger = getObject<Logger>();
+  logger.info("Usb Irq Exit");
+}
+
+}
+
 int main(void)
 {
   getIrqVectorTable();
@@ -30,8 +72,12 @@ int main(void)
   auto& uart = getObject<UartDriver>();
   auto& logger = getObject<Logger>();
   auto& gpio = getObject<GpioDriver>();
+  auto& device = getObject<OtgFsDeviceHal>();
 
   system.initialize();
+  device.setCurrentMode(OtgFsMode::Device);
+  device.init();
+  device.setCurrentMode(OtgFsMode::Device);
 
   flasher.setPeriod(500);
   flasher.setPin(UserLed2.port, UserLed2.pin);
@@ -53,8 +99,12 @@ int main(void)
 
   bool buttonLock = false;
 
+  tusb_init();
+
   while (1)
   {
+    tud_task();
+
     flasher.blink();
 
     if (gpio.getPin(UserButton) == PinState::Low && !buttonLock) {
@@ -64,5 +114,8 @@ int main(void)
       logger.info("User Button released");
       buttonLock = false;
     }
+
+    cdc_task();
+
   }
 }

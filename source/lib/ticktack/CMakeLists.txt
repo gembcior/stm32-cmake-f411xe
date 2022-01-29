@@ -9,6 +9,6 @@ add_subdirectory(src)
 
 if (UNIT_TEST)
   include(Testing)
-  stm32_target_add_mock_library(ticktack)
+  testing_target_add_mock_library(ticktack)
   add_subdirectory(test)
 endif()

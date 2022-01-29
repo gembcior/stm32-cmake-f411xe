@@ -1,11 +1,9 @@
 #ifndef OBJECTS_H
 #define OBJECTS_H
 
-#include "system/constants.h"
+#include "gpio/GpioDriver.h"
 #include "uart/UartDriver.h"
 #include "flasher/Flasher.h"
-#include "gpio/GpioDriver.h"
-#include "irq/IrqManager.h"
 
 
 namespace stm32::objects {

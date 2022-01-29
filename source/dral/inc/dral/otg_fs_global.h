@@ -192,11 +192,10 @@ private:
   class Fs_grxstsr_hostReg: public RegisterModel<address>
   {
   public:
-    using epnum = FieldModel<address,  0, 0x0000000F>;
+    using chnum = FieldModel<address,  0, 0x0000000F>;
     using bcnt = FieldModel<address,  4, 0x000007FF>;
     using dpid = FieldModel<address, 15, 0x00000003>;
     using pktsts = FieldModel<address, 17, 0x0000000F>;
-    using frmnum = FieldModel<address, 21, 0x0000000F>;
 
   };
 
@@ -264,6 +263,7 @@ private:
     using vbusasen = FieldModel<address, 18, 0x00000001>;
     using vbusbsen = FieldModel<address, 19, 0x00000001>;
     using sofouten = FieldModel<address, 20, 0x00000001>;
+    using novbussens = FieldModel<address, 21, 0x00000001>;
 
   };
 

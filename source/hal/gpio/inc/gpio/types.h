@@ -70,7 +70,7 @@ enum class PinState : uint32_t {
 };
 
 
-enum class PortAlternateFunction {
+enum class PortAlternateFunction : uint32_t {
   Af0 = 0,
   Af1,
   Af2,

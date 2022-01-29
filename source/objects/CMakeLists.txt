@@ -6,11 +6,12 @@ target_include_directories(objects
 )
 
 target_link_libraries(objects
-  PRIVATE
-    system
+  PUBLIC
     uart
     flasher
-    irq
+    gpio
+  PRIVATE
+    system
 )
 
 add_subdirectory(src)

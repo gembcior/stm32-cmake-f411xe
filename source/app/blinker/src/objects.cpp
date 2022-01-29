@@ -12,6 +12,7 @@
 #include <array>
 #include "irq/IrqAdapterTable.h"
 #include "irq.h"
+#include "nvic/NvicHal.h"
 
 
 
@@ -45,6 +46,14 @@ const IrqAdapterPointer* getIrqVectorTable()
   static const std::array<IrqAdapterPointer, IrqNumber> IrqVectorTable = IrqAdapterTable<IrqNumber>::Table;
 
   return reinterpret_cast<IrqAdapterPointer const*>(IrqVectorTable.data());
+}
+
+
+template<>
+IrqManager<IrqNumber>& getObject<IrqManager<IrqNumber>>()
+{
+  static IrqManager<IrqNumber> irqManager(getObject<NvicHal>());
+  return irqManager;
 }
 
 } // namespace

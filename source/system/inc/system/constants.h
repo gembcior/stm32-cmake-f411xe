@@ -69,6 +69,32 @@ constexpr hal::GpioPin UserButton = {
   .pin = hal::Pin::Pin13,
 };
 
+
+constexpr hal::GpioPin UsbOtgFsDm = {
+  .config = {
+    .mode = hal::PortMode::AlternateFunction,
+    .type = hal::PortType::PushPull,
+    .speed = hal::PortSpeed::High,
+    .pull = hal::PortPull::NoPull,
+    .af = hal::PortAlternateFunction::Af10,
+  },
+  .port = hal::Port::PortA,
+  .pin = hal::Pin::Pin11,
+};
+
+
+constexpr hal::GpioPin UsbOtgFsDp = {
+  .config = {
+    .mode = hal::PortMode::AlternateFunction,
+    .type = hal::PortType::PushPull,
+    .speed = hal::PortSpeed::High,
+    .pull = hal::PortPull::NoPull,
+    .af = hal::PortAlternateFunction::Af10,
+  },
+  .port = hal::Port::PortA,
+  .pin = hal::Pin::Pin12,
+};
+
 } // namespace
 
 #endif /* CONSTANTS_H */

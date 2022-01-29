@@ -112,7 +112,7 @@ private:
   {
   public:
     using iepm = FieldModel<address,  0, 0x0000FFFF>;
-    using oepint = FieldModel<address, 16, 0x0000FFFF>;
+    using oepm = FieldModel<address, 16, 0x0000FFFF>;
 
   };
 
@@ -631,6 +631,127 @@ private:
 
 public:
   using doeptsiz3 = Doeptsiz3Reg<BaseAddress + 0x0370>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class DiepctlxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using epena = FieldModel<address, 31, 0x00000001, bankOffset>;
+    using epdis = FieldModel<address, 30, 0x00000001, bankOffset>;
+    using soddfrm = FieldModel<address, 29, 0x00000001, bankOffset>;
+    using sd0pid_sevnfrm = FieldModel<address, 28, 0x00000001, bankOffset>;
+    using snak = FieldModel<address, 27, 0x00000001, bankOffset>;
+    using cnak = FieldModel<address, 26, 0x00000001, bankOffset>;
+    using txfnum = FieldModel<address, 22, 0x0000000F, bankOffset>;
+    using stall = FieldModel<address, 21, 0x00000001, bankOffset>;
+    using eptyp = FieldModel<address, 18, 0x00000003, bankOffset>;
+    using naksts = FieldModel<address, 17, 0x00000001, bankOffset>;
+    using eonum_dpid = FieldModel<address, 16, 0x00000001, bankOffset>;
+    using usbaep = FieldModel<address, 15, 0x00000001, bankOffset>;
+    using mpsiz = FieldModel<address,  0, 0x000007FF, bankOffset>;
+
+  };
+
+public:
+  using diepctlx = DiepctlxBankReg<BaseAddress + 0x0140, 0x0020>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class DoepctlxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using epena = FieldModel<address, 31, 0x00000001, bankOffset>;
+    using epdis = FieldModel<address, 30, 0x00000001, bankOffset>;
+    using soddfrm = FieldModel<address, 29, 0x00000001, bankOffset>;
+    using sd0pid_sevnfrm = FieldModel<address, 28, 0x00000001, bankOffset>;
+    using snak = FieldModel<address, 27, 0x00000001, bankOffset>;
+    using cnak = FieldModel<address, 26, 0x00000001, bankOffset>;
+    using stall = FieldModel<address, 21, 0x00000001, bankOffset>;
+    using snpm = FieldModel<address, 20, 0x00000001, bankOffset>;
+    using eptyp = FieldModel<address, 18, 0x00000003, bankOffset>;
+    using naksts = FieldModel<address, 17, 0x00000001, bankOffset>;
+    using eonum_dpid = FieldModel<address, 16, 0x00000001, bankOffset>;
+    using usbaep = FieldModel<address, 15, 0x00000001, bankOffset>;
+    using mpsiz = FieldModel<address,  0, 0x000007FF, bankOffset>;
+
+  };
+
+public:
+  using doepctlx = DoepctlxBankReg<BaseAddress + 0x0320, 0x0020>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class DiepintxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using txfe = FieldModel<address,  7, 0x00000001, bankOffset>;
+    using inepne = FieldModel<address,  6, 0x00000001, bankOffset>;
+    using ittxfe = FieldModel<address,  4, 0x00000001, bankOffset>;
+    using toc = FieldModel<address,  3, 0x00000001, bankOffset>;
+    using epdisd = FieldModel<address,  1, 0x00000001, bankOffset>;
+    using xfrc = FieldModel<address,  0, 0x00000001, bankOffset>;
+
+  };
+
+public:
+  using diepintx = DiepintxBankReg<BaseAddress + 0x0108, 0x0020>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class DoepintxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using b2bstup = FieldModel<address,  6, 0x00000001, bankOffset>;
+    using otepdis = FieldModel<address,  4, 0x00000001, bankOffset>;
+    using stup = FieldModel<address,  3, 0x00000001, bankOffset>;
+    using epdisd = FieldModel<address,  1, 0x00000001, bankOffset>;
+    using xfrc = FieldModel<address,  0, 0x00000001, bankOffset>;
+
+  };
+
+public:
+  using doepintx = DoepintxBankReg<BaseAddress + 0x0308, 0x0020>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class DieptsizxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using mcnt = FieldModel<address, 29, 0x00000003, bankOffset>;
+    using pktcnt = FieldModel<address, 19, 0x000003FF, bankOffset>;
+    using xfrsiz = FieldModel<address,  0, 0x0007FFFF, bankOffset>;
+
+  };
+
+public:
+  using dieptsizx = DieptsizxBankReg<BaseAddress + 0x0130, 0x0020>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class DtxfstsxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using ineptfsav = FieldModel<address,  0, 0x0000FFFF, bankOffset>;
+
+  };
+
+public:
+  using dtxfstsx = DtxfstsxBankReg<BaseAddress + 0x0118, 0x0020>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class DoeptsizxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using rxdpid_stupcnt = FieldModel<address, 29, 0x00000003, bankOffset>;
+    using pktcnt = FieldModel<address, 19, 0x000003FF, bankOffset>;
+    using xfrsiz = FieldModel<address,  0, 0x0007FFFF, bankOffset>;
+
+  };
+
+public:
+  using doeptsizx = DoeptsizxBankReg<BaseAddress + 0x0330, 0x0020>;
 
 
 };

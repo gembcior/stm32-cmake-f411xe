@@ -885,6 +885,100 @@ private:
 public:
   using s7fcr = S7fcrReg<BaseAddress + 0x00CC>;
 
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class SxndtrBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using ndt = FieldModel<address,  0, 0x0000FFFF, bankOffset>;
+
+  };
+
+public:
+  using sxndtr = SxndtrBankReg<BaseAddress + 0x0014, 0x0018>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class SxparBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using pa = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
+
+  };
+
+public:
+  using sxpar = SxparBankReg<BaseAddress + 0x0018, 0x0018>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class Sxm0arBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using m0a = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
+
+  };
+
+public:
+  using sxm0ar = Sxm0arBankReg<BaseAddress + 0x001C, 0x0018>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class Sxm1arBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using m1a = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
+
+  };
+
+public:
+  using sxm1ar = Sxm1arBankReg<BaseAddress + 0x0020, 0x0018>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class SxfcrBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using feie = FieldModel<address,  7, 0x00000001, bankOffset>;
+    using fs = FieldModel<address,  3, 0x00000007, bankOffset>;
+    using dmdis = FieldModel<address,  2, 0x00000001, bankOffset>;
+    using fth = FieldModel<address,  0, 0x00000003, bankOffset>;
+
+  };
+
+public:
+  using sxfcr = SxfcrBankReg<BaseAddress + 0x0024, 0x0018>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class SxcrBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using chsel = FieldModel<address, 25, 0x00000007, bankOffset>;
+    using mburst = FieldModel<address, 23, 0x00000003, bankOffset>;
+    using pburst = FieldModel<address, 21, 0x00000003, bankOffset>;
+    using ack = FieldModel<address, 20, 0x00000001, bankOffset>;
+    using ct = FieldModel<address, 19, 0x00000001, bankOffset>;
+    using dbm = FieldModel<address, 18, 0x00000001, bankOffset>;
+    using pl = FieldModel<address, 16, 0x00000003, bankOffset>;
+    using pincos = FieldModel<address, 15, 0x00000001, bankOffset>;
+    using msize = FieldModel<address, 13, 0x00000003, bankOffset>;
+    using psize = FieldModel<address, 11, 0x00000003, bankOffset>;
+    using minc = FieldModel<address, 10, 0x00000001, bankOffset>;
+    using pinc = FieldModel<address,  9, 0x00000001, bankOffset>;
+    using circ = FieldModel<address,  8, 0x00000001, bankOffset>;
+    using dir = FieldModel<address,  6, 0x00000003, bankOffset>;
+    using pfctrl = FieldModel<address,  5, 0x00000001, bankOffset>;
+    using tcie = FieldModel<address,  4, 0x00000001, bankOffset>;
+    using htie = FieldModel<address,  3, 0x00000001, bankOffset>;
+    using teie = FieldModel<address,  2, 0x00000001, bankOffset>;
+    using dmeie = FieldModel<address,  1, 0x00000001, bankOffset>;
+    using en = FieldModel<address,  0, 0x00000001, bankOffset>;
+
+  };
+
+public:
+  using sxcr = SxcrBankReg<BaseAddress + 0x0028, 0x0018>;
+
 
 };
 

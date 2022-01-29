@@ -9,8 +9,10 @@ namespace stm32::irq {
 
 struct Irq
 {
-  uint32_t position;
+  uint32_t number;
   IrqHandler* handler;
+  uint32_t handlerPosition;
+  uint32_t priority;
 };
 
 } // namespace

@@ -718,6 +718,82 @@ private:
 public:
   using fs_hctsiz7 = Fs_hctsiz7Reg<BaseAddress + 0x01F0>;
 
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class Fs_hccharxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using mpsiz = FieldModel<address,  0, 0x000007FF, bankOffset>;
+    using epnum = FieldModel<address, 11, 0x0000000F, bankOffset>;
+    using epdir = FieldModel<address, 15, 0x00000001, bankOffset>;
+    using lsdev = FieldModel<address, 17, 0x00000001, bankOffset>;
+    using eptyp = FieldModel<address, 18, 0x00000003, bankOffset>;
+    using mcnt = FieldModel<address, 20, 0x00000003, bankOffset>;
+    using dad = FieldModel<address, 22, 0x0000007F, bankOffset>;
+    using oddfrm = FieldModel<address, 29, 0x00000001, bankOffset>;
+    using chdis = FieldModel<address, 30, 0x00000001, bankOffset>;
+    using chena = FieldModel<address, 31, 0x00000001, bankOffset>;
+
+  };
+
+public:
+  using fs_hccharx = Fs_hccharxBankReg<BaseAddress + 0x0100, 0x0020>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class Fs_hcintxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using xfrc = FieldModel<address,  0, 0x00000001, bankOffset>;
+    using chh = FieldModel<address,  1, 0x00000001, bankOffset>;
+    using stall = FieldModel<address,  3, 0x00000001, bankOffset>;
+    using nak = FieldModel<address,  4, 0x00000001, bankOffset>;
+    using ack = FieldModel<address,  5, 0x00000001, bankOffset>;
+    using txerr = FieldModel<address,  7, 0x00000001, bankOffset>;
+    using bberr = FieldModel<address,  8, 0x00000001, bankOffset>;
+    using frmor = FieldModel<address,  9, 0x00000001, bankOffset>;
+    using dterr = FieldModel<address, 10, 0x00000001, bankOffset>;
+
+  };
+
+public:
+  using fs_hcintx = Fs_hcintxBankReg<BaseAddress + 0x0108, 0x0020>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class Fs_hcintmskxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using xfrcm = FieldModel<address,  0, 0x00000001, bankOffset>;
+    using chhm = FieldModel<address,  1, 0x00000001, bankOffset>;
+    using stallm = FieldModel<address,  3, 0x00000001, bankOffset>;
+    using nakm = FieldModel<address,  4, 0x00000001, bankOffset>;
+    using ackm = FieldModel<address,  5, 0x00000001, bankOffset>;
+    using nyet = FieldModel<address,  6, 0x00000001, bankOffset>;
+    using txerrm = FieldModel<address,  7, 0x00000001, bankOffset>;
+    using bberrm = FieldModel<address,  8, 0x00000001, bankOffset>;
+    using frmorm = FieldModel<address,  9, 0x00000001, bankOffset>;
+    using dterrm = FieldModel<address, 10, 0x00000001, bankOffset>;
+
+  };
+
+public:
+  using fs_hcintmskx = Fs_hcintmskxBankReg<BaseAddress + 0x010C, 0x0020>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class Fs_hctsizxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using xfrsiz = FieldModel<address,  0, 0x0007FFFF, bankOffset>;
+    using pktcnt = FieldModel<address, 19, 0x000003FF, bankOffset>;
+    using dpid = FieldModel<address, 29, 0x00000003, bankOffset>;
+
+  };
+
+public:
+  using fs_hctsizx = Fs_hctsizxBankReg<BaseAddress + 0x0110, 0x0020>;
+
 
 };
 

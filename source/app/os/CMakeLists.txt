@@ -1,4 +1,4 @@
-include(Utils)
+include(STM32Utils)
 
 add_executable(os_app)
 

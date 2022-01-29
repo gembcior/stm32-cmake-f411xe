@@ -20,6 +20,7 @@ void BlinkerSystem::enablePeripherals()
   m_rccHal.enablePeripheralClock(Ahb1Peripheral::Gpioc);
   m_rccHal.enablePeripheralClock(Ahb1Peripheral::Gpioa);
   m_rccHal.enablePeripheralClock(Apb1Peripheral::Usart2);
+  m_rccHal.enablePeripheralClock(Ahb2Peripheral::Otgfs);
 }
 
 
@@ -30,6 +31,8 @@ void BlinkerSystem::setupGpio()
   m_gpioDriver.configure(UserLed4);
   m_gpioDriver.configure(Uart2Tx);
   m_gpioDriver.configure(UserButton);
+  m_gpioDriver.configure(UsbOtgFsDm);
+  m_gpioDriver.configure(UsbOtgFsDp);
 }
 
 
@@ -44,6 +47,8 @@ void BlinkerSystem::setupInterrupts()
   m_irqManager.registerIrqHandler(DebugMonIrq);
   m_irqManager.registerIrqHandler(PendSvIrq);
   m_irqManager.registerIrqHandler(SysTickIrq);
+  m_irqManager.enableIrq(OtgFsIrq);
+  m_irqManager.setIrqPriority(OtgFsIrq);
 }
 
 } // namespace

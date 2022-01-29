@@ -4,14 +4,12 @@
 #include "uart/UartDriver.h"
 #include "ticktack/TickTack.h"
 #include "gpio/GpioHal.h"
-#include "irq/IrqManager.h"
 
 
 namespace stm32::objects {
 
 using namespace stm32::hal;
 using namespace stm32::lib;
-using namespace stm32::irq;
 using namespace stm32::system;
 
 

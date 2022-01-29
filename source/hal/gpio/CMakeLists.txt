@@ -7,7 +7,7 @@ target_include_directories(gpio
 
 if (UNIT_TEST)
   include(Testing)
-  stm32_target_add_mock_library(gpio)
+  testing_target_add_mock_library(gpio)
 endif()
 
 add_subdirectory(src)

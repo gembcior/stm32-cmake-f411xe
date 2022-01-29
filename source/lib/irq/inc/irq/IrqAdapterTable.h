@@ -6,7 +6,6 @@
 #include "irq/IrqManager.h"
 
 
-
 namespace stm32::irq {
 
 using IrqAdapterPointer = void(*)();

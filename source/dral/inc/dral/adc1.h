@@ -297,6 +297,30 @@ private:
 public:
   using dr = DrReg<BaseAddress + 0x004C>;
 
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class SmprxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using smpx_x = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
+
+  };
+
+public:
+  using smprx = SmprxBankReg<BaseAddress + 0x000C, 0x0004>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class JdrxBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using jdata = FieldModel<address,  0, 0x0000FFFF, bankOffset>;
+
+  };
+
+public:
+  using jdrx = JdrxBankReg<BaseAddress + 0x003C, 0x0004>;
+
 
 };
 
