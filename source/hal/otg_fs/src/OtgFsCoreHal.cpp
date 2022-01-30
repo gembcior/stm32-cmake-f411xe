@@ -11,7 +11,9 @@ void OtgFsCoreHal::init()
 {
   selectPhy(OtgFsPhy::Internal);
   reset();
-  activateTransceiver();
+  resetPhyClk();
+  // Clear any pending interrupts
+  otg_fs_global::fs_gintsts::write(0xFF'FF'FF'FFU);
   setInterruptMask(OtgFsInterruptMask::Otgint, true);
   setInterruptMask(OtgFsInterruptMask::Mmism, true);
 }
@@ -139,12 +141,31 @@ void OtgFsCoreHal::deactivateTransceiver()
 void OtgFsCoreHal::setInterruptMask(OtgFsInterruptMask interrupt, bool mask)
 {
   // TODO
+  uint32_t value = mask ? 1 : 0;
   switch (interrupt) {
     case OtgFsInterruptMask::Otgint:
-      otg_fs_global::fs_gintmsk::otgint::write(mask);
+      otg_fs_global::fs_gintmsk::otgint::write(value);
       break;
     case OtgFsInterruptMask::Mmism:
-      otg_fs_global::fs_gintmsk::mmism::write(mask);
+      otg_fs_global::fs_gintmsk::mmism::write(value);
+    case OtgFsInterruptMask::Usbrst:
+      otg_fs_global::fs_gintmsk::usbrst::write(value);
+      break;
+    case OtgFsInterruptMask::Enumdnem:
+      otg_fs_global::fs_gintmsk::enumdnem::write(value);
+      break;
+    case OtgFsInterruptMask::Usbsuspm:
+      otg_fs_global::fs_gintmsk::usbsuspm::write(value);
+      break;
+    case OtgFsInterruptMask::Wuim:
+      otg_fs_global::fs_gintmsk::wuim::write(value);
+      break;
+    case OtgFsInterruptMask::Rxflvlm:
+      otg_fs_global::fs_gintmsk::rxflvlm::write(value);
+      break;
+    case OtgFsInterruptMask::Sofm:
+      otg_fs_global::fs_gintmsk::sofm::write(value);
+      break;
     default:
       break;
   }

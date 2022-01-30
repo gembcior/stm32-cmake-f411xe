@@ -31,18 +31,6 @@ void _putchar(char character)
   writeUart(character);
 }
 
-void cdc_task(void)
-{
-  if ( tud_cdc_available() )
-  {
-    char buf[64];
-    uint32_t count = tud_cdc_read(buf, sizeof(buf));
-
-    tud_cdc_write(buf, count);
-    tud_cdc_write_flush();
-  }
-}
-
 void tud_cdc_line_state_cb(uint8_t itf, bool dtr, bool rts)
 {
   (void) itf;
@@ -56,11 +44,20 @@ void tud_cdc_line_state_cb(uint8_t itf, bool dtr, bool rts)
   }
 }
 
-void UsbIrqHandler() {
-  tud_int_handler(BOARD_DEVICE_RHPORT_NUM);
 }
 
+
+void cdc_task(void)
+{
+  if (tud_cdc_available()) {
+    char buf[64];
+    uint32_t count = tud_cdc_read(buf, sizeof(buf));
+
+    tud_cdc_write(buf, count);
+    tud_cdc_write_flush();
+  }
 }
+
 
 int main(void)
 {
@@ -70,16 +67,11 @@ int main(void)
   auto& uart = getObject<UartDriver>();
   auto& logger = getObject<Logger>();
   auto& gpio = getObject<GpioDriver>();
-  auto& device = getObject<OtgFsDeviceHal>();
 
   system.initialize();
-  device.setCurrentMode(OtgFsMode::Device);
-  device.init();
-  device.setCurrentMode(OtgFsMode::Device);
 
   flasher.setPeriod(500);
   flasher.setPin(UserLed2.port, UserLed2.pin);
-
 
   UartConfiguration uartConfig = {
     .mode = UartMode::Tx,

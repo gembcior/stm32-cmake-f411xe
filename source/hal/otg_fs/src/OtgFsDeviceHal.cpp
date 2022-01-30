@@ -12,20 +12,17 @@ using namespace dral::stm32f411;
 void OtgFsDeviceHal::init()
 {
   OtgFsCoreHal::init();
-  disconnect();
-  disableVBusSensing();
-  resetPhyClk();
-  setPeriodicFrameInterval(OtgFsPeriodicFrameInterval::Fi80);
+  otg_fs_device::fs_dcfg::nzlsohsk::write(1);
   setSpeed(OtgFsSpeed::FullSpeed);
-  flushTxFifo(0x10U);
-  flushRxFifo();
-  otg_fs_device::fs_diepmsk::write(0);
-  otg_fs_device::fs_doepmsk::write(0);
-  otg_fs_device::fs_daintmsk::write(0);
-  // TODO endpoints setup ???
-  otg_fs_global::fs_gintmsk::write(0);
-  clearInterrupts(0xBFFFFFFFU);
-  // TODO enable interrupts
+  setCurrentMode(OtgFsMode::Device);
+  disableVBusSensing();
+  activateTransceiver();
+  setInterruptMask(OtgFsInterruptMask::Usbrst, true);
+  setInterruptMask(OtgFsInterruptMask::Enumdnem, true);
+  setInterruptMask(OtgFsInterruptMask::Usbsuspm, true);
+  setInterruptMask(OtgFsInterruptMask::Wuim, true);
+  setInterruptMask(OtgFsInterruptMask::Rxflvlm, true);
+  enableGlobalInterrupts();
 }
 
 
@@ -45,9 +42,17 @@ void OtgFsDeviceHal::disconnect()
 }
 
 
+void OtgFsDeviceHal::wakeup()
+{
+  otg_fs_device::fs_dctl::rwusig::write(1);
+  // TODO add 1ms to 15ms according to spec
+  otg_fs_device::fs_dctl::rwusig::write(0);
+}
+
+
 void OtgFsDeviceHal::setAddress(uint8_t address)
 {
-  otg_fs_device::fs_dcfg::write(address);
+  otg_fs_device::fs_dcfg::dad::write(address);
 }
 
 

@@ -47,6 +47,7 @@ void UsbSystem::setupInterrupts()
   m_irqManager.registerIrqHandler(DebugMonIrq);
   m_irqManager.registerIrqHandler(PendSvIrq);
   m_irqManager.registerIrqHandler(SysTickIrq);
+  m_irqManager.registerIrqHandler(OtgFsIrq);
   m_irqManager.enableIrq(OtgFsIrq);
   m_irqManager.setIrqPriority(OtgFsIrq);
 }

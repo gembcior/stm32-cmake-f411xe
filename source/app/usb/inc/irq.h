@@ -8,6 +8,7 @@
 #include "irq/DefaultIrqHandler.h"
 #include "irq/ExceptionHandler.h"
 #include "SysTickIrqHandler.h"
+#include "UsbIrqHandler.h"
 #include "irq/IrqAdapterTable.h"
 
 extern "C" {
@@ -99,16 +100,16 @@ const Irq SysTickIrq = {
 };
 
 
-constexpr Irq OtgFsIrq = {
+const Irq OtgFsIrq = {
   .number = getIrqNumber(0x14C),
-  .handler = nullptr,
+  .handler = &objects::getObject<UsbIrqHandler>(),
   .handlerPosition = getIrqHandlerPosition(0x14C),
   .priority = 0,
 };
 
-template<uint32_t Size, IrqAdapterPointer ... adapters>
-struct IrqAdapterTable<Size, OtgFsIrq.handlerPosition, adapters...> :
-  IrqAdapterTable<Size, OtgFsIrq.handlerPosition + 1, adapters..., UsbIrqHandler> { };
+//template<uint32_t Size, IrqAdapterPointer ... adapters>
+//struct IrqAdapterTable<Size, OtgFsIrq.handlerPosition, adapters...> :
+//  IrqAdapterTable<Size, OtgFsIrq.handlerPosition + 1, adapters..., UsbIrqHandler> { };
 
 } // namespace
 

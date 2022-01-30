@@ -345,6 +345,7 @@ static tusb_speed_t get_speed(uint8_t rhport)
   return (enum_spd == DCD_HIGH_SPEED) ? TUSB_SPEED_HIGH : TUSB_SPEED_FULL;
 }
 
+#if 0
 static void set_speed(uint8_t rhport, tusb_speed_t speed)
 {
   uint32_t bitvalue;
@@ -364,6 +365,7 @@ static void set_speed(uint8_t rhport, tusb_speed_t speed)
   dev->DCFG &= ~(3 << USB_OTG_DCFG_DSPD_Pos);
   dev->DCFG |= (bitvalue << USB_OTG_DCFG_DSPD_Pos);
 }
+#endif
 
 #if defined(USB_HS_PHYC)
 static bool USB_HS_PHYCInit(void)
@@ -456,6 +458,7 @@ static void edpt_schedule_packets(uint8_t rhport, uint8_t const epnum, uint8_t c
   }
 }
 
+#if 0
 /*------------------------------------------------------------------*/
 /* Controller API
  *------------------------------------------------------------------*/
@@ -601,7 +604,7 @@ void dcd_disconnect(uint8_t rhport)
   USB_OTG_DeviceTypeDef * dev = DEVICE_BASE(rhport);
   dev->DCTL |= USB_OTG_DCTL_SDIS;
 }
-
+#endif
 
 /*------------------------------------------------------------------*/
 /* DCD Endpoint port

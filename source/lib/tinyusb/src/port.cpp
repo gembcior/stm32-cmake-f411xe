@@ -14,6 +14,7 @@ using namespace stm32::hal;
 
 void dcd_init (uint8_t rhport)
 {
+  (void) rhport;
   auto& device = getObject<OtgFsDeviceHal>();
   device.init();
   dcd_connect(rhport);
@@ -38,6 +39,7 @@ void dcd_int_disable (uint8_t rhport)
 
 void dcd_set_address (uint8_t rhport, uint8_t dev_addr)
 {
+  (void) rhport;
   auto& device = getObject<OtgFsDeviceHal>();
   device.setAddress(dev_addr);
   dcd_edpt_xfer(rhport, tu_edpt_addr(0, TUSB_DIR_IN), NULL, 0);
@@ -47,6 +49,8 @@ void dcd_set_address (uint8_t rhport, uint8_t dev_addr)
 void dcd_remote_wakeup (uint8_t rhport)
 {
   (void) rhport;
+  auto& device = getObject<OtgFsDeviceHal>();
+  device.wakeup();
 }
 
 
@@ -98,7 +102,7 @@ OtgFsEndpoint& getEndpoint(uint32_t number, OtgFsEndpointDirection direction)
   }
 }
 
-
+#if 0
 bool dcd_edpt_open (uint8_t rhport, tusb_desc_endpoint_t const * ep_desc)
 {
   (void) rhport;
@@ -216,3 +220,4 @@ void dcd_int_handler(uint8_t rhport)
 {
   (void) rhport;
 }
+#endif

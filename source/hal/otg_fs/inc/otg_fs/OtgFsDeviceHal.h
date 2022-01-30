@@ -29,6 +29,7 @@ public:
   void startXfer(OtgFsEndpoint& ep);
   void setStall(OtgFsEndpoint& ep);
   void clearStall(OtgFsEndpoint& ep);
+  void wakeup();
 
 };
 

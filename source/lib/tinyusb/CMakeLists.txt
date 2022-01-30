@@ -58,5 +58,5 @@ target_compile_options(tinyusb
     -Wno-deprecated
 )
 
-#add_subdirectory(src)
+add_subdirectory(src)
 add_subdirectory(origin)
