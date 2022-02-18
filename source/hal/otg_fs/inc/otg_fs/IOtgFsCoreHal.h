@@ -14,7 +14,7 @@ public:
   virtual void enableGlobalInterrupts() = 0;
   virtual void disableGlobalInterrupts() = 0;
   virtual void resetPhyClk() = 0;
-  virtual void clearInterrupts(uint32_t interrupt) = 0;
+  virtual void clearInterrupt(OtgFsInterrupt interrupt) = 0;
   virtual void activateTransceiver() = 0;
   virtual void deactivateTransceiver() = 0;
   virtual void setInterruptMask(OtgFsInterruptMask interrupt, bool mask) = 0;

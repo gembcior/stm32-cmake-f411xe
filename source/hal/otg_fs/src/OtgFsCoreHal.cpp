@@ -119,13 +119,6 @@ void OtgFsCoreHal::resetPhyClk()
 }
 
 
-void OtgFsCoreHal::clearInterrupts(uint32_t interrupt)
-{
-  auto value = otg_fs_global::fs_gintsts::read() | interrupt;
-  otg_fs_global::fs_gintsts::write(value);
-}
-
-
 void OtgFsCoreHal::activateTransceiver()
 {
   otg_fs_global::fs_gccfg::pwrdwn::write(1);
@@ -141,6 +134,7 @@ void OtgFsCoreHal::deactivateTransceiver()
 void OtgFsCoreHal::setInterruptMask(OtgFsInterruptMask interrupt, bool mask)
 {
   // TODO
+  // TODO try to implement this without switch (big size)
   uint32_t value = mask ? 1 : 0;
   switch (interrupt) {
     case OtgFsInterruptMask::Otgint:
@@ -186,6 +180,30 @@ void OtgFsCoreHal::flushRxFifo()
   otg_fs_global::fs_grstctl::rxfflsh::write(1);
   // TODO add timeout guard
   while (otg_fs_global::fs_grstctl::rxfflsh::read() != 0);
+}
+
+
+void OtgFsCoreHal::clearInterrupt(OtgFsInterrupt interrupt)
+{
+  otg_fs_global::fs_gintsts::write(1 << interrupt);
+}
+
+
+uint32_t OtgFsCoreHal::getInterruptStatus()
+{
+  return otg_fs_global::fs_gintsts::read();
+}
+
+
+bool OtgFsCoreHal::getInterruptStatus(OtgFsInterrupt interrupt)
+{
+  return (otg_fs_global::fs_gintsts::read() >> interrupt) & 0x1;
+}
+
+
+bool OtgFsCoreHal::getInterruptStatus(uint32_t status, OtgFsInterrupt interrupt)
+{
+  return (status >> interrupt) & 0x1;
 }
 
 } // namespace

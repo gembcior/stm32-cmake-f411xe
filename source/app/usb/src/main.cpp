@@ -1,12 +1,12 @@
-#include <cstdint>
 #include "UsbSystem.h"
 #include "objects.h"
 #include "system/constants.h"
 #include "uart/types.h"
+#include <cstdint>
 
-#include "objects/objects.h"
-#include "logger/Logger.h"
 #include "flasher/Flasher.h"
+#include "logger/Logger.h"
+#include "objects/objects.h"
 
 #include "otg_fs/OtgFsDeviceHal.h"
 #include "tusb.h"
@@ -16,26 +16,21 @@ using namespace stm32::system;
 using namespace stm32::hal;
 using namespace stm32::lib;
 
-
-void writeUart(const char character)
-{
-  auto& uart = getObject<UartDriver>();
+void writeUart(const char character) {
+  auto &uart = getObject<UartDriver>();
   uart.write(character);
 }
 
-
 extern "C" {
 
-void _putchar(char character)
-{
+void _putchar(char character) {
   writeUart(character);
 }
 
-void tud_cdc_line_state_cb(uint8_t itf, bool dtr, bool rts)
-{
-  (void) itf;
-  (void) rts;
-  auto& logger = getObject<Logger>();
+void tud_cdc_line_state_cb(uint8_t itf, bool dtr, bool rts) {
+  (void)itf;
+  (void)rts;
+  auto &logger = getObject<Logger>();
 
   if (dtr) {
     logger.info("Terminal connected");
@@ -43,12 +38,9 @@ void tud_cdc_line_state_cb(uint8_t itf, bool dtr, bool rts)
     logger.info("Terminal disconnected");
   }
 }
-
 }
 
-
-void cdc_task(void)
-{
+void cdc_task(void) {
   if (tud_cdc_available()) {
     char buf[64];
     uint32_t count = tud_cdc_read(buf, sizeof(buf));
@@ -58,28 +50,24 @@ void cdc_task(void)
   }
 }
 
-
-int main(void)
-{
+int main(void) {
   getIrqVectorTable();
-  auto& system = getObject<System>();
-  auto& flasher = getObject<Flasher>();
-  auto& uart = getObject<UartDriver>();
-  auto& logger = getObject<Logger>();
-  auto& gpio = getObject<GpioDriver>();
+  auto &system = getObject<System>();
+  auto &flasher = getObject<Flasher>();
+  auto &uart = getObject<UartDriver>();
+  auto &logger = getObject<Logger>();
+  auto &gpio = getObject<GpioDriver>();
 
   system.initialize();
 
   flasher.setPeriod(500);
   flasher.setPin(UserLed2.port, UserLed2.pin);
 
-  UartConfiguration uartConfig = {
-    .mode = UartMode::Tx,
-    .baudRate = 115200,
-    .dataLength = UartDataLength::Data8Bits,
-    .parity = UartParity::Disable,
-    .stopBits = UartStopBits::OneStopBit
-  };
+  UartConfiguration uartConfig = {.mode = UartMode::Tx,
+                                  .baudRate = 115200,
+                                  .dataLength = UartDataLength::Data8Bits,
+                                  .parity = UartParity::Disable,
+                                  .stopBits = UartStopBits::OneStopBit};
 
   uart.enable();
   uart.configure(uartConfig);
@@ -91,8 +79,7 @@ int main(void)
 
   tusb_init();
 
-  while (1)
-  {
+  while (1) {
     tud_task();
 
     flasher.blink();
@@ -106,6 +93,5 @@ int main(void)
     }
 
     cdc_task();
-
   }
 }

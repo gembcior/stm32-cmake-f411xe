@@ -27,7 +27,6 @@ public:
   void enableGlobalInterrupts() final;
   void disableGlobalInterrupts() final;
   void resetPhyClk() final;
-  void clearInterrupts(uint32_t interrupt) final;
   void activateTransceiver() final;
   void deactivateTransceiver() final;
   // TODO replace bool with enum for mask and unmask
@@ -36,6 +35,11 @@ public:
   void flushTxFifo(uint32_t fifoNumber);
   void flushRxFifo();
 
+  void clearInterrupt(OtgFsInterrupt interrupt) final;
+  void clearOtgInterrupt(OtgFsOtgInterrupt interrupt);
+  uint32_t getInterruptStatus();
+  bool getInterruptStatus(OtgFsInterrupt interrupt);
+  bool getInterruptStatus(uint32_t status, OtgFsInterrupt interrupt);
 };
 
 } // namespace

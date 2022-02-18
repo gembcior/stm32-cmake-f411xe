@@ -1120,6 +1120,7 @@ static void handle_epin_ints(uint8_t rhport, USB_OTG_DeviceTypeDef * dev, USB_OT
   }
 }
 
+//#if 0
 void dcd_int_handler(uint8_t rhport)
 {
   USB_OTG_GlobalTypeDef * usb_otg = GLOBAL_BASE(rhport);
@@ -1232,5 +1233,6 @@ void dcd_int_handler(uint8_t rhport)
   ////    TU_LOG2("      IISOIXFR!\r\n");
   //  }
 }
+//#endif
 
 #endif

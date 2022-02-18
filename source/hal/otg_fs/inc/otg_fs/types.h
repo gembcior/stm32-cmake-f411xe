@@ -17,6 +17,38 @@ enum class OtgFsMode {
 };
 
 
+enum OtgFsInterrupt : uint32_t {
+  Mmis               = 1,
+  Otgint             = 2,
+  Sof                = 3,
+  Rxflvl             = 4,
+  Nptxfe             = 5,
+  Ginakeff           = 6,
+  Goutnakeff         = 7,
+  Esusp              = 10,
+  Usbsusp            = 11,
+  Usbrst             = 12,
+  Enumdne            = 13,
+  Isoodrp            = 14,
+  Eopf               = 15,
+  Iepint             = 18,
+  Oepint             = 19,
+  Iisoixfr           = 20,
+  Ipxfr_incompisoout = 21,
+  Hprtint            = 24,
+  Hcint              = 25,
+  Ptxfe              = 26,
+  Cidschg            = 28,
+  Discint            = 29,
+  Srqint             = 30,
+  Wkupint            = 31,
+};
+
+
+enum OtgFsOtgInterrupt : uint32_t {
+};
+
+
 enum class OtgFsInterruptMask {
   Mmism,
   Otgint,

@@ -1,8 +1,31 @@
 #include <cstdint>
-#include "port.h"
+#include "device/dcd.h"
 #include "objects/objects.h"
 #include "otg_fs/OtgFsDeviceHal.h"
 #include <array>
+
+
+extern "C" {
+
+// Device Setup
+void dcd_init (uint8_t rhport);
+void dcd_int_enable (uint8_t rhport);
+void dcd_int_disable (uint8_t rhport);
+//void dcd_int_handler(uint8_t rhport);
+void dcd_set_address (uint8_t rhport, uint8_t dev_addr);
+void dcd_remote_wakeup(uint8_t rhport);
+void dcd_connect(uint8_t rhport);
+void dcd_disconnect(uint8_t rhport);
+
+// Endpoints
+bool dcd_edpt_open (uint8_t rhport, tusb_desc_endpoint_t const * desc_edpt);
+void dcd_edpt_close_all (uint8_t rhport);
+bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t total_bytes);
+bool dcd_edpt_xfer_fifo (uint8_t rhport, uint8_t ep_addr, tu_fifo_t * ff, uint16_t total_bytes);
+void dcd_edpt_stall (uint8_t rhport, uint8_t ep_addr);
+void dcd_edpt_clear_stall (uint8_t rhport, uint8_t ep_addr);
+
+}
 
 
 using namespace stm32::objects;
@@ -215,9 +238,47 @@ void dcd_edpt_clear_stall (uint8_t rhport, uint8_t ep_addr)
   device.clearStall(endpoint);
 }
 
+#endif
 
-void dcd_int_handler(uint8_t rhport)
+void dcd_int_handler_(uint8_t rhport)
 {
   (void) rhport;
+  auto& usb = getObject<OtgFsCoreHal>();
+  auto& device = getObject<OtgFsDeviceHal>();
+  (void)device;
+
+  uint32_t status = usb.getInterruptStatus();
+
+  if (usb.getInterruptStatus(status, OtgFsInterrupt::Usbrst)) {
+    usb.clearInterrupt(OtgFsInterrupt::Usbrst);
+  }
+
+  if (usb.getInterruptStatus(status, OtgFsInterrupt::Enumdne)) {
+    usb.clearInterrupt(OtgFsInterrupt::Enumdne);
+  }
+
+  if (usb.getInterruptStatus(status, OtgFsInterrupt::Usbsusp)) {
+    usb.clearInterrupt(OtgFsInterrupt::Usbsusp);
+  }
+
+  if (usb.getInterruptStatus(status, OtgFsInterrupt::Wkupint)) {
+    usb.clearInterrupt(OtgFsInterrupt::Wkupint);
+  }
+
+  if (usb.getInterruptStatus(status, OtgFsInterrupt::Otgint)) {
+  }
+
+  if (usb.getInterruptStatus(status, OtgFsInterrupt::Sof)) {
+    usb.clearInterrupt(OtgFsInterrupt::Sof);
+  }
+
+  if (usb.getInterruptStatus(status, OtgFsInterrupt::Rxflvl)) {
+  }
+
+  if (usb.getInterruptStatus(status, OtgFsInterrupt::Oepint)) {
+  }
+
+  if (usb.getInterruptStatus(status, OtgFsInterrupt::Iepint)) {
+  }
+
 }
-#endif
