@@ -10,6 +10,11 @@ set(CMAKE_C_STANDARD_REQUIRED True)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
 
+if (UNIT_TEST)
+add_compile_options("--coverage")
+add_link_options("--coverage")
+endif()
+
 if (NOT UNIT_TEST)
   add_subdirectory(app)
   add_subdirectory(crt)

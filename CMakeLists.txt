@@ -58,3 +58,13 @@ ExternalProject_Add(unittests
                     -D CMAKE_BUILD_TYPE:STRING="Debug"
                     -D UNIT_TEST:BOOL=ON
 )
+
+find_package(Python3)
+
+if (Python3_FOUND)
+  ExternalProject_Add_Step(unittests coverage
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/coverage/gcov.py ${CMAKE_BINARY_DIR}/gcov
+    COMMENT "Gather coverage with gcov"
+    DEPENDEES test
+  )
+endif()
