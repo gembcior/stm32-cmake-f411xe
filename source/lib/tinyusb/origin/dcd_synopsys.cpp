@@ -28,122 +28,22 @@
  */
 
 #include "tusb_option.h"
+#include "stm32f4xx.h"
+#include "device/dcd.h"
 
 // Since TinyUSB doesn't use SOF for now, and this interrupt too often (1ms interval)
 // We disable SOF for now until needed later on
 #define USE_SOF     0
 
-#if defined (STM32F105x8) || defined (STM32F105xB) || defined (STM32F105xC) || \
-    defined (STM32F107xB) || defined (STM32F107xC)
-#define STM32F1_SYNOPSYS
-#endif
-
-#if defined (STM32L475xx) || defined (STM32L476xx) ||                          \
-    defined (STM32L485xx) || defined (STM32L486xx) || defined (STM32L496xx) || \
-    defined (STM32L4R5xx) || defined (STM32L4R7xx) || defined (STM32L4R9xx) || \
-    defined (STM32L4S5xx) || defined (STM32L4S7xx) || defined (STM32L4S9xx)
-#define STM32L4_SYNOPSYS
-#endif
-
-#if TUSB_OPT_DEVICE_ENABLED &&                                          \
-    ( (CFG_TUSB_MCU == OPT_MCU_STM32F1 && defined(STM32F1_SYNOPSYS)) || \
-       CFG_TUSB_MCU == OPT_MCU_STM32F2                               || \
-       CFG_TUSB_MCU == OPT_MCU_STM32F4                               || \
-       CFG_TUSB_MCU == OPT_MCU_STM32F7                               || \
-       CFG_TUSB_MCU == OPT_MCU_STM32H7                               || \
-      (CFG_TUSB_MCU == OPT_MCU_STM32L4 && defined(STM32L4_SYNOPSYS)  || \
-       CFG_TUSB_MCU == OPT_MCU_GD32VF103 )                           \
-    )
-
-// EP_MAX       : Max number of bi-directional endpoints including EP0
-// EP_FIFO_SIZE : Size of dedicated USB SRAM
-#if CFG_TUSB_MCU == OPT_MCU_STM32F1
-#include "stm32f1xx.h"
-#define EP_MAX_FS       4
-#define EP_FIFO_SIZE_FS 1280
-
-#elif CFG_TUSB_MCU == OPT_MCU_STM32F2
-#include "stm32f2xx.h"
-#define EP_MAX_FS       USB_OTG_FS_MAX_IN_ENDPOINTS
-#define EP_FIFO_SIZE_FS USB_OTG_FS_TOTAL_FIFO_SIZE
-
-#elif CFG_TUSB_MCU == OPT_MCU_STM32F4
-#include "stm32f4xx.h"
 #define EP_MAX_FS       USB_OTG_FS_MAX_IN_ENDPOINTS
 #define EP_FIFO_SIZE_FS USB_OTG_FS_TOTAL_FIFO_SIZE
 #define EP_MAX_HS       USB_OTG_HS_MAX_IN_ENDPOINTS
 #define EP_FIFO_SIZE_HS USB_OTG_HS_TOTAL_FIFO_SIZE
 
-#elif CFG_TUSB_MCU == OPT_MCU_STM32H7
-#include "stm32h7xx.h"
-#define EP_MAX_FS       9
-#define EP_FIFO_SIZE_FS 4096
-#define EP_MAX_HS       9
-#define EP_FIFO_SIZE_HS 4096
-
-#elif CFG_TUSB_MCU == OPT_MCU_STM32F7
-#include "stm32f7xx.h"
-#define EP_MAX_FS       6
-#define EP_FIFO_SIZE_FS 1280
-#define EP_MAX_HS       9
-#define EP_FIFO_SIZE_HS 4096
-
-#elif CFG_TUSB_MCU == OPT_MCU_STM32L4
-#include "stm32l4xx.h"
-#define EP_MAX_FS       6
-#define EP_FIFO_SIZE_FS 1280
-
-#elif CFG_TUSB_MCU == OPT_MCU_GD32VF103
-#include "synopsys_common.h"
-
-// for remote wakeup delay
-#define __NOP()   __asm volatile ("nop")
-
-// These numbers are the same for the whole GD32VF103 family.
-#define OTG_FS_IRQn     86
-#define EP_MAX_FS       4
-#define EP_FIFO_SIZE_FS 1280
-
-// The GD32VF103 is a RISC-V MCU, which implements the ECLIC Core-Local
-// Interrupt Controller by Nuclei. It is nearly API compatible to the
-// NVIC used by ARM MCUs.
-#define ECLIC_INTERRUPT_ENABLE_BASE 0xD2001001UL
-
-#define NVIC_EnableIRQ __eclic_enable_interrupt
-#define NVIC_DisableIRQ __eclic_disable_interrupt
-
-static inline void __eclic_enable_interrupt (uint32_t irq) {
-  *(volatile uint8_t*)(ECLIC_INTERRUPT_ENABLE_BASE + (irq * 4)) = 1;
-}
-
-static inline void __eclic_disable_interrupt (uint32_t irq){
-  *(volatile uint8_t*)(ECLIC_INTERRUPT_ENABLE_BASE + (irq * 4)) = 0;
-}
-
-#else
-#error "Unsupported MCUs"
-#endif
-
-#include "device/dcd.h"
-
-//--------------------------------------------------------------------+
-// MACRO TYPEDEF CONSTANT ENUM
-//--------------------------------------------------------------------+
-
-// On STM32 we associate Port0 to OTG_FS, and Port1 to OTG_HS
-#if TUD_OPT_RHPORT == 0
 #define EP_MAX            EP_MAX_FS
 #define EP_FIFO_SIZE      EP_FIFO_SIZE_FS
 #define RHPORT_REGS_BASE  USB_OTG_FS_PERIPH_BASE
 #define RHPORT_IRQn       OTG_FS_IRQn
-
-#else
-#define EP_MAX            EP_MAX_HS
-#define EP_FIFO_SIZE      EP_FIFO_SIZE_HS
-#define RHPORT_REGS_BASE  USB_OTG_HS_PERIPH_BASE
-#define RHPORT_IRQn       OTG_HS_IRQn
-
-#endif
 
 #define GLOBAL_BASE(_port)     ((USB_OTG_GlobalTypeDef*) RHPORT_REGS_BASE)
 #define DEVICE_BASE(_port)     (USB_OTG_DeviceTypeDef *) (RHPORT_REGS_BASE + USB_OTG_DEVICE_BASE)
@@ -151,8 +51,7 @@ static inline void __eclic_disable_interrupt (uint32_t irq){
 #define IN_EP_BASE(_port)      (USB_OTG_INEndpointTypeDef *) (RHPORT_REGS_BASE + USB_OTG_IN_ENDPOINT_BASE)
 #define FIFO_BASE(_port, _x)   ((volatile uint32_t *) (RHPORT_REGS_BASE + USB_OTG_FIFO_BASE + (_x) * USB_OTG_FIFO_SIZE))
 
-enum
-{
+enum {
   DCD_HIGH_SPEED        = 0, // Highspeed mode
   DCD_FULL_SPEED_USE_HS = 1, // Full speed in Highspeed port (probably with internal PHY)
   DCD_FULL_SPEED        = 3, // Full speed with internal PHY
@@ -345,47 +244,6 @@ static tusb_speed_t get_speed(uint8_t rhport)
   return (enum_spd == DCD_HIGH_SPEED) ? TUSB_SPEED_HIGH : TUSB_SPEED_FULL;
 }
 
-
-#if defined(USB_HS_PHYC)
-static bool USB_HS_PHYCInit(void)
-{
-  USB_HS_PHYC_GlobalTypeDef *usb_hs_phyc = (USB_HS_PHYC_GlobalTypeDef*) USB_HS_PHYC_CONTROLLER_BASE;
-
-  // Enable LDO
-  usb_hs_phyc->USB_HS_PHYC_LDO |= USB_HS_PHYC_LDO_ENABLE;
-
-  // Wait until LDO ready
-  while ( 0 == (usb_hs_phyc->USB_HS_PHYC_LDO & USB_HS_PHYC_LDO_STATUS) ) {}
-
-  uint32_t phyc_pll = 0;
-
-  // TODO Try to get HSE_VALUE from registers instead of depending CFLAGS
-  switch ( HSE_VALUE )
-  {
-    case 12000000: phyc_pll = USB_HS_PHYC_PLL1_PLLSEL_12MHZ   ; break;
-    case 12500000: phyc_pll = USB_HS_PHYC_PLL1_PLLSEL_12_5MHZ ; break;
-    case 16000000: phyc_pll = USB_HS_PHYC_PLL1_PLLSEL_16MHZ   ; break;
-    case 24000000: phyc_pll = USB_HS_PHYC_PLL1_PLLSEL_24MHZ   ; break;
-    case 25000000: phyc_pll = USB_HS_PHYC_PLL1_PLLSEL_25MHZ   ; break;
-    case 32000000: phyc_pll = USB_HS_PHYC_PLL1_PLLSEL_Msk     ; break; // Value not defined in header
-    default:
-      TU_ASSERT(0);
-  }
-  usb_hs_phyc->USB_HS_PHYC_PLL = phyc_pll;
-
-  // Control the tuning interface of the High Speed PHY
-  // Use magic value (USB_HS_PHYC_TUNE_VALUE) from ST driver
-  usb_hs_phyc->USB_HS_PHYC_TUNE |= 0x00000F13U;
-
-  // Enable PLL internal PHY
-  usb_hs_phyc->USB_HS_PHYC_PLL |= USB_HS_PHYC_PLL_PLLEN;
-
-  // Original ST code has 2 ms delay for PLL stabilization.
-  // Primitive test shows that more than 10 USB un/replug cycle showed no error with enumeration
-
-  return true;
-}
-#endif
 
 static void edpt_schedule_packets(uint8_t rhport, uint8_t const epnum, uint8_t const dir, uint16_t const num_packets, uint16_t total_bytes)
 {
@@ -1068,5 +926,3 @@ void dcd_int_handler(uint8_t rhport)
   ////    TU_LOG2("      IISOIXFR!\r\n");
   //  }
 }
-
-#endif

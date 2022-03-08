@@ -1,6 +1,6 @@
 target_sources(tinyusb
   PRIVATE
-    dcd_synopsys.c
+    dcd_synopsys.cpp
 )
 
 target_include_directories(tinyusb
