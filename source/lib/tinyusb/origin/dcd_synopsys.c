@@ -604,7 +604,6 @@ void dcd_disconnect(uint8_t rhport)
   USB_OTG_DeviceTypeDef * dev = DEVICE_BASE(rhport);
   dev->DCTL |= USB_OTG_DCTL_SDIS;
 }
-#endif
 
 /*------------------------------------------------------------------*/
 /* DCD Endpoint port
@@ -696,6 +695,7 @@ bool dcd_edpt_open (uint8_t rhport, tusb_desc_endpoint_t const * desc_edpt)
 
   return true;
 }
+
 
 // Close all non-control endpoints, cancel all pending transfers if any.
 void dcd_edpt_close_all (uint8_t rhport)

@@ -5,6 +5,10 @@
 
 namespace stm32::hal {
 
+constexpr uint32_t MaxEndpoints = 4U;
+constexpr uint32_t EndpointSize = 64U;
+constexpr uint32_t EndpointFifoSize = 1280U;
+
 enum class OtgFsPhy {
   External,
   Internal,
@@ -17,7 +21,13 @@ enum class OtgFsMode {
 };
 
 
-enum OtgFsInterrupt : uint32_t {
+enum class OtgFsInterruptMask {
+  Masked,
+  UnMasked,
+};
+
+
+enum class OtgFsInterrupt : uint32_t {
   Mmis               = 1,
   Otgint             = 2,
   Sof                = 3,
@@ -45,39 +55,6 @@ enum OtgFsInterrupt : uint32_t {
 };
 
 
-enum OtgFsOtgInterrupt : uint32_t {
-};
-
-
-enum class OtgFsInterruptMask {
-  Mmism,
-  Otgint,
-  Sofm,
-  Rxflvlm,
-  Nptxfem,
-  Ginakeffm,
-  Gonakeffm,
-  Esuspm,
-  Usbsuspm,
-  Usbrst,
-  Enumdnem,
-  Isoodrpm,
-  Eopfm,
-  Iepint,
-  Oepint,
-  Iisoixfrm,
-  Iisooxfrm,
-  Ipxfrm,
-  Prtim,
-  Hcim,
-  Ptxfem,
-  Cidschgm,
-  Discint,
-  Srqim,
-  Wuim,
-};
-
-
 enum class OtgFsPeriodicFrameInterval : uint32_t {
   Fi80,
   Fi85,
@@ -91,25 +68,32 @@ enum class OtgFsSpeed : uint32_t {
 };
 
 
-enum class OtgFsDeviceInEndpointInterruptMask {
-  Xfrcm,
-  Epdm,
-  Tom,
-  Ittxfemsk,
-  Inepnmm,
-  Inepnem,
-  Nakm,
+enum class OtgFSNonZeroLenStatusOutHandshake : uint32_t {
+  OutPacket = 0,
+  StallHandshake = 1,
 };
 
 
-enum class OtgFsDeviceOutEndpointInterruptMask {
-  Xfrcm,
-  Epdm,
-  Stupm,
-  Stsphsrxm,
-  Outpkterrm,
-  Berrm,
-  Nakmsk,
+enum class OtgFsDeviceInEndpointInterrupt : uint32_t {
+  Xfrc   = 0,
+  Epd    = 1,
+  To     = 3,
+  Ittxfe = 4,
+  Inepnm = 5,
+  Inepne = 6,
+  Nak    = 13,
+};
+
+
+enum class OtgFsDeviceOutEndpointInterrupt : uint32_t {
+  Xfrc      = 0,
+  Epd       = 1,
+  Stup      = 3,
+  Otepd     = 4,
+  Stsphsrx  = 5,
+  Outpkterr = 8,
+  Berr      = 12,
+  Nak       = 13,
 };
 
 
@@ -129,12 +113,13 @@ enum class OtgFsEndpointType {
 
 struct OtgFsEndpoint
 {
-  uint32_t number;
   OtgFsEndpointDirection direction;
   OtgFsEndpointType type;
+  uint32_t number;
   uint32_t maxPacketSize;
   uint32_t xferLen;
   uint32_t interval;
+  uint8_t* buffer;
 };
 
 } // namespace

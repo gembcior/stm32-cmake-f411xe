@@ -12,4 +12,5 @@ target_include_directories(otg_fs
 target_link_libraries(otg_fs
   PRIVATE
     dral
+    system
 )

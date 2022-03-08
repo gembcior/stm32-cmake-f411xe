@@ -1,24 +1,29 @@
 #include <cstdint>
+#include "tusb_option.h"
 #include "device/dcd.h"
 #include "objects/objects.h"
 #include "otg_fs/OtgFsDeviceHal.h"
 #include <array>
 
+#include "dral/otg_fs_device.h"
+#include "dral/otg_fs_global.h"
+
 
 extern "C" {
 
-// Device Setup
+/* Device API */
 void dcd_init (uint8_t rhport);
 void dcd_int_enable (uint8_t rhport);
 void dcd_int_disable (uint8_t rhport);
-//void dcd_int_handler(uint8_t rhport);
+void dcd_int_handler(uint8_t rhport);
 void dcd_set_address (uint8_t rhport, uint8_t dev_addr);
 void dcd_remote_wakeup(uint8_t rhport);
 void dcd_connect(uint8_t rhport);
 void dcd_disconnect(uint8_t rhport);
 
-// Endpoints
+/* Endpoints API */
 bool dcd_edpt_open (uint8_t rhport, tusb_desc_endpoint_t const * desc_edpt);
+void dcd_edpt_close (uint8_t rhport, uint8_t ep_addr);
 void dcd_edpt_close_all (uint8_t rhport);
 bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t total_bytes);
 bool dcd_edpt_xfer_fifo (uint8_t rhport, uint8_t ep_addr, tu_fifo_t * ff, uint16_t total_bytes);
@@ -30,16 +35,18 @@ void dcd_edpt_clear_stall (uint8_t rhport, uint8_t ep_addr);
 
 using namespace stm32::objects;
 using namespace stm32::hal;
+using namespace dral::stm32f411;
 
-/*------------------------------------------------------------------*/
-/* Device API
- *------------------------------------------------------------------*/
+
+/* Device API */
 
 void dcd_init (uint8_t rhport)
 {
   (void) rhport;
+
   auto& device = getObject<OtgFsDeviceHal>();
   device.init();
+
   dcd_connect(rhport);
 }
 
@@ -47,6 +54,7 @@ void dcd_init (uint8_t rhport)
 void dcd_int_enable (uint8_t rhport)
 {
   (void) rhport;
+
   auto& device = getObject<OtgFsDeviceHal>();
   device.enableGlobalInterrupts();
 }
@@ -55,6 +63,7 @@ void dcd_int_enable (uint8_t rhport)
 void dcd_int_disable (uint8_t rhport)
 {
   (void) rhport;
+
   auto& device = getObject<OtgFsDeviceHal>();
   device.disableGlobalInterrupts();
 }
@@ -63,8 +72,11 @@ void dcd_int_disable (uint8_t rhport)
 void dcd_set_address (uint8_t rhport, uint8_t dev_addr)
 {
   (void) rhport;
+  TU_LOG(1, "dcd_set_address\n\r");
+
   auto& device = getObject<OtgFsDeviceHal>();
   device.setAddress(dev_addr);
+
   dcd_edpt_xfer(rhport, tu_edpt_addr(0, TUSB_DIR_IN), NULL, 0);
 }
 
@@ -72,6 +84,8 @@ void dcd_set_address (uint8_t rhport, uint8_t dev_addr)
 void dcd_remote_wakeup (uint8_t rhport)
 {
   (void) rhport;
+  TU_LOG(1, "dcd_remote_wakeup\n\r");
+
   auto& device = getObject<OtgFsDeviceHal>();
   device.wakeup();
 }
@@ -80,6 +94,7 @@ void dcd_remote_wakeup (uint8_t rhport)
 void dcd_connect(uint8_t rhport)
 {
   (void) rhport;
+
   auto& device = getObject<OtgFsDeviceHal>();
   device.connect();
 }
@@ -88,32 +103,32 @@ void dcd_connect(uint8_t rhport)
 void dcd_disconnect(uint8_t rhport)
 {
   (void) rhport;
+
   auto& device = getObject<OtgFsDeviceHal>();
   device.disconnect();
 }
 
-//--------------------------------------------------------------------+
-// Endpoint API
-//--------------------------------------------------------------------+
+
+/* Endpoints API */
 
 OtgFsEndpoint& getEndpoint(uint32_t number, OtgFsEndpointDirection direction)
 {
-  constexpr uint32_t MaxEndpoint = 4;
-
-  static std::array<OtgFsEndpoint, MaxEndpoint> in = [] {
-    std::array<OtgFsEndpoint, MaxEndpoint> init = {};
-    for (unsigned i = 0; i < MaxEndpoint; i++) {
+  static std::array<OtgFsEndpoint, MaxEndpoints> in = [] {
+    std::array<OtgFsEndpoint, MaxEndpoints> init = {};
+    for (unsigned i = 0; i < MaxEndpoints; i++) {
       init[i].number = i;
       init[i].direction = OtgFsEndpointDirection::In;
+      init[i].buffer = nullptr;
     }
     return init;
   }();
 
-  static std::array<OtgFsEndpoint, MaxEndpoint> out = [] {
-    std::array<OtgFsEndpoint, MaxEndpoint> init = {};
-    for (unsigned i = 0; i < MaxEndpoint; i++) {
+  static std::array<OtgFsEndpoint, MaxEndpoints> out = [] {
+    std::array<OtgFsEndpoint, MaxEndpoints> init = {};
+    for (unsigned i = 0; i < MaxEndpoints; i++) {
       init[i].number = i;
       init[i].direction = OtgFsEndpointDirection::Out;
+      init[i].buffer = nullptr;
     }
     return init;
   }();
@@ -125,31 +140,97 @@ OtgFsEndpoint& getEndpoint(uint32_t number, OtgFsEndpointDirection direction)
   }
 }
 
-#if 0
+
+tu_fifo_t* getXferFifo(uint32_t number, OtgFsEndpointDirection direction)
+{
+  static std::array<tu_fifo_t*, MaxEndpoints> in = {nullptr};
+  static std::array<tu_fifo_t*, MaxEndpoints> out = {nullptr};
+
+  if (direction == OtgFsEndpointDirection::In) {
+    return in[number];
+  } else {
+    return out[number];
+  }
+}
+
+
+static uint32_t TxFifoAllocatedWords = 16;
+static bool OutEndpointClosed = false;
+static uint16_t Endpoint0Pending[2];
+static TU_ATTR_ALIGNED(4) uint32_t SetupPacket[2];
+
+
 bool dcd_edpt_open (uint8_t rhport, tusb_desc_endpoint_t const * ep_desc)
 {
   (void) rhport;
 
+  TU_LOG(1, "dcd_edpt_open\n\r");
+
   const auto endpointNumber = tu_edpt_number(ep_desc->bEndpointAddress);
   const auto endpointDirection = static_cast<OtgFsEndpointDirection>(tu_edpt_dir(ep_desc->bEndpointAddress));
 
+  auto& device = getObject<OtgFsDeviceHal>();
   auto& endpoint = getEndpoint(endpointNumber, endpointDirection);
 
   endpoint.maxPacketSize = ep_desc->wMaxPacketSize.size;
   endpoint.interval = ep_desc->bInterval;
 
-  auto& device = getObject<OtgFsDeviceHal>();
+  const uint32_t fifoSize = (endpoint.maxPacketSize + 3) / 4;
+
+  if (endpoint.direction == OtgFsEndpointDirection::Out) {
+    const uint32_t rxFifoSize = device.getRxFifoSize(4 * fifoSize);
+    if (otg_fs_global::fs_grxfsiz::rxfd::read() < rxFifoSize) {
+      otg_fs_global::fs_grxfsiz::rxfd::write(rxFifoSize);
+    }
+  } else {
+    TxFifoAllocatedWords += fifoSize;
+    const uint32_t txFifoStartAddress = EndpointFifoSize / 4 - TxFifoAllocatedWords;
+    if (endpoint.number == 1) {
+      otg_fs_global::fs_dieptxf1::ineptxfd::write(fifoSize);
+      otg_fs_global::fs_dieptxf1::ineptxsa::write(txFifoStartAddress);
+    } else if (endpoint.number == 2) {
+      otg_fs_global::fs_dieptxf2::ineptxfd::write(fifoSize);
+      otg_fs_global::fs_dieptxf2::ineptxsa::write(txFifoStartAddress);
+    } else if (endpoint.number == 3) {
+      otg_fs_global::fs_dieptxf3::ineptxfd::write(fifoSize);
+      otg_fs_global::fs_dieptxf3::ineptxsa::write(txFifoStartAddress);
+    }
+  }
 
   device.activateEndpoint(endpoint);
-
-  // TODO add FIFO support
 
   return true;
 }
 
 
+void dcd_edpt_close_all (uint8_t rhport)
+{
+  TU_LOG(1, "dcd_edpt_close_all\n\r");
+
+  auto& device = getObject<OtgFsDeviceHal>();
+
+  device.setAllInEndpointInterruptMask(0, OtgFsInterruptMask::UnMasked);
+  device.setAllOutEndpointInterruptMask(0, OtgFsInterruptMask::UnMasked);
+
+  for (uint32_t i = 1; i < MaxEndpoints; i++) {
+    uint32_t endpointRegNumber = i - 1;
+
+    otg_fs_device::doepctlx::write(endpointRegNumber, 0);
+    auto& outEndpoint = getEndpoint(i, OtgFsEndpointDirection::Out);
+    outEndpoint.maxPacketSize = 0;
+    otg_fs_device::diepctlx::write(endpointRegNumber, 0);
+    auto& inEndpoint = getEndpoint(i, OtgFsEndpointDirection::In);
+    inEndpoint.maxPacketSize = 0;
+  }
+
+  TxFifoAllocatedWords = 16;
+}
+
+
 void dcd_edpt_close (uint8_t rhport, uint8_t ep_addr)
 {
+  TU_LOG(1, "dcd_edpt_close\n\r");
+
   (void) rhport;
   const auto endpointNumber = tu_edpt_number(ep_addr);
   const auto endpointDirection = static_cast<OtgFsEndpointDirection>(tu_edpt_dir(ep_addr));
@@ -161,23 +242,47 @@ void dcd_edpt_close (uint8_t rhport, uint8_t ep_addr)
   if (endpoint.direction == OtgFsEndpointDirection::In) {
     device.flushTxFifo(endpoint.number);
   }
-  // TODO add FIFO support
+
+  endpoint.maxPacketSize = 0;
+  if (endpoint.direction == OtgFsEndpointDirection::In) {
+    uint32_t fifoSize = 0;
+    if (endpoint.number == 1) {
+      fifoSize = otg_fs_global::fs_dieptxf1::ineptxfd::read();
+    } else if (endpoint.number == 2) {
+      fifoSize = otg_fs_global::fs_dieptxf2::ineptxfd::read();
+    } else if (endpoint.number == 3) {
+      fifoSize = otg_fs_global::fs_dieptxf3::ineptxfd::read();
+    }
+    TxFifoAllocatedWords -= fifoSize;
+  } else {
+    OutEndpointClosed = true;
+  }
 }
 
 
 bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t total_bytes)
 {
+  TU_LOG(1, "dcd_edpt_xfer\n\r");
   (void) rhport;
-  (void) buffer;
 
   const auto endpointNumber = tu_edpt_number(ep_addr);
   const auto endpointDirection = static_cast<OtgFsEndpointDirection>(tu_edpt_dir(ep_addr));
 
   auto& endpoint = getEndpoint(endpointNumber, endpointDirection);
+
+  endpoint.buffer = buffer;
+  endpoint.xferLen = total_bytes;
+
   auto& device = getObject<OtgFsDeviceHal>();
 
-  endpoint.xferLen = total_bytes;
-  // TODO do something with buffer
+  if (endpoint.number == 0) {
+    Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] = total_bytes;
+
+    // TODO check if needed
+    uint32_t totalBytes = tu_min16(Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)], endpoint.maxPacketSize);
+    endpoint.xferLen = totalBytes;
+    Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] -= totalBytes;
+  }
 
   device.startXfer(endpoint);
 
@@ -187,19 +292,30 @@ bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t 
 
 bool dcd_edpt_xfer_fifo (uint8_t rhport, uint8_t ep_addr, tu_fifo_t * ff, uint16_t total_bytes)
 {
+  TU_LOG(1, "dcd_edpt_xfer_fifo\n\r");
   (void) rhport;
-  (void) ep_addr;
-  (void) ff;
+
+  TU_ASSERT(ff->item_size == 1);
 
   const auto endpointNumber = tu_edpt_number(ep_addr);
   const auto endpointDirection = static_cast<OtgFsEndpointDirection>(tu_edpt_dir(ep_addr));
 
+  tu_fifo_t* xferFifo = getXferFifo(endpointNumber, endpointDirection);
+  xferFifo = ff;
+  (void) xferFifo;
+
   auto& endpoint = getEndpoint(endpointNumber, endpointDirection);
-  auto& device = getObject<OtgFsDeviceHal>();
-
+  endpoint.buffer = nullptr;
   endpoint.xferLen = total_bytes;
-  // TODO do something with ff
 
+  if (endpoint.number == 0) {
+    // TODO check if needed
+    uint32_t totalBytes = tu_min16(Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)], endpoint.maxPacketSize);
+    endpoint.xferLen = totalBytes;
+    Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] -= totalBytes;
+  }
+
+  auto& device = getObject<OtgFsDeviceHal>();
   device.startXfer(endpoint);
 
   return true;
@@ -208,6 +324,7 @@ bool dcd_edpt_xfer_fifo (uint8_t rhport, uint8_t ep_addr, tu_fifo_t * ff, uint16
 
 void dcd_edpt_stall (uint8_t rhport, uint8_t ep_addr)
 {
+  TU_LOG(1, "dcd_edpt_stall\n\r");
   (void) rhport;
 
   const auto endpointNumber = tu_edpt_number(ep_addr);
@@ -227,6 +344,7 @@ void dcd_edpt_stall (uint8_t rhport, uint8_t ep_addr)
 
 void dcd_edpt_clear_stall (uint8_t rhport, uint8_t ep_addr)
 {
+  TU_LOG(1, "dcd_edpt_clear_stall\n\r");
   (void) rhport;
 
   const auto endpointNumber = tu_edpt_number(ep_addr);
@@ -238,47 +356,344 @@ void dcd_edpt_clear_stall (uint8_t rhport, uint8_t ep_addr)
   device.clearStall(endpoint);
 }
 
-#endif
 
-void dcd_int_handler_(uint8_t rhport)
+void updateRxFifoSize()
 {
-  (void) rhport;
+  uint32_t maxEndpointSize = 0;
+  for (uint32_t epnum = 0; epnum < MaxEndpoints; epnum++) {
+    maxEndpointSize = tu_max16(maxEndpointSize, getEndpoint(epnum, OtgFsEndpointDirection::Out).maxPacketSize);
+  }
+
+  auto& device = getObject<OtgFsDeviceHal>();
+  otg_fs_global::fs_grxfsiz::rxfd::write(device.getRxFifoSize(maxEndpointSize));
+}
+
+
+void handleRxFifoNonEmpty()
+{
+  uint32_t rxStatus = otg_fs_global::fs_grxstsr_device::read();
+  uint32_t packetStatus = otg_fs_global::fs_grxstsr_device::pktsts::getFromRegValue(rxStatus); 
+  uint32_t endpointNumber = otg_fs_global::fs_grxstsr_device::epnum::getFromRegValue(rxStatus);
+  uint32_t byteCount = otg_fs_global::fs_grxstsr_device::bcnt::getFromRegValue(rxStatus);
+
+  auto& device = getObject<OtgFsDeviceHal>();
+  volatile uint32_t* rxFifo = reinterpret_cast<volatile uint32_t*>(device.getFifoAddress(0));
+
+//  TU_LOG(1, "Packet Status %lu\n\r", packetStatus);
+//  TU_LOG(1, "byteCount %lu\n\r", byteCount);
+
+  switch (packetStatus) {
+    case 0x1U:
+      break;
+    case 0x2U: {
+      auto& endpoint = getEndpoint(endpointNumber, OtgFsEndpointDirection::Out);
+      auto* xferFifo = getXferFifo(endpointNumber, OtgFsEndpointDirection::Out);
+
+      if (xferFifo) {
+        tu_fifo_write_n_const_addr_full_words(xferFifo, (const void*)rxFifo, byteCount);
+      } else {
+        device.readFifoPacket(endpoint.buffer, byteCount);
+        endpoint.buffer += byteCount;
+      }
+
+      if(byteCount < endpoint.maxPacketSize) {
+        uint32_t xferLen = endpointNumber == 0 ? otg_fs_device::doeptsiz0::xfrsiz::read() : otg_fs_device::doeptsizx::xfrsiz::read(endpointNumber - 1);
+        endpoint.xferLen -= xferLen;
+
+        if(endpointNumber == 0) {
+          endpoint.xferLen -= Endpoint0Pending[1];
+          Endpoint0Pending[1] = 0;
+        }
+      }
+    } break;
+    case 0x3U:
+      break;
+    case 0x4U:
+      if (endpointNumber == 0) {
+        otg_fs_device::doeptsiz0::stupcnt::write(3);
+      } else {
+        otg_fs_device::doeptsizx::rxdpid_stupcnt::write(endpointNumber - 1, 3);
+      }
+      break;
+    case 0x6U:
+      device.readFifoPacket(reinterpret_cast<uint8_t*>(SetupPacket), byteCount);
+//      SetupPacket[0] = *rxFifo;
+//      SetupPacket[1] = *rxFifo;
+//      TU_LOG(1, "SetupPacket[0]: %lu\n\r", SetupPacket[0]);
+//      TU_LOG(1, "SetupPacket[1]: %lu\n\r", SetupPacket[1]);
+      break;
+    default:
+      TU_BREAKPOINT();
+      break;
+  }
+}
+
+
+void handleOutEndpointInterrupt(uint8_t rhport)
+{
+  for (uint32_t i = 0; i < MaxEndpoints; i++) {
+    auto& endpoint = getEndpoint(i, OtgFsEndpointDirection::Out);
+
+    uint32_t oepint = otg_fs_device::fs_daint::oepint::read();
+
+    if (oepint & (1U << i)) {
+      if (endpoint.number == 0) {
+        if (otg_fs_device::doepint0::stup::read()) {
+          otg_fs_device::doepint0::stup::write(1);
+          dcd_event_setup_received(rhport, reinterpret_cast<uint8_t*>(SetupPacket), true);
+        }
+
+        if (otg_fs_device::doepint0::xfrc::read()) {
+          otg_fs_device::doepint0::xfrc::write(1);
+
+          if (Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)]) {
+            // TODO check if needed
+            uint32_t totalBytes = tu_min16(Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)], endpoint.maxPacketSize);
+            endpoint.xferLen = totalBytes;
+            Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] -= totalBytes;
+
+            auto& device = getObject<OtgFsDeviceHal>();
+            device.startXfer(endpoint);
+          } else {
+            dcd_event_xfer_complete(rhport, i, endpoint.xferLen, XFER_RESULT_SUCCESS, true);
+          }
+        }
+      } else {
+
+        uint32_t endpointRegNumber = i - 1;
+
+        if (otg_fs_device::doepintx::stup::read(endpointRegNumber)) {
+          otg_fs_device::doepintx::stup::write(endpointRegNumber, 1);
+          dcd_event_setup_received(rhport, reinterpret_cast<uint8_t*>(SetupPacket), true);
+        }
+
+        if (otg_fs_device::doepintx::xfrc::read(endpointRegNumber)) {
+          otg_fs_device::doepintx::xfrc::write(endpointRegNumber, 1);
+          dcd_event_xfer_complete(rhport, i, endpoint.xferLen, XFER_RESULT_SUCCESS, true);
+        }
+      }
+
+    }
+  }
+}
+
+
+void handleInEndpointInterrupt(uint8_t rhport)
+{
+  for (uint32_t i = 0; i < MaxEndpoints; i++) {
+    auto& device = getObject<OtgFsDeviceHal>();
+    auto& endpoint = getEndpoint(i, OtgFsEndpointDirection::In);
+
+    uint32_t iepint = otg_fs_device::fs_daint::iepint::read();
+
+    if (iepint & (1U << i)) {
+      if (endpoint.number == 0) {
+
+        if (otg_fs_device::diepint0::xfrc::read()) {
+          otg_fs_device::diepint0::xfrc::write(1);
+
+          if (Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)]) {
+            // TODO check if needed
+            uint32_t totalBytes = tu_min16(Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)], endpoint.maxPacketSize);
+            endpoint.xferLen = totalBytes;
+            Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] -= totalBytes;
+
+            auto& device = getObject<OtgFsDeviceHal>();
+            device.startXfer(endpoint);
+          } else {
+            dcd_event_xfer_complete(rhport, i | TUSB_DIR_IN_MASK, endpoint.xferLen, XFER_RESULT_SUCCESS, true);
+          }
+        }
+
+        if (otg_fs_device::diepint0::txfe::read() && (otg_fs_device::diepempmsk::read() & (1U << i))) {
+
+          uint32_t remainingPackets = otg_fs_device::dieptsiz0::pktcnt::read();
+
+          for (uint32_t packet = 0; packet < remainingPackets; packet++) {
+            uint32_t remainingBytes = otg_fs_device::dieptsiz0::xfrsiz::read();
+            uint32_t packetSize = tu_min16(remainingBytes, endpoint.maxPacketSize);
+
+            if (packetSize > (otg_fs_device::dtxfsts0::ineptfsav::read() << 2U)) {
+              break;
+            }
+
+            auto* xferFifo = getXferFifo(i, OtgFsEndpointDirection::Out);
+
+            if (xferFifo) {
+              uint32_t* txFifo = reinterpret_cast<uint32_t*>(device.getFifoAddress(i));
+              tu_fifo_read_n_const_addr_full_words(xferFifo, txFifo, packetSize);
+            } else {
+              device.writeFifoPacket(i, endpoint.buffer, packetSize);
+              endpoint.buffer += packetSize;
+            }
+          }
+
+          if (otg_fs_device::dieptsiz0::xfrsiz::read() == 0) {
+            uint32_t diepempmsk = otg_fs_device::diepempmsk::read();
+            otg_fs_device::diepempmsk::write(diepempmsk & ~(1U << i));
+          }
+        }
+
+      } else {
+        uint32_t endpointRegNumber = i - 1;
+
+        if (otg_fs_device::diepintx::xfrc::read(endpointRegNumber)) {
+          otg_fs_device::diepintx::xfrc::write(endpointRegNumber, 1);
+
+          dcd_event_xfer_complete(rhport, i | TUSB_DIR_IN_MASK, endpoint.xferLen, XFER_RESULT_SUCCESS, true);
+        }
+
+        if (otg_fs_device::diepintx::txfe::read(endpointRegNumber) && (otg_fs_device::diepempmsk::read() & (1U << i))) {
+
+          uint32_t remainingPackets = otg_fs_device::dieptsizx::pktcnt::read(endpointRegNumber);
+
+          for (uint32_t packet = 0; packet < remainingPackets; packet++) {
+            uint32_t remainingBytes = otg_fs_device::dieptsizx::xfrsiz::read(endpointRegNumber);
+            uint32_t packetSize = tu_min16(remainingBytes, endpoint.maxPacketSize);
+
+            if (packetSize > (otg_fs_device::dtxfstsx::ineptfsav::read(endpointRegNumber) << 2U)) {
+              break;
+            }
+
+            auto* xferFifo = getXferFifo(i, OtgFsEndpointDirection::Out);
+
+            if (xferFifo) {
+              uint32_t* txFifo = reinterpret_cast<uint32_t*>(device.getFifoAddress(i));
+              tu_fifo_read_n_const_addr_full_words(xferFifo, txFifo, packetSize);
+            } else {
+              device.writeFifoPacket(i, endpoint.buffer, packetSize);
+              endpoint.buffer += packetSize;
+            }
+          }
+
+          if (otg_fs_device::dieptsizx::xfrsiz::read(endpointRegNumber) == 0) {
+            uint32_t diepempmsk = otg_fs_device::diepempmsk::read();
+            otg_fs_device::diepempmsk::write(diepempmsk & ~(1U << i));
+          }
+
+        }
+      }
+    }
+
+  }
+}
+
+
+void dcd_int_handler(uint8_t rhport)
+{
   auto& usb = getObject<OtgFsCoreHal>();
   auto& device = getObject<OtgFsDeviceHal>();
-  (void)device;
 
   uint32_t status = usb.getInterruptStatus();
 
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Usbrst)) {
     usb.clearInterrupt(OtgFsInterrupt::Usbrst);
+
+    TU_LOG(1, "IrqUsbrst\n\r");
+
+    OutEndpointClosed = false;
+    TxFifoAllocatedWords = 16;
+    getEndpoint(0, OtgFsEndpointDirection::In).maxPacketSize = 64;
+    getEndpoint(0, OtgFsEndpointDirection::Out).maxPacketSize = 64;
+
+    device.busReset();
+
+    // TODO check if needed
+    otg_fs_device::fs_dcfg::dad::write(0);
+    otg_fs_global::fs_gintmsk::oepint::write(1);
+    otg_fs_global::fs_gintmsk::iepint::write(1);
   }
 
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Enumdne)) {
     usb.clearInterrupt(OtgFsInterrupt::Enumdne);
+
+    TU_LOG(1, "IrqEnumdne\n\r");
+
+    auto speed = device.getSpeed();
+    tusb_speed_t tusbSpeed;
+
+    if (speed == OtgFsSpeed::FullSpeed) {
+      tusbSpeed = tusb_speed_t::TUSB_SPEED_FULL;
+      otg_fs_device::fs_diepctl0::mpsiz::write(0);
+    } else {
+      tusbSpeed = tusb_speed_t::TUSB_SPEED_INVALID;
+    }
+
+    dcd_event_bus_reset(rhport, tusbSpeed, true);
   }
 
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Usbsusp)) {
     usb.clearInterrupt(OtgFsInterrupt::Usbsusp);
+
+    TU_LOG(1, "IrqUsbsusp\n\r");
+
+    dcd_event_bus_signal(rhport, DCD_EVENT_SUSPEND, true);
   }
 
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Wkupint)) {
+
+    TU_LOG(1, "IrqWkupint\n\r");
+
     usb.clearInterrupt(OtgFsInterrupt::Wkupint);
+    dcd_event_bus_signal(rhport, DCD_EVENT_RESUME, true);
   }
 
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Otgint)) {
+
+    TU_LOG(1, "IrqOtgint\n\r");
+
+    uint32_t sedet = otg_fs_global::fs_gotgint::sedet::read();
+
+    if (sedet == 1) {
+      dcd_event_bus_signal(rhport, DCD_EVENT_UNPLUGGED, true);
+    }
+
+    uint32_t otgInt = otg_fs_global::fs_gotgint::read();
+    otg_fs_global::fs_gotgint::write(otgInt);
   }
 
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Sof)) {
+
+    TU_LOG(1, "IrqSof\n\r");
+
     usb.clearInterrupt(OtgFsInterrupt::Sof);
+    usb.setInterruptMask(OtgFsInterrupt::Sof, OtgFsInterruptMask::Masked);
+    dcd_event_bus_signal(rhport, DCD_EVENT_SOF, true);
+
+    TU_LOG(1, "IrqSofEnd\n\r");
   }
 
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Rxflvl)) {
+
+    usb.setInterruptMask(OtgFsInterrupt::Rxflvl, OtgFsInterruptMask::Masked);
+
+    TU_LOG(1, "IrqRxflvl\n\r");
+
+    do {
+      handleRxFifoNonEmpty();
+
+//      TU_LOG(1, "RxflvlSts %lu\n\r", otg_fs_global::fs_gintsts::rxflvl::read());
+    } while(otg_fs_global::fs_gintsts::rxflvl::read() != 0);
+    if (OutEndpointClosed) {
+      updateRxFifoSize();
+      OutEndpointClosed = false;
+    }
+    usb.setInterruptMask(OtgFsInterrupt::Rxflvl, OtgFsInterruptMask::UnMasked);
+
+    TU_LOG(1, "IrqRxflvlEnd\n\r");
   }
 
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Oepint)) {
+
+    TU_LOG(1, "IrqOepint\n\r");
+
+    handleOutEndpointInterrupt(rhport);
   }
 
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Iepint)) {
-  }
 
+    TU_LOG(1, "IrqIepint\n\r");
+
+    handleInEndpointInterrupt(rhport);
+  }
 }

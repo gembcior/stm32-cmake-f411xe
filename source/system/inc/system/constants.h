@@ -5,8 +5,8 @@
 
 namespace stm32::system {
 
-constexpr uint32_t SystemClock = 96e6;
-constexpr uint32_t SysTickClock = 1e3;
+constexpr uint32_t SystemClock = 96'000'000U;
+constexpr uint32_t SysTickClock = 1000U;
 
 
 constexpr hal::GpioPin UserLed4 = {

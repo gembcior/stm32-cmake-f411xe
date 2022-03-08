@@ -7,4 +7,7 @@ add_subdirectory(nvic)
 add_subdirectory(gpio)
 add_subdirectory(dma)
 add_subdirectory(uart)
+
+if (NOT UNIT_TEST)
 add_subdirectory(otg_fs)
+endif()
