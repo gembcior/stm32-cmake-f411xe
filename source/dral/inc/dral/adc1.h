@@ -15,13 +15,12 @@ private:
   class SrReg: public RegisterModel<address>
   {
   public:
-    using ovr = FieldModel<address,  5, 0x00000001>;
-    using strt = FieldModel<address,  4, 0x00000001>;
-    using jstrt = FieldModel<address,  3, 0x00000001>;
-    using jeoc = FieldModel<address,  2, 0x00000001>;
-    using eoc = FieldModel<address,  1, 0x00000001>;
-    using awd = FieldModel<address,  0, 0x00000001>;
-
+    using ovr = FieldModel<address, 5, 0x00000001>;
+    using strt = FieldModel<address, 4, 0x00000001>;
+    using jstrt = FieldModel<address, 3, 0x00000001>;
+    using jeoc = FieldModel<address, 2, 0x00000001>;
+    using eoc = FieldModel<address, 1, 0x00000001>;
+    using awd = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -40,13 +39,12 @@ private:
     using jdiscen = FieldModel<address, 12, 0x00000001>;
     using discen = FieldModel<address, 11, 0x00000001>;
     using jauto = FieldModel<address, 10, 0x00000001>;
-    using awdsgl = FieldModel<address,  9, 0x00000001>;
-    using scan = FieldModel<address,  8, 0x00000001>;
-    using jeocie = FieldModel<address,  7, 0x00000001>;
-    using awdie = FieldModel<address,  6, 0x00000001>;
-    using eocie = FieldModel<address,  5, 0x00000001>;
-    using awdch = FieldModel<address,  0, 0x0000001F>;
-
+    using awdsgl = FieldModel<address, 9, 0x00000001>;
+    using scan = FieldModel<address, 8, 0x00000001>;
+    using jeocie = FieldModel<address, 7, 0x00000001>;
+    using awdie = FieldModel<address, 6, 0x00000001>;
+    using eocie = FieldModel<address, 5, 0x00000001>;
+    using awdch = FieldModel<address, 0, 0x0000001F>;
   };
 
 public:
@@ -65,11 +63,10 @@ private:
     using jextsel = FieldModel<address, 16, 0x0000000F>;
     using align = FieldModel<address, 11, 0x00000001>;
     using eocs = FieldModel<address, 10, 0x00000001>;
-    using dds = FieldModel<address,  9, 0x00000001>;
-    using dma = FieldModel<address,  8, 0x00000001>;
-    using cont = FieldModel<address,  1, 0x00000001>;
-    using adon = FieldModel<address,  0, 0x00000001>;
-
+    using dds = FieldModel<address, 9, 0x00000001>;
+    using dma = FieldModel<address, 8, 0x00000001>;
+    using cont = FieldModel<address, 1, 0x00000001>;
+    using adon = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -80,8 +77,7 @@ private:
   class Smpr1Reg: public RegisterModel<address>
   {
   public:
-    using smpx_x = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using smpx_x = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -92,8 +88,7 @@ private:
   class Smpr2Reg: public RegisterModel<address>
   {
   public:
-    using smpx_x = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using smpx_x = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -104,8 +99,7 @@ private:
   class Jofr1Reg: public RegisterModel<address>
   {
   public:
-    using joffset1 = FieldModel<address,  0, 0x00000FFF>;
-
+    using joffset1 = FieldModel<address, 0, 0x00000FFF>;
   };
 
 public:
@@ -116,8 +110,7 @@ private:
   class Jofr2Reg: public RegisterModel<address>
   {
   public:
-    using joffset2 = FieldModel<address,  0, 0x00000FFF>;
-
+    using joffset2 = FieldModel<address, 0, 0x00000FFF>;
   };
 
 public:
@@ -128,8 +121,7 @@ private:
   class Jofr3Reg: public RegisterModel<address>
   {
   public:
-    using joffset3 = FieldModel<address,  0, 0x00000FFF>;
-
+    using joffset3 = FieldModel<address, 0, 0x00000FFF>;
   };
 
 public:
@@ -140,8 +132,7 @@ private:
   class Jofr4Reg: public RegisterModel<address>
   {
   public:
-    using joffset4 = FieldModel<address,  0, 0x00000FFF>;
-
+    using joffset4 = FieldModel<address, 0, 0x00000FFF>;
   };
 
 public:
@@ -152,8 +143,7 @@ private:
   class HtrReg: public RegisterModel<address>
   {
   public:
-    using ht = FieldModel<address,  0, 0x00000FFF>;
-
+    using ht = FieldModel<address, 0, 0x00000FFF>;
   };
 
 public:
@@ -164,8 +154,7 @@ private:
   class LtrReg: public RegisterModel<address>
   {
   public:
-    using lt = FieldModel<address,  0, 0x00000FFF>;
-
+    using lt = FieldModel<address, 0, 0x00000FFF>;
   };
 
 public:
@@ -179,9 +168,8 @@ private:
     using l = FieldModel<address, 20, 0x0000000F>;
     using sq16 = FieldModel<address, 15, 0x0000001F>;
     using sq15 = FieldModel<address, 10, 0x0000001F>;
-    using sq14 = FieldModel<address,  5, 0x0000001F>;
-    using sq13 = FieldModel<address,  0, 0x0000001F>;
-
+    using sq14 = FieldModel<address, 5, 0x0000001F>;
+    using sq13 = FieldModel<address, 0, 0x0000001F>;
   };
 
 public:
@@ -196,9 +184,8 @@ private:
     using sq11 = FieldModel<address, 20, 0x0000001F>;
     using sq10 = FieldModel<address, 15, 0x0000001F>;
     using sq9 = FieldModel<address, 10, 0x0000001F>;
-    using sq8 = FieldModel<address,  5, 0x0000001F>;
-    using sq7 = FieldModel<address,  0, 0x0000001F>;
-
+    using sq8 = FieldModel<address, 5, 0x0000001F>;
+    using sq7 = FieldModel<address, 0, 0x0000001F>;
   };
 
 public:
@@ -213,9 +200,8 @@ private:
     using sq5 = FieldModel<address, 20, 0x0000001F>;
     using sq4 = FieldModel<address, 15, 0x0000001F>;
     using sq3 = FieldModel<address, 10, 0x0000001F>;
-    using sq2 = FieldModel<address,  5, 0x0000001F>;
-    using sq1 = FieldModel<address,  0, 0x0000001F>;
-
+    using sq2 = FieldModel<address, 5, 0x0000001F>;
+    using sq1 = FieldModel<address, 0, 0x0000001F>;
   };
 
 public:
@@ -229,9 +215,8 @@ private:
     using jl = FieldModel<address, 20, 0x00000003>;
     using jsq4 = FieldModel<address, 15, 0x0000001F>;
     using jsq3 = FieldModel<address, 10, 0x0000001F>;
-    using jsq2 = FieldModel<address,  5, 0x0000001F>;
-    using jsq1 = FieldModel<address,  0, 0x0000001F>;
-
+    using jsq2 = FieldModel<address, 5, 0x0000001F>;
+    using jsq1 = FieldModel<address, 0, 0x0000001F>;
   };
 
 public:
@@ -242,8 +227,7 @@ private:
   class Jdr1Reg: public RegisterModel<address>
   {
   public:
-    using jdata = FieldModel<address,  0, 0x0000FFFF>;
-
+    using jdata = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -254,8 +238,7 @@ private:
   class Jdr2Reg: public RegisterModel<address>
   {
   public:
-    using jdata = FieldModel<address,  0, 0x0000FFFF>;
-
+    using jdata = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -266,8 +249,7 @@ private:
   class Jdr3Reg: public RegisterModel<address>
   {
   public:
-    using jdata = FieldModel<address,  0, 0x0000FFFF>;
-
+    using jdata = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -278,8 +260,7 @@ private:
   class Jdr4Reg: public RegisterModel<address>
   {
   public:
-    using jdata = FieldModel<address,  0, 0x0000FFFF>;
-
+    using jdata = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -290,8 +271,7 @@ private:
   class DrReg: public RegisterModel<address>
   {
   public:
-    using data = FieldModel<address,  0, 0x0000FFFF>;
-
+    using data = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -302,8 +282,7 @@ private:
   class SmprxBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using smpx_x = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
-
+    using smpx_x = FieldModel<address, 0, 0xFFFFFFFF, bankOffset>;
   };
 
 public:
@@ -314,14 +293,11 @@ private:
   class JdrxBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using jdata = FieldModel<address,  0, 0x0000FFFF, bankOffset>;
-
+    using jdata = FieldModel<address, 0, 0x0000FFFF, bankOffset>;
   };
 
 public:
   using jdrx = JdrxBankReg<BaseAddress + 0x003C, 0x0004>;
-
-
 };
 
 }

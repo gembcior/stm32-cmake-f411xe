@@ -15,8 +15,7 @@ private:
   class DrReg: public RegisterModel<address>
   {
   public:
-    using dr = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using dr = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -27,8 +26,7 @@ private:
   class IdrReg: public RegisterModel<address>
   {
   public:
-    using idr = FieldModel<address,  0, 0x000000FF>;
-
+    using idr = FieldModel<address, 0, 0x000000FF>;
   };
 
 public:
@@ -39,14 +37,11 @@ private:
   class CrReg: public RegisterModel<address>
   {
   public:
-    using cr = FieldModel<address,  0, 0x00000001>;
-
+    using cr = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
   using cr = CrReg<BaseAddress + 0x0008>;
-
-
 };
 
 }

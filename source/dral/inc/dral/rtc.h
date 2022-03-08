@@ -19,10 +19,9 @@ private:
     using ht = FieldModel<address, 20, 0x00000003>;
     using hu = FieldModel<address, 16, 0x0000000F>;
     using mnt = FieldModel<address, 12, 0x00000007>;
-    using mnu = FieldModel<address,  8, 0x0000000F>;
-    using st = FieldModel<address,  4, 0x00000007>;
-    using su = FieldModel<address,  0, 0x0000000F>;
-
+    using mnu = FieldModel<address, 8, 0x0000000F>;
+    using st = FieldModel<address, 4, 0x00000007>;
+    using su = FieldModel<address, 0, 0x0000000F>;
   };
 
 public:
@@ -37,10 +36,9 @@ private:
     using yu = FieldModel<address, 16, 0x0000000F>;
     using wdu = FieldModel<address, 13, 0x00000007>;
     using mt = FieldModel<address, 12, 0x00000001>;
-    using mu = FieldModel<address,  8, 0x0000000F>;
-    using dt = FieldModel<address,  4, 0x00000003>;
-    using du = FieldModel<address,  0, 0x0000000F>;
-
+    using mu = FieldModel<address, 8, 0x0000000F>;
+    using dt = FieldModel<address, 4, 0x00000003>;
+    using du = FieldModel<address, 0, 0x0000000F>;
   };
 
 public:
@@ -64,15 +62,14 @@ private:
     using alraie = FieldModel<address, 12, 0x00000001>;
     using tse = FieldModel<address, 11, 0x00000001>;
     using wute = FieldModel<address, 10, 0x00000001>;
-    using alrbe = FieldModel<address,  9, 0x00000001>;
-    using alrae = FieldModel<address,  8, 0x00000001>;
-    using dce = FieldModel<address,  7, 0x00000001>;
-    using fmt = FieldModel<address,  6, 0x00000001>;
-    using bypshad = FieldModel<address,  5, 0x00000001>;
-    using refckon = FieldModel<address,  4, 0x00000001>;
-    using tsedge = FieldModel<address,  3, 0x00000001>;
-    using wcksel = FieldModel<address,  0, 0x00000007>;
-
+    using alrbe = FieldModel<address, 9, 0x00000001>;
+    using alrae = FieldModel<address, 8, 0x00000001>;
+    using dce = FieldModel<address, 7, 0x00000001>;
+    using fmt = FieldModel<address, 6, 0x00000001>;
+    using bypshad = FieldModel<address, 5, 0x00000001>;
+    using refckon = FieldModel<address, 4, 0x00000001>;
+    using tsedge = FieldModel<address, 3, 0x00000001>;
+    using wcksel = FieldModel<address, 0, 0x00000007>;
   };
 
 public:
@@ -83,23 +80,22 @@ private:
   class IsrReg: public RegisterModel<address>
   {
   public:
-    using alrawf = FieldModel<address,  0, 0x00000001>;
-    using alrbwf = FieldModel<address,  1, 0x00000001>;
-    using wutwf = FieldModel<address,  2, 0x00000001>;
-    using shpf = FieldModel<address,  3, 0x00000001>;
-    using inits = FieldModel<address,  4, 0x00000001>;
-    using rsf = FieldModel<address,  5, 0x00000001>;
-    using initf = FieldModel<address,  6, 0x00000001>;
-    using init = FieldModel<address,  7, 0x00000001>;
-    using alraf = FieldModel<address,  8, 0x00000001>;
-    using alrbf = FieldModel<address,  9, 0x00000001>;
+    using alrawf = FieldModel<address, 0, 0x00000001>;
+    using alrbwf = FieldModel<address, 1, 0x00000001>;
+    using wutwf = FieldModel<address, 2, 0x00000001>;
+    using shpf = FieldModel<address, 3, 0x00000001>;
+    using inits = FieldModel<address, 4, 0x00000001>;
+    using rsf = FieldModel<address, 5, 0x00000001>;
+    using initf = FieldModel<address, 6, 0x00000001>;
+    using init = FieldModel<address, 7, 0x00000001>;
+    using alraf = FieldModel<address, 8, 0x00000001>;
+    using alrbf = FieldModel<address, 9, 0x00000001>;
     using wutf = FieldModel<address, 10, 0x00000001>;
     using tsf = FieldModel<address, 11, 0x00000001>;
     using tsovf = FieldModel<address, 12, 0x00000001>;
     using tamp1f = FieldModel<address, 13, 0x00000001>;
     using tamp2f = FieldModel<address, 14, 0x00000001>;
     using recalpf = FieldModel<address, 16, 0x00000001>;
-
   };
 
 public:
@@ -111,8 +107,7 @@ private:
   {
   public:
     using prediv_a = FieldModel<address, 16, 0x0000007F>;
-    using prediv_s = FieldModel<address,  0, 0x00007FFF>;
-
+    using prediv_s = FieldModel<address, 0, 0x00007FFF>;
   };
 
 public:
@@ -123,8 +118,7 @@ private:
   class WutrReg: public RegisterModel<address>
   {
   public:
-    using wut = FieldModel<address,  0, 0x0000FFFF>;
-
+    using wut = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -135,9 +129,8 @@ private:
   class CalibrReg: public RegisterModel<address>
   {
   public:
-    using dcs = FieldModel<address,  7, 0x00000001>;
-    using dc = FieldModel<address,  0, 0x0000001F>;
-
+    using dcs = FieldModel<address, 7, 0x00000001>;
+    using dc = FieldModel<address, 0, 0x0000001F>;
   };
 
 public:
@@ -158,11 +151,10 @@ private:
     using hu = FieldModel<address, 16, 0x0000000F>;
     using msk2 = FieldModel<address, 15, 0x00000001>;
     using mnt = FieldModel<address, 12, 0x00000007>;
-    using mnu = FieldModel<address,  8, 0x0000000F>;
-    using msk1 = FieldModel<address,  7, 0x00000001>;
-    using st = FieldModel<address,  4, 0x00000007>;
-    using su = FieldModel<address,  0, 0x0000000F>;
-
+    using mnu = FieldModel<address, 8, 0x0000000F>;
+    using msk1 = FieldModel<address, 7, 0x00000001>;
+    using st = FieldModel<address, 4, 0x00000007>;
+    using su = FieldModel<address, 0, 0x0000000F>;
   };
 
 public:
@@ -183,11 +175,10 @@ private:
     using hu = FieldModel<address, 16, 0x0000000F>;
     using msk2 = FieldModel<address, 15, 0x00000001>;
     using mnt = FieldModel<address, 12, 0x00000007>;
-    using mnu = FieldModel<address,  8, 0x0000000F>;
-    using msk1 = FieldModel<address,  7, 0x00000001>;
-    using st = FieldModel<address,  4, 0x00000007>;
-    using su = FieldModel<address,  0, 0x0000000F>;
-
+    using mnu = FieldModel<address, 8, 0x0000000F>;
+    using msk1 = FieldModel<address, 7, 0x00000001>;
+    using st = FieldModel<address, 4, 0x00000007>;
+    using su = FieldModel<address, 0, 0x0000000F>;
   };
 
 public:
@@ -198,8 +189,7 @@ private:
   class WprReg: public RegisterModel<address>
   {
   public:
-    using key = FieldModel<address,  0, 0x000000FF>;
-
+    using key = FieldModel<address, 0, 0x000000FF>;
   };
 
 public:
@@ -210,8 +200,7 @@ private:
   class SsrReg: public RegisterModel<address>
   {
   public:
-    using ss = FieldModel<address,  0, 0x0000FFFF>;
-
+    using ss = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -223,8 +212,7 @@ private:
   {
   public:
     using add1s = FieldModel<address, 31, 0x00000001>;
-    using subfs = FieldModel<address,  0, 0x00007FFF>;
-
+    using subfs = FieldModel<address, 0, 0x00007FFF>;
   };
 
 public:
@@ -239,10 +227,9 @@ private:
     using ht = FieldModel<address, 20, 0x00000003>;
     using hu = FieldModel<address, 16, 0x0000000F>;
     using mnt = FieldModel<address, 12, 0x00000007>;
-    using mnu = FieldModel<address,  8, 0x0000000F>;
-    using st = FieldModel<address,  4, 0x00000007>;
-    using su = FieldModel<address,  0, 0x0000000F>;
-
+    using mnu = FieldModel<address, 8, 0x0000000F>;
+    using st = FieldModel<address, 4, 0x00000007>;
+    using su = FieldModel<address, 0, 0x0000000F>;
   };
 
 public:
@@ -255,10 +242,9 @@ private:
   public:
     using wdu = FieldModel<address, 13, 0x00000007>;
     using mt = FieldModel<address, 12, 0x00000001>;
-    using mu = FieldModel<address,  8, 0x0000000F>;
-    using dt = FieldModel<address,  4, 0x00000003>;
-    using du = FieldModel<address,  0, 0x0000000F>;
-
+    using mu = FieldModel<address, 8, 0x0000000F>;
+    using dt = FieldModel<address, 4, 0x00000003>;
+    using du = FieldModel<address, 0, 0x0000000F>;
   };
 
 public:
@@ -269,8 +255,7 @@ private:
   class TsssrReg: public RegisterModel<address>
   {
   public:
-    using ss = FieldModel<address,  0, 0x0000FFFF>;
-
+    using ss = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -284,8 +269,7 @@ private:
     using calp = FieldModel<address, 15, 0x00000001>;
     using calw8 = FieldModel<address, 14, 0x00000001>;
     using calw16 = FieldModel<address, 13, 0x00000001>;
-    using calm = FieldModel<address,  0, 0x000001FF>;
-
+    using calm = FieldModel<address, 0, 0x000001FF>;
   };
 
 public:
@@ -302,14 +286,13 @@ private:
     using tamppudis = FieldModel<address, 15, 0x00000001>;
     using tampprch = FieldModel<address, 13, 0x00000003>;
     using tampflt = FieldModel<address, 11, 0x00000003>;
-    using tampfreq = FieldModel<address,  8, 0x00000007>;
-    using tampts = FieldModel<address,  7, 0x00000001>;
-    using tamp2trg = FieldModel<address,  4, 0x00000001>;
-    using tamp2e = FieldModel<address,  3, 0x00000001>;
-    using tampie = FieldModel<address,  2, 0x00000001>;
-    using tamp1trg = FieldModel<address,  1, 0x00000001>;
-    using tamp1e = FieldModel<address,  0, 0x00000001>;
-
+    using tampfreq = FieldModel<address, 8, 0x00000007>;
+    using tampts = FieldModel<address, 7, 0x00000001>;
+    using tamp2trg = FieldModel<address, 4, 0x00000001>;
+    using tamp2e = FieldModel<address, 3, 0x00000001>;
+    using tampie = FieldModel<address, 2, 0x00000001>;
+    using tamp1trg = FieldModel<address, 1, 0x00000001>;
+    using tamp1e = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -321,8 +304,7 @@ private:
   {
   public:
     using maskss = FieldModel<address, 24, 0x0000000F>;
-    using ss = FieldModel<address,  0, 0x00007FFF>;
-
+    using ss = FieldModel<address, 0, 0x00007FFF>;
   };
 
 public:
@@ -334,8 +316,7 @@ private:
   {
   public:
     using maskss = FieldModel<address, 24, 0x0000000F>;
-    using ss = FieldModel<address,  0, 0x00007FFF>;
-
+    using ss = FieldModel<address, 0, 0x00007FFF>;
   };
 
 public:
@@ -346,8 +327,7 @@ private:
   class Bkp0rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -358,8 +338,7 @@ private:
   class Bkp1rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -370,8 +349,7 @@ private:
   class Bkp2rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -382,8 +360,7 @@ private:
   class Bkp3rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -394,8 +371,7 @@ private:
   class Bkp4rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -406,8 +382,7 @@ private:
   class Bkp5rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -418,8 +393,7 @@ private:
   class Bkp6rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -430,8 +404,7 @@ private:
   class Bkp7rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -442,8 +415,7 @@ private:
   class Bkp8rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -454,8 +426,7 @@ private:
   class Bkp9rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -466,8 +437,7 @@ private:
   class Bkp10rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -478,8 +448,7 @@ private:
   class Bkp11rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -490,8 +459,7 @@ private:
   class Bkp12rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -502,8 +470,7 @@ private:
   class Bkp13rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -514,8 +481,7 @@ private:
   class Bkp14rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -526,8 +492,7 @@ private:
   class Bkp15rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -538,8 +503,7 @@ private:
   class Bkp16rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -550,8 +514,7 @@ private:
   class Bkp17rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -562,8 +525,7 @@ private:
   class Bkp18rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -574,8 +536,7 @@ private:
   class Bkp19rReg: public RegisterModel<address>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -587,8 +548,7 @@ private:
   {
   public:
     using maskss = FieldModel<address, 24, 0x0000000F, bankOffset>;
-    using ss = FieldModel<address,  0, 0x00007FFF, bankOffset>;
-
+    using ss = FieldModel<address, 0, 0x00007FFF, bankOffset>;
   };
 
 public:
@@ -599,14 +559,11 @@ private:
   class BkpxrBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using bkp = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
-
+    using bkp = FieldModel<address, 0, 0xFFFFFFFF, bankOffset>;
   };
 
 public:
   using bkpxr = BkpxrBankReg<BaseAddress + 0x0050, 0x0004>;
-
-
 };
 
 }

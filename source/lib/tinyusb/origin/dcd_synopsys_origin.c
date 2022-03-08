@@ -296,7 +296,7 @@ static void bus_reset(uint8_t rhport)
 }
 
 // Set turn-around timeout according to link speed
-uint32_t SystemCoreClock = 96000000U;
+extern uint32_t SystemCoreClock;
 static void set_turnaround(USB_OTG_GlobalTypeDef * usb_otg, tusb_speed_t speed)
 {
   usb_otg->GUSBCFG &= ~USB_OTG_GUSBCFG_TRDT;
@@ -345,6 +345,25 @@ static tusb_speed_t get_speed(uint8_t rhport)
   return (enum_spd == DCD_HIGH_SPEED) ? TUSB_SPEED_HIGH : TUSB_SPEED_FULL;
 }
 
+static void set_speed(uint8_t rhport, tusb_speed_t speed)
+{
+  uint32_t bitvalue;
+
+  if ( rhport == 1 )
+  {
+    bitvalue = ((TUSB_SPEED_HIGH == speed) ? DCD_HIGH_SPEED : DCD_FULL_SPEED_USE_HS);
+  }
+  else
+  {
+    bitvalue = DCD_FULL_SPEED;
+  }
+
+  USB_OTG_DeviceTypeDef * dev = DEVICE_BASE(rhport);
+
+  // Clear and set speed bits
+  dev->DCFG &= ~(3 << USB_OTG_DCFG_DSPD_Pos);
+  dev->DCFG |= (bitvalue << USB_OTG_DCFG_DSPD_Pos);
+}
 
 #if defined(USB_HS_PHYC)
 static bool USB_HS_PHYCInit(void)
@@ -440,6 +459,148 @@ static void edpt_schedule_packets(uint8_t rhport, uint8_t const epnum, uint8_t c
 /*------------------------------------------------------------------*/
 /* Controller API
  *------------------------------------------------------------------*/
+void dcd_init (uint8_t rhport)
+{
+  // Programming model begins in the last section of the chapter on the USB
+  // peripheral in each Reference Manual.
+
+  USB_OTG_GlobalTypeDef * usb_otg = GLOBAL_BASE(rhport);
+
+  // No HNP/SRP (no OTG support), program timeout later.
+  if ( rhport == 1 )
+  {
+    // On selected MCUs HS port1 can be used with external PHY via ULPI interface
+#if CFG_TUSB_RHPORT1_MODE & OPT_MODE_HIGH_SPEED
+    // deactivate internal PHY
+    usb_otg->GCCFG &= ~USB_OTG_GCCFG_PWRDWN;
+
+    // Init The UTMI Interface
+    usb_otg->GUSBCFG &= ~(USB_OTG_GUSBCFG_TSDPS | USB_OTG_GUSBCFG_ULPIFSLS | USB_OTG_GUSBCFG_PHYSEL);
+
+    // Select default internal VBUS Indicator and Drive for ULPI
+    usb_otg->GUSBCFG &= ~(USB_OTG_GUSBCFG_ULPIEVBUSD | USB_OTG_GUSBCFG_ULPIEVBUSI);
+#else
+    usb_otg->GUSBCFG |= USB_OTG_GUSBCFG_PHYSEL;
+#endif
+
+#if defined(USB_HS_PHYC)
+    // Highspeed with embedded UTMI PHYC
+
+    // Select UTMI Interface
+    usb_otg->GUSBCFG &= ~USB_OTG_GUSBCFG_ULPI_UTMI_SEL;
+    usb_otg->GCCFG |= USB_OTG_GCCFG_PHYHSEN;
+
+    // Enables control of a High Speed USB PHY
+    USB_HS_PHYCInit();
+#endif
+  } else
+  {
+    // Enable internal PHY
+    usb_otg->GUSBCFG |= USB_OTG_GUSBCFG_PHYSEL;
+  }
+
+  // Reset core after selecting PHY
+  // Wait AHB IDLE, reset then wait until it is cleared
+  while ((usb_otg->GRSTCTL & USB_OTG_GRSTCTL_AHBIDL) == 0U) {}
+  usb_otg->GRSTCTL |= USB_OTG_GRSTCTL_CSRST;
+  while ((usb_otg->GRSTCTL & USB_OTG_GRSTCTL_CSRST) == USB_OTG_GRSTCTL_CSRST) {}
+
+  // Restart PHY clock
+  *((volatile uint32_t *)(RHPORT_REGS_BASE + USB_OTG_PCGCCTL_BASE)) = 0;
+
+  // Clear all interrupts
+  usb_otg->GINTSTS |= usb_otg->GINTSTS;
+
+  // Required as part of core initialization.
+  // TODO: How should mode mismatch be handled? It will cause
+  // the core to stop working/require reset.
+  usb_otg->GINTMSK |= USB_OTG_GINTMSK_OTGINT | USB_OTG_GINTMSK_MMISM;
+
+  USB_OTG_DeviceTypeDef * dev = DEVICE_BASE(rhport);
+
+  // If USB host misbehaves during status portion of control xfer
+  // (non zero-length packet), send STALL back and discard.
+  dev->DCFG |=  USB_OTG_DCFG_NZLSOHSK;
+
+  set_speed(rhport, TUD_OPT_HIGH_SPEED ? TUSB_SPEED_HIGH : TUSB_SPEED_FULL);
+
+  // Enable internal USB transceiver, unless using HS core (port 1) with external PHY.
+  if (!(rhport == 1 && (CFG_TUSB_RHPORT1_MODE & OPT_MODE_HIGH_SPEED))) usb_otg->GCCFG |= USB_OTG_GCCFG_PWRDWN;
+
+  usb_otg->GINTMSK |= USB_OTG_GINTMSK_USBRST   | USB_OTG_GINTMSK_ENUMDNEM |
+      USB_OTG_GINTMSK_USBSUSPM | USB_OTG_GINTMSK_WUIM     |
+      USB_OTG_GINTMSK_RXFLVLM  | (USE_SOF ? USB_OTG_GINTMSK_SOFM : 0);
+
+  // Enable global interrupt
+  usb_otg->GAHBCFG |= USB_OTG_GAHBCFG_GINT;
+
+  dcd_connect(rhport);
+}
+
+void dcd_int_enable (uint8_t rhport)
+{
+  (void) rhport;
+  NVIC_EnableIRQ(RHPORT_IRQn);
+}
+
+void dcd_int_disable (uint8_t rhport)
+{
+  (void) rhport;
+  NVIC_DisableIRQ(RHPORT_IRQn);
+}
+
+void dcd_set_address (uint8_t rhport, uint8_t dev_addr)
+{
+  USB_OTG_DeviceTypeDef * dev = DEVICE_BASE(rhport);
+  dev->DCFG = (dev->DCFG & ~USB_OTG_DCFG_DAD_Msk) | (dev_addr << USB_OTG_DCFG_DAD_Pos);
+
+  // Response with status after changing device address
+  dcd_edpt_xfer(rhport, tu_edpt_addr(0, TUSB_DIR_IN), NULL, 0);
+}
+
+static void remote_wakeup_delay(void)
+{
+  // try to delay for 1 ms
+  uint32_t count = SystemCoreClock / 1000;
+  while ( count-- )
+  {
+    __NOP();
+  }
+}
+
+void dcd_remote_wakeup(uint8_t rhport)
+{
+  (void) rhport;
+
+  USB_OTG_GlobalTypeDef * usb_otg = GLOBAL_BASE(rhport);
+  USB_OTG_DeviceTypeDef * dev = DEVICE_BASE(rhport);
+
+  // set remote wakeup
+  dev->DCTL |= USB_OTG_DCTL_RWUSIG;
+
+  // enable SOF to detect bus resume
+  usb_otg->GINTSTS = USB_OTG_GINTSTS_SOF;
+  usb_otg->GINTMSK |= USB_OTG_GINTMSK_SOFM;
+
+  // Per specs: remote wakeup signal bit must be clear within 1-15ms
+  remote_wakeup_delay();
+
+  dev->DCTL &= ~USB_OTG_DCTL_RWUSIG;
+}
+
+void dcd_connect(uint8_t rhport)
+{
+  (void) rhport;
+  USB_OTG_DeviceTypeDef * dev = DEVICE_BASE(rhport);
+  dev->DCTL &= ~USB_OTG_DCTL_SDIS;
+}
+
+void dcd_disconnect(uint8_t rhport)
+{
+  (void) rhport;
+  USB_OTG_DeviceTypeDef * dev = DEVICE_BASE(rhport);
+  dev->DCTL |= USB_OTG_DCTL_SDIS;
+}
 
 
 /*------------------------------------------------------------------*/

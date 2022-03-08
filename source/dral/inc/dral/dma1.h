@@ -27,15 +27,14 @@ private:
     using feif2 = FieldModel<address, 16, 0x00000001>;
     using tcif1 = FieldModel<address, 11, 0x00000001>;
     using htif1 = FieldModel<address, 10, 0x00000001>;
-    using teif1 = FieldModel<address,  9, 0x00000001>;
-    using dmeif1 = FieldModel<address,  8, 0x00000001>;
-    using feif1 = FieldModel<address,  6, 0x00000001>;
-    using tcif0 = FieldModel<address,  5, 0x00000001>;
-    using htif0 = FieldModel<address,  4, 0x00000001>;
-    using teif0 = FieldModel<address,  3, 0x00000001>;
-    using dmeif0 = FieldModel<address,  2, 0x00000001>;
-    using feif0 = FieldModel<address,  0, 0x00000001>;
-
+    using teif1 = FieldModel<address, 9, 0x00000001>;
+    using dmeif1 = FieldModel<address, 8, 0x00000001>;
+    using feif1 = FieldModel<address, 6, 0x00000001>;
+    using tcif0 = FieldModel<address, 5, 0x00000001>;
+    using htif0 = FieldModel<address, 4, 0x00000001>;
+    using teif0 = FieldModel<address, 3, 0x00000001>;
+    using dmeif0 = FieldModel<address, 2, 0x00000001>;
+    using feif0 = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -58,15 +57,14 @@ private:
     using feif6 = FieldModel<address, 16, 0x00000001>;
     using tcif5 = FieldModel<address, 11, 0x00000001>;
     using htif5 = FieldModel<address, 10, 0x00000001>;
-    using teif5 = FieldModel<address,  9, 0x00000001>;
-    using dmeif5 = FieldModel<address,  8, 0x00000001>;
-    using feif5 = FieldModel<address,  6, 0x00000001>;
-    using tcif4 = FieldModel<address,  5, 0x00000001>;
-    using htif4 = FieldModel<address,  4, 0x00000001>;
-    using teif4 = FieldModel<address,  3, 0x00000001>;
-    using dmeif4 = FieldModel<address,  2, 0x00000001>;
-    using feif4 = FieldModel<address,  0, 0x00000001>;
-
+    using teif5 = FieldModel<address, 9, 0x00000001>;
+    using dmeif5 = FieldModel<address, 8, 0x00000001>;
+    using feif5 = FieldModel<address, 6, 0x00000001>;
+    using tcif4 = FieldModel<address, 5, 0x00000001>;
+    using htif4 = FieldModel<address, 4, 0x00000001>;
+    using teif4 = FieldModel<address, 3, 0x00000001>;
+    using dmeif4 = FieldModel<address, 2, 0x00000001>;
+    using feif4 = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -89,15 +87,14 @@ private:
     using cfeif2 = FieldModel<address, 16, 0x00000001>;
     using ctcif1 = FieldModel<address, 11, 0x00000001>;
     using chtif1 = FieldModel<address, 10, 0x00000001>;
-    using cteif1 = FieldModel<address,  9, 0x00000001>;
-    using cdmeif1 = FieldModel<address,  8, 0x00000001>;
-    using cfeif1 = FieldModel<address,  6, 0x00000001>;
-    using ctcif0 = FieldModel<address,  5, 0x00000001>;
-    using chtif0 = FieldModel<address,  4, 0x00000001>;
-    using cteif0 = FieldModel<address,  3, 0x00000001>;
-    using cdmeif0 = FieldModel<address,  2, 0x00000001>;
-    using cfeif0 = FieldModel<address,  0, 0x00000001>;
-
+    using cteif1 = FieldModel<address, 9, 0x00000001>;
+    using cdmeif1 = FieldModel<address, 8, 0x00000001>;
+    using cfeif1 = FieldModel<address, 6, 0x00000001>;
+    using ctcif0 = FieldModel<address, 5, 0x00000001>;
+    using chtif0 = FieldModel<address, 4, 0x00000001>;
+    using cteif0 = FieldModel<address, 3, 0x00000001>;
+    using cdmeif0 = FieldModel<address, 2, 0x00000001>;
+    using cfeif0 = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -120,15 +117,14 @@ private:
     using cfeif6 = FieldModel<address, 16, 0x00000001>;
     using ctcif5 = FieldModel<address, 11, 0x00000001>;
     using chtif5 = FieldModel<address, 10, 0x00000001>;
-    using cteif5 = FieldModel<address,  9, 0x00000001>;
-    using cdmeif5 = FieldModel<address,  8, 0x00000001>;
-    using cfeif5 = FieldModel<address,  6, 0x00000001>;
-    using ctcif4 = FieldModel<address,  5, 0x00000001>;
-    using chtif4 = FieldModel<address,  4, 0x00000001>;
-    using cteif4 = FieldModel<address,  3, 0x00000001>;
-    using cdmeif4 = FieldModel<address,  2, 0x00000001>;
-    using cfeif4 = FieldModel<address,  0, 0x00000001>;
-
+    using cteif5 = FieldModel<address, 9, 0x00000001>;
+    using cdmeif5 = FieldModel<address, 8, 0x00000001>;
+    using cfeif5 = FieldModel<address, 6, 0x00000001>;
+    using ctcif4 = FieldModel<address, 5, 0x00000001>;
+    using chtif4 = FieldModel<address, 4, 0x00000001>;
+    using cteif4 = FieldModel<address, 3, 0x00000001>;
+    using cdmeif4 = FieldModel<address, 2, 0x00000001>;
+    using cfeif4 = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -149,16 +145,15 @@ private:
     using msize = FieldModel<address, 13, 0x00000003>;
     using psize = FieldModel<address, 11, 0x00000003>;
     using minc = FieldModel<address, 10, 0x00000001>;
-    using pinc = FieldModel<address,  9, 0x00000001>;
-    using circ = FieldModel<address,  8, 0x00000001>;
-    using dir = FieldModel<address,  6, 0x00000003>;
-    using pfctrl = FieldModel<address,  5, 0x00000001>;
-    using tcie = FieldModel<address,  4, 0x00000001>;
-    using htie = FieldModel<address,  3, 0x00000001>;
-    using teie = FieldModel<address,  2, 0x00000001>;
-    using dmeie = FieldModel<address,  1, 0x00000001>;
-    using en = FieldModel<address,  0, 0x00000001>;
-
+    using pinc = FieldModel<address, 9, 0x00000001>;
+    using circ = FieldModel<address, 8, 0x00000001>;
+    using dir = FieldModel<address, 6, 0x00000003>;
+    using pfctrl = FieldModel<address, 5, 0x00000001>;
+    using tcie = FieldModel<address, 4, 0x00000001>;
+    using htie = FieldModel<address, 3, 0x00000001>;
+    using teie = FieldModel<address, 2, 0x00000001>;
+    using dmeie = FieldModel<address, 1, 0x00000001>;
+    using en = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -169,8 +164,7 @@ private:
   class S0ndtrReg: public RegisterModel<address>
   {
   public:
-    using ndt = FieldModel<address,  0, 0x0000FFFF>;
-
+    using ndt = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -181,8 +175,7 @@ private:
   class S0parReg: public RegisterModel<address>
   {
   public:
-    using pa = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using pa = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -193,8 +186,7 @@ private:
   class S0m0arReg: public RegisterModel<address>
   {
   public:
-    using m0a = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using m0a = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -205,8 +197,7 @@ private:
   class S0m1arReg: public RegisterModel<address>
   {
   public:
-    using m1a = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using m1a = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -217,11 +208,10 @@ private:
   class S0fcrReg: public RegisterModel<address>
   {
   public:
-    using feie = FieldModel<address,  7, 0x00000001>;
-    using fs = FieldModel<address,  3, 0x00000007>;
-    using dmdis = FieldModel<address,  2, 0x00000001>;
-    using fth = FieldModel<address,  0, 0x00000003>;
-
+    using feie = FieldModel<address, 7, 0x00000001>;
+    using fs = FieldModel<address, 3, 0x00000007>;
+    using dmdis = FieldModel<address, 2, 0x00000001>;
+    using fth = FieldModel<address, 0, 0x00000003>;
   };
 
 public:
@@ -243,16 +233,15 @@ private:
     using msize = FieldModel<address, 13, 0x00000003>;
     using psize = FieldModel<address, 11, 0x00000003>;
     using minc = FieldModel<address, 10, 0x00000001>;
-    using pinc = FieldModel<address,  9, 0x00000001>;
-    using circ = FieldModel<address,  8, 0x00000001>;
-    using dir = FieldModel<address,  6, 0x00000003>;
-    using pfctrl = FieldModel<address,  5, 0x00000001>;
-    using tcie = FieldModel<address,  4, 0x00000001>;
-    using htie = FieldModel<address,  3, 0x00000001>;
-    using teie = FieldModel<address,  2, 0x00000001>;
-    using dmeie = FieldModel<address,  1, 0x00000001>;
-    using en = FieldModel<address,  0, 0x00000001>;
-
+    using pinc = FieldModel<address, 9, 0x00000001>;
+    using circ = FieldModel<address, 8, 0x00000001>;
+    using dir = FieldModel<address, 6, 0x00000003>;
+    using pfctrl = FieldModel<address, 5, 0x00000001>;
+    using tcie = FieldModel<address, 4, 0x00000001>;
+    using htie = FieldModel<address, 3, 0x00000001>;
+    using teie = FieldModel<address, 2, 0x00000001>;
+    using dmeie = FieldModel<address, 1, 0x00000001>;
+    using en = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -263,8 +252,7 @@ private:
   class S1ndtrReg: public RegisterModel<address>
   {
   public:
-    using ndt = FieldModel<address,  0, 0x0000FFFF>;
-
+    using ndt = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -275,8 +263,7 @@ private:
   class S1parReg: public RegisterModel<address>
   {
   public:
-    using pa = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using pa = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -287,8 +274,7 @@ private:
   class S1m0arReg: public RegisterModel<address>
   {
   public:
-    using m0a = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using m0a = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -299,8 +285,7 @@ private:
   class S1m1arReg: public RegisterModel<address>
   {
   public:
-    using m1a = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using m1a = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -311,11 +296,10 @@ private:
   class S1fcrReg: public RegisterModel<address>
   {
   public:
-    using feie = FieldModel<address,  7, 0x00000001>;
-    using fs = FieldModel<address,  3, 0x00000007>;
-    using dmdis = FieldModel<address,  2, 0x00000001>;
-    using fth = FieldModel<address,  0, 0x00000003>;
-
+    using feie = FieldModel<address, 7, 0x00000001>;
+    using fs = FieldModel<address, 3, 0x00000007>;
+    using dmdis = FieldModel<address, 2, 0x00000001>;
+    using fth = FieldModel<address, 0, 0x00000003>;
   };
 
 public:
@@ -337,16 +321,15 @@ private:
     using msize = FieldModel<address, 13, 0x00000003>;
     using psize = FieldModel<address, 11, 0x00000003>;
     using minc = FieldModel<address, 10, 0x00000001>;
-    using pinc = FieldModel<address,  9, 0x00000001>;
-    using circ = FieldModel<address,  8, 0x00000001>;
-    using dir = FieldModel<address,  6, 0x00000003>;
-    using pfctrl = FieldModel<address,  5, 0x00000001>;
-    using tcie = FieldModel<address,  4, 0x00000001>;
-    using htie = FieldModel<address,  3, 0x00000001>;
-    using teie = FieldModel<address,  2, 0x00000001>;
-    using dmeie = FieldModel<address,  1, 0x00000001>;
-    using en = FieldModel<address,  0, 0x00000001>;
-
+    using pinc = FieldModel<address, 9, 0x00000001>;
+    using circ = FieldModel<address, 8, 0x00000001>;
+    using dir = FieldModel<address, 6, 0x00000003>;
+    using pfctrl = FieldModel<address, 5, 0x00000001>;
+    using tcie = FieldModel<address, 4, 0x00000001>;
+    using htie = FieldModel<address, 3, 0x00000001>;
+    using teie = FieldModel<address, 2, 0x00000001>;
+    using dmeie = FieldModel<address, 1, 0x00000001>;
+    using en = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -357,8 +340,7 @@ private:
   class S2ndtrReg: public RegisterModel<address>
   {
   public:
-    using ndt = FieldModel<address,  0, 0x0000FFFF>;
-
+    using ndt = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -369,8 +351,7 @@ private:
   class S2parReg: public RegisterModel<address>
   {
   public:
-    using pa = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using pa = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -381,8 +362,7 @@ private:
   class S2m0arReg: public RegisterModel<address>
   {
   public:
-    using m0a = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using m0a = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -393,8 +373,7 @@ private:
   class S2m1arReg: public RegisterModel<address>
   {
   public:
-    using m1a = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using m1a = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -405,11 +384,10 @@ private:
   class S2fcrReg: public RegisterModel<address>
   {
   public:
-    using feie = FieldModel<address,  7, 0x00000001>;
-    using fs = FieldModel<address,  3, 0x00000007>;
-    using dmdis = FieldModel<address,  2, 0x00000001>;
-    using fth = FieldModel<address,  0, 0x00000003>;
-
+    using feie = FieldModel<address, 7, 0x00000001>;
+    using fs = FieldModel<address, 3, 0x00000007>;
+    using dmdis = FieldModel<address, 2, 0x00000001>;
+    using fth = FieldModel<address, 0, 0x00000003>;
   };
 
 public:
@@ -431,16 +409,15 @@ private:
     using msize = FieldModel<address, 13, 0x00000003>;
     using psize = FieldModel<address, 11, 0x00000003>;
     using minc = FieldModel<address, 10, 0x00000001>;
-    using pinc = FieldModel<address,  9, 0x00000001>;
-    using circ = FieldModel<address,  8, 0x00000001>;
-    using dir = FieldModel<address,  6, 0x00000003>;
-    using pfctrl = FieldModel<address,  5, 0x00000001>;
-    using tcie = FieldModel<address,  4, 0x00000001>;
-    using htie = FieldModel<address,  3, 0x00000001>;
-    using teie = FieldModel<address,  2, 0x00000001>;
-    using dmeie = FieldModel<address,  1, 0x00000001>;
-    using en = FieldModel<address,  0, 0x00000001>;
-
+    using pinc = FieldModel<address, 9, 0x00000001>;
+    using circ = FieldModel<address, 8, 0x00000001>;
+    using dir = FieldModel<address, 6, 0x00000003>;
+    using pfctrl = FieldModel<address, 5, 0x00000001>;
+    using tcie = FieldModel<address, 4, 0x00000001>;
+    using htie = FieldModel<address, 3, 0x00000001>;
+    using teie = FieldModel<address, 2, 0x00000001>;
+    using dmeie = FieldModel<address, 1, 0x00000001>;
+    using en = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -451,8 +428,7 @@ private:
   class S3ndtrReg: public RegisterModel<address>
   {
   public:
-    using ndt = FieldModel<address,  0, 0x0000FFFF>;
-
+    using ndt = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -463,8 +439,7 @@ private:
   class S3parReg: public RegisterModel<address>
   {
   public:
-    using pa = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using pa = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -475,8 +450,7 @@ private:
   class S3m0arReg: public RegisterModel<address>
   {
   public:
-    using m0a = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using m0a = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -487,8 +461,7 @@ private:
   class S3m1arReg: public RegisterModel<address>
   {
   public:
-    using m1a = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using m1a = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -499,11 +472,10 @@ private:
   class S3fcrReg: public RegisterModel<address>
   {
   public:
-    using feie = FieldModel<address,  7, 0x00000001>;
-    using fs = FieldModel<address,  3, 0x00000007>;
-    using dmdis = FieldModel<address,  2, 0x00000001>;
-    using fth = FieldModel<address,  0, 0x00000003>;
-
+    using feie = FieldModel<address, 7, 0x00000001>;
+    using fs = FieldModel<address, 3, 0x00000007>;
+    using dmdis = FieldModel<address, 2, 0x00000001>;
+    using fth = FieldModel<address, 0, 0x00000003>;
   };
 
 public:
@@ -525,16 +497,15 @@ private:
     using msize = FieldModel<address, 13, 0x00000003>;
     using psize = FieldModel<address, 11, 0x00000003>;
     using minc = FieldModel<address, 10, 0x00000001>;
-    using pinc = FieldModel<address,  9, 0x00000001>;
-    using circ = FieldModel<address,  8, 0x00000001>;
-    using dir = FieldModel<address,  6, 0x00000003>;
-    using pfctrl = FieldModel<address,  5, 0x00000001>;
-    using tcie = FieldModel<address,  4, 0x00000001>;
-    using htie = FieldModel<address,  3, 0x00000001>;
-    using teie = FieldModel<address,  2, 0x00000001>;
-    using dmeie = FieldModel<address,  1, 0x00000001>;
-    using en = FieldModel<address,  0, 0x00000001>;
-
+    using pinc = FieldModel<address, 9, 0x00000001>;
+    using circ = FieldModel<address, 8, 0x00000001>;
+    using dir = FieldModel<address, 6, 0x00000003>;
+    using pfctrl = FieldModel<address, 5, 0x00000001>;
+    using tcie = FieldModel<address, 4, 0x00000001>;
+    using htie = FieldModel<address, 3, 0x00000001>;
+    using teie = FieldModel<address, 2, 0x00000001>;
+    using dmeie = FieldModel<address, 1, 0x00000001>;
+    using en = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -545,8 +516,7 @@ private:
   class S4ndtrReg: public RegisterModel<address>
   {
   public:
-    using ndt = FieldModel<address,  0, 0x0000FFFF>;
-
+    using ndt = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -557,8 +527,7 @@ private:
   class S4parReg: public RegisterModel<address>
   {
   public:
-    using pa = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using pa = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -569,8 +538,7 @@ private:
   class S4m0arReg: public RegisterModel<address>
   {
   public:
-    using m0a = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using m0a = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -581,8 +549,7 @@ private:
   class S4m1arReg: public RegisterModel<address>
   {
   public:
-    using m1a = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using m1a = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -593,11 +560,10 @@ private:
   class S4fcrReg: public RegisterModel<address>
   {
   public:
-    using feie = FieldModel<address,  7, 0x00000001>;
-    using fs = FieldModel<address,  3, 0x00000007>;
-    using dmdis = FieldModel<address,  2, 0x00000001>;
-    using fth = FieldModel<address,  0, 0x00000003>;
-
+    using feie = FieldModel<address, 7, 0x00000001>;
+    using fs = FieldModel<address, 3, 0x00000007>;
+    using dmdis = FieldModel<address, 2, 0x00000001>;
+    using fth = FieldModel<address, 0, 0x00000003>;
   };
 
 public:
@@ -619,16 +585,15 @@ private:
     using msize = FieldModel<address, 13, 0x00000003>;
     using psize = FieldModel<address, 11, 0x00000003>;
     using minc = FieldModel<address, 10, 0x00000001>;
-    using pinc = FieldModel<address,  9, 0x00000001>;
-    using circ = FieldModel<address,  8, 0x00000001>;
-    using dir = FieldModel<address,  6, 0x00000003>;
-    using pfctrl = FieldModel<address,  5, 0x00000001>;
-    using tcie = FieldModel<address,  4, 0x00000001>;
-    using htie = FieldModel<address,  3, 0x00000001>;
-    using teie = FieldModel<address,  2, 0x00000001>;
-    using dmeie = FieldModel<address,  1, 0x00000001>;
-    using en = FieldModel<address,  0, 0x00000001>;
-
+    using pinc = FieldModel<address, 9, 0x00000001>;
+    using circ = FieldModel<address, 8, 0x00000001>;
+    using dir = FieldModel<address, 6, 0x00000003>;
+    using pfctrl = FieldModel<address, 5, 0x00000001>;
+    using tcie = FieldModel<address, 4, 0x00000001>;
+    using htie = FieldModel<address, 3, 0x00000001>;
+    using teie = FieldModel<address, 2, 0x00000001>;
+    using dmeie = FieldModel<address, 1, 0x00000001>;
+    using en = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -639,8 +604,7 @@ private:
   class S5ndtrReg: public RegisterModel<address>
   {
   public:
-    using ndt = FieldModel<address,  0, 0x0000FFFF>;
-
+    using ndt = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -651,8 +615,7 @@ private:
   class S5parReg: public RegisterModel<address>
   {
   public:
-    using pa = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using pa = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -663,8 +626,7 @@ private:
   class S5m0arReg: public RegisterModel<address>
   {
   public:
-    using m0a = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using m0a = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -675,8 +637,7 @@ private:
   class S5m1arReg: public RegisterModel<address>
   {
   public:
-    using m1a = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using m1a = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -687,11 +648,10 @@ private:
   class S5fcrReg: public RegisterModel<address>
   {
   public:
-    using feie = FieldModel<address,  7, 0x00000001>;
-    using fs = FieldModel<address,  3, 0x00000007>;
-    using dmdis = FieldModel<address,  2, 0x00000001>;
-    using fth = FieldModel<address,  0, 0x00000003>;
-
+    using feie = FieldModel<address, 7, 0x00000001>;
+    using fs = FieldModel<address, 3, 0x00000007>;
+    using dmdis = FieldModel<address, 2, 0x00000001>;
+    using fth = FieldModel<address, 0, 0x00000003>;
   };
 
 public:
@@ -713,16 +673,15 @@ private:
     using msize = FieldModel<address, 13, 0x00000003>;
     using psize = FieldModel<address, 11, 0x00000003>;
     using minc = FieldModel<address, 10, 0x00000001>;
-    using pinc = FieldModel<address,  9, 0x00000001>;
-    using circ = FieldModel<address,  8, 0x00000001>;
-    using dir = FieldModel<address,  6, 0x00000003>;
-    using pfctrl = FieldModel<address,  5, 0x00000001>;
-    using tcie = FieldModel<address,  4, 0x00000001>;
-    using htie = FieldModel<address,  3, 0x00000001>;
-    using teie = FieldModel<address,  2, 0x00000001>;
-    using dmeie = FieldModel<address,  1, 0x00000001>;
-    using en = FieldModel<address,  0, 0x00000001>;
-
+    using pinc = FieldModel<address, 9, 0x00000001>;
+    using circ = FieldModel<address, 8, 0x00000001>;
+    using dir = FieldModel<address, 6, 0x00000003>;
+    using pfctrl = FieldModel<address, 5, 0x00000001>;
+    using tcie = FieldModel<address, 4, 0x00000001>;
+    using htie = FieldModel<address, 3, 0x00000001>;
+    using teie = FieldModel<address, 2, 0x00000001>;
+    using dmeie = FieldModel<address, 1, 0x00000001>;
+    using en = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -733,8 +692,7 @@ private:
   class S6ndtrReg: public RegisterModel<address>
   {
   public:
-    using ndt = FieldModel<address,  0, 0x0000FFFF>;
-
+    using ndt = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -745,8 +703,7 @@ private:
   class S6parReg: public RegisterModel<address>
   {
   public:
-    using pa = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using pa = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -757,8 +714,7 @@ private:
   class S6m0arReg: public RegisterModel<address>
   {
   public:
-    using m0a = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using m0a = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -769,8 +725,7 @@ private:
   class S6m1arReg: public RegisterModel<address>
   {
   public:
-    using m1a = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using m1a = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -781,11 +736,10 @@ private:
   class S6fcrReg: public RegisterModel<address>
   {
   public:
-    using feie = FieldModel<address,  7, 0x00000001>;
-    using fs = FieldModel<address,  3, 0x00000007>;
-    using dmdis = FieldModel<address,  2, 0x00000001>;
-    using fth = FieldModel<address,  0, 0x00000003>;
-
+    using feie = FieldModel<address, 7, 0x00000001>;
+    using fs = FieldModel<address, 3, 0x00000007>;
+    using dmdis = FieldModel<address, 2, 0x00000001>;
+    using fth = FieldModel<address, 0, 0x00000003>;
   };
 
 public:
@@ -807,16 +761,15 @@ private:
     using msize = FieldModel<address, 13, 0x00000003>;
     using psize = FieldModel<address, 11, 0x00000003>;
     using minc = FieldModel<address, 10, 0x00000001>;
-    using pinc = FieldModel<address,  9, 0x00000001>;
-    using circ = FieldModel<address,  8, 0x00000001>;
-    using dir = FieldModel<address,  6, 0x00000003>;
-    using pfctrl = FieldModel<address,  5, 0x00000001>;
-    using tcie = FieldModel<address,  4, 0x00000001>;
-    using htie = FieldModel<address,  3, 0x00000001>;
-    using teie = FieldModel<address,  2, 0x00000001>;
-    using dmeie = FieldModel<address,  1, 0x00000001>;
-    using en = FieldModel<address,  0, 0x00000001>;
-
+    using pinc = FieldModel<address, 9, 0x00000001>;
+    using circ = FieldModel<address, 8, 0x00000001>;
+    using dir = FieldModel<address, 6, 0x00000003>;
+    using pfctrl = FieldModel<address, 5, 0x00000001>;
+    using tcie = FieldModel<address, 4, 0x00000001>;
+    using htie = FieldModel<address, 3, 0x00000001>;
+    using teie = FieldModel<address, 2, 0x00000001>;
+    using dmeie = FieldModel<address, 1, 0x00000001>;
+    using en = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -827,8 +780,7 @@ private:
   class S7ndtrReg: public RegisterModel<address>
   {
   public:
-    using ndt = FieldModel<address,  0, 0x0000FFFF>;
-
+    using ndt = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -839,8 +791,7 @@ private:
   class S7parReg: public RegisterModel<address>
   {
   public:
-    using pa = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using pa = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -851,8 +802,7 @@ private:
   class S7m0arReg: public RegisterModel<address>
   {
   public:
-    using m0a = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using m0a = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -863,8 +813,7 @@ private:
   class S7m1arReg: public RegisterModel<address>
   {
   public:
-    using m1a = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using m1a = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -875,11 +824,10 @@ private:
   class S7fcrReg: public RegisterModel<address>
   {
   public:
-    using feie = FieldModel<address,  7, 0x00000001>;
-    using fs = FieldModel<address,  3, 0x00000007>;
-    using dmdis = FieldModel<address,  2, 0x00000001>;
-    using fth = FieldModel<address,  0, 0x00000003>;
-
+    using feie = FieldModel<address, 7, 0x00000001>;
+    using fs = FieldModel<address, 3, 0x00000007>;
+    using dmdis = FieldModel<address, 2, 0x00000001>;
+    using fth = FieldModel<address, 0, 0x00000003>;
   };
 
 public:
@@ -890,8 +838,7 @@ private:
   class SxndtrBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using ndt = FieldModel<address,  0, 0x0000FFFF, bankOffset>;
-
+    using ndt = FieldModel<address, 0, 0x0000FFFF, bankOffset>;
   };
 
 public:
@@ -902,8 +849,7 @@ private:
   class SxparBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using pa = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
-
+    using pa = FieldModel<address, 0, 0xFFFFFFFF, bankOffset>;
   };
 
 public:
@@ -914,8 +860,7 @@ private:
   class Sxm0arBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using m0a = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
-
+    using m0a = FieldModel<address, 0, 0xFFFFFFFF, bankOffset>;
   };
 
 public:
@@ -926,8 +871,7 @@ private:
   class Sxm1arBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using m1a = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
-
+    using m1a = FieldModel<address, 0, 0xFFFFFFFF, bankOffset>;
   };
 
 public:
@@ -938,11 +882,10 @@ private:
   class SxfcrBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using feie = FieldModel<address,  7, 0x00000001, bankOffset>;
-    using fs = FieldModel<address,  3, 0x00000007, bankOffset>;
-    using dmdis = FieldModel<address,  2, 0x00000001, bankOffset>;
-    using fth = FieldModel<address,  0, 0x00000003, bankOffset>;
-
+    using feie = FieldModel<address, 7, 0x00000001, bankOffset>;
+    using fs = FieldModel<address, 3, 0x00000007, bankOffset>;
+    using dmdis = FieldModel<address, 2, 0x00000001, bankOffset>;
+    using fth = FieldModel<address, 0, 0x00000003, bankOffset>;
   };
 
 public:
@@ -964,22 +907,19 @@ private:
     using msize = FieldModel<address, 13, 0x00000003, bankOffset>;
     using psize = FieldModel<address, 11, 0x00000003, bankOffset>;
     using minc = FieldModel<address, 10, 0x00000001, bankOffset>;
-    using pinc = FieldModel<address,  9, 0x00000001, bankOffset>;
-    using circ = FieldModel<address,  8, 0x00000001, bankOffset>;
-    using dir = FieldModel<address,  6, 0x00000003, bankOffset>;
-    using pfctrl = FieldModel<address,  5, 0x00000001, bankOffset>;
-    using tcie = FieldModel<address,  4, 0x00000001, bankOffset>;
-    using htie = FieldModel<address,  3, 0x00000001, bankOffset>;
-    using teie = FieldModel<address,  2, 0x00000001, bankOffset>;
-    using dmeie = FieldModel<address,  1, 0x00000001, bankOffset>;
-    using en = FieldModel<address,  0, 0x00000001, bankOffset>;
-
+    using pinc = FieldModel<address, 9, 0x00000001, bankOffset>;
+    using circ = FieldModel<address, 8, 0x00000001, bankOffset>;
+    using dir = FieldModel<address, 6, 0x00000003, bankOffset>;
+    using pfctrl = FieldModel<address, 5, 0x00000001, bankOffset>;
+    using tcie = FieldModel<address, 4, 0x00000001, bankOffset>;
+    using htie = FieldModel<address, 3, 0x00000001, bankOffset>;
+    using teie = FieldModel<address, 2, 0x00000001, bankOffset>;
+    using dmeie = FieldModel<address, 1, 0x00000001, bankOffset>;
+    using en = FieldModel<address, 0, 0x00000001, bankOffset>;
   };
 
 public:
   using sxcr = SxcrBankReg<BaseAddress + 0x0028, 0x0018>;
-
-
 };
 
 }

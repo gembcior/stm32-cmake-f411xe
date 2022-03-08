@@ -23,11 +23,10 @@ private:
     using hsebyp = FieldModel<address, 18, 0x00000001>;
     using hserdy = FieldModel<address, 17, 0x00000001>;
     using hseon = FieldModel<address, 16, 0x00000001>;
-    using hsical = FieldModel<address,  8, 0x000000FF>;
-    using hsitrim = FieldModel<address,  3, 0x0000001F>;
-    using hsirdy = FieldModel<address,  1, 0x00000001>;
-    using hsion = FieldModel<address,  0, 0x00000001>;
-
+    using hsical = FieldModel<address, 8, 0x000000FF>;
+    using hsitrim = FieldModel<address, 3, 0x0000001F>;
+    using hsirdy = FieldModel<address, 1, 0x00000001>;
+    using hsion = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -50,17 +49,16 @@ private:
     using plln6 = FieldModel<address, 12, 0x00000001>;
     using plln5 = FieldModel<address, 11, 0x00000001>;
     using plln4 = FieldModel<address, 10, 0x00000001>;
-    using plln3 = FieldModel<address,  9, 0x00000001>;
-    using plln2 = FieldModel<address,  8, 0x00000001>;
-    using plln1 = FieldModel<address,  7, 0x00000001>;
-    using plln0 = FieldModel<address,  6, 0x00000001>;
-    using pllm5 = FieldModel<address,  5, 0x00000001>;
-    using pllm4 = FieldModel<address,  4, 0x00000001>;
-    using pllm3 = FieldModel<address,  3, 0x00000001>;
-    using pllm2 = FieldModel<address,  2, 0x00000001>;
-    using pllm1 = FieldModel<address,  1, 0x00000001>;
-    using pllm0 = FieldModel<address,  0, 0x00000001>;
-
+    using plln3 = FieldModel<address, 9, 0x00000001>;
+    using plln2 = FieldModel<address, 8, 0x00000001>;
+    using plln1 = FieldModel<address, 7, 0x00000001>;
+    using plln0 = FieldModel<address, 6, 0x00000001>;
+    using pllm5 = FieldModel<address, 5, 0x00000001>;
+    using pllm4 = FieldModel<address, 4, 0x00000001>;
+    using pllm3 = FieldModel<address, 3, 0x00000001>;
+    using pllm2 = FieldModel<address, 2, 0x00000001>;
+    using pllm1 = FieldModel<address, 1, 0x00000001>;
+    using pllm0 = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -79,12 +77,11 @@ private:
     using rtcpre = FieldModel<address, 16, 0x0000001F>;
     using ppre2 = FieldModel<address, 13, 0x00000007>;
     using ppre1 = FieldModel<address, 10, 0x00000007>;
-    using hpre = FieldModel<address,  4, 0x0000000F>;
-    using sws1 = FieldModel<address,  3, 0x00000001>;
-    using sws0 = FieldModel<address,  2, 0x00000001>;
-    using sw1 = FieldModel<address,  1, 0x00000001>;
-    using sw0 = FieldModel<address,  0, 0x00000001>;
-
+    using hpre = FieldModel<address, 4, 0x0000000F>;
+    using sws1 = FieldModel<address, 3, 0x00000001>;
+    using sws0 = FieldModel<address, 2, 0x00000001>;
+    using sw1 = FieldModel<address, 1, 0x00000001>;
+    using sw0 = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -106,16 +103,15 @@ private:
     using pllrdyie = FieldModel<address, 12, 0x00000001>;
     using hserdyie = FieldModel<address, 11, 0x00000001>;
     using hsirdyie = FieldModel<address, 10, 0x00000001>;
-    using lserdyie = FieldModel<address,  9, 0x00000001>;
-    using lsirdyie = FieldModel<address,  8, 0x00000001>;
-    using cssf = FieldModel<address,  7, 0x00000001>;
-    using plli2srdyf = FieldModel<address,  5, 0x00000001>;
-    using pllrdyf = FieldModel<address,  4, 0x00000001>;
-    using hserdyf = FieldModel<address,  3, 0x00000001>;
-    using hsirdyf = FieldModel<address,  2, 0x00000001>;
-    using lserdyf = FieldModel<address,  1, 0x00000001>;
-    using lsirdyf = FieldModel<address,  0, 0x00000001>;
-
+    using lserdyie = FieldModel<address, 9, 0x00000001>;
+    using lsirdyie = FieldModel<address, 8, 0x00000001>;
+    using cssf = FieldModel<address, 7, 0x00000001>;
+    using plli2srdyf = FieldModel<address, 5, 0x00000001>;
+    using pllrdyf = FieldModel<address, 4, 0x00000001>;
+    using hserdyf = FieldModel<address, 3, 0x00000001>;
+    using hsirdyf = FieldModel<address, 2, 0x00000001>;
+    using lserdyf = FieldModel<address, 1, 0x00000001>;
+    using lsirdyf = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -129,13 +125,12 @@ private:
     using dma2rst = FieldModel<address, 22, 0x00000001>;
     using dma1rst = FieldModel<address, 21, 0x00000001>;
     using crcrst = FieldModel<address, 12, 0x00000001>;
-    using gpiohrst = FieldModel<address,  7, 0x00000001>;
-    using gpioerst = FieldModel<address,  4, 0x00000001>;
-    using gpiodrst = FieldModel<address,  3, 0x00000001>;
-    using gpiocrst = FieldModel<address,  2, 0x00000001>;
-    using gpiobrst = FieldModel<address,  1, 0x00000001>;
-    using gpioarst = FieldModel<address,  0, 0x00000001>;
-
+    using gpiohrst = FieldModel<address, 7, 0x00000001>;
+    using gpioerst = FieldModel<address, 4, 0x00000001>;
+    using gpiodrst = FieldModel<address, 3, 0x00000001>;
+    using gpiocrst = FieldModel<address, 2, 0x00000001>;
+    using gpiobrst = FieldModel<address, 1, 0x00000001>;
+    using gpioarst = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -146,8 +141,7 @@ private:
   class Ahb2rstrReg: public RegisterModel<address>
   {
   public:
-    using otgfsrst = FieldModel<address,  7, 0x00000001>;
-
+    using otgfsrst = FieldModel<address, 7, 0x00000001>;
   };
 
 public:
@@ -166,11 +160,10 @@ private:
     using spi3rst = FieldModel<address, 15, 0x00000001>;
     using spi2rst = FieldModel<address, 14, 0x00000001>;
     using wwdgrst = FieldModel<address, 11, 0x00000001>;
-    using tim5rst = FieldModel<address,  3, 0x00000001>;
-    using tim4rst = FieldModel<address,  2, 0x00000001>;
-    using tim3rst = FieldModel<address,  1, 0x00000001>;
-    using tim2rst = FieldModel<address,  0, 0x00000001>;
-
+    using tim5rst = FieldModel<address, 3, 0x00000001>;
+    using tim4rst = FieldModel<address, 2, 0x00000001>;
+    using tim3rst = FieldModel<address, 1, 0x00000001>;
+    using tim2rst = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -187,11 +180,10 @@ private:
     using syscfgrst = FieldModel<address, 14, 0x00000001>;
     using spi1rst = FieldModel<address, 12, 0x00000001>;
     using sdiorst = FieldModel<address, 11, 0x00000001>;
-    using adcrst = FieldModel<address,  8, 0x00000001>;
-    using usart6rst = FieldModel<address,  5, 0x00000001>;
-    using usart1rst = FieldModel<address,  4, 0x00000001>;
-    using tim1rst = FieldModel<address,  0, 0x00000001>;
-
+    using adcrst = FieldModel<address, 8, 0x00000001>;
+    using usart6rst = FieldModel<address, 5, 0x00000001>;
+    using usart1rst = FieldModel<address, 4, 0x00000001>;
+    using tim1rst = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -205,13 +197,12 @@ private:
     using dma2en = FieldModel<address, 22, 0x00000001>;
     using dma1en = FieldModel<address, 21, 0x00000001>;
     using crcen = FieldModel<address, 12, 0x00000001>;
-    using gpiohen = FieldModel<address,  7, 0x00000001>;
-    using gpioeen = FieldModel<address,  4, 0x00000001>;
-    using gpioden = FieldModel<address,  3, 0x00000001>;
-    using gpiocen = FieldModel<address,  2, 0x00000001>;
-    using gpioben = FieldModel<address,  1, 0x00000001>;
-    using gpioaen = FieldModel<address,  0, 0x00000001>;
-
+    using gpiohen = FieldModel<address, 7, 0x00000001>;
+    using gpioeen = FieldModel<address, 4, 0x00000001>;
+    using gpioden = FieldModel<address, 3, 0x00000001>;
+    using gpiocen = FieldModel<address, 2, 0x00000001>;
+    using gpioben = FieldModel<address, 1, 0x00000001>;
+    using gpioaen = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -222,8 +213,7 @@ private:
   class Ahb2enrReg: public RegisterModel<address>
   {
   public:
-    using otgfsen = FieldModel<address,  7, 0x00000001>;
-
+    using otgfsen = FieldModel<address, 7, 0x00000001>;
   };
 
 public:
@@ -242,11 +232,10 @@ private:
     using spi3en = FieldModel<address, 15, 0x00000001>;
     using spi2en = FieldModel<address, 14, 0x00000001>;
     using wwdgen = FieldModel<address, 11, 0x00000001>;
-    using tim5en = FieldModel<address,  3, 0x00000001>;
-    using tim4en = FieldModel<address,  2, 0x00000001>;
-    using tim3en = FieldModel<address,  1, 0x00000001>;
-    using tim2en = FieldModel<address,  0, 0x00000001>;
-
+    using tim5en = FieldModel<address, 3, 0x00000001>;
+    using tim4en = FieldModel<address, 2, 0x00000001>;
+    using tim3en = FieldModel<address, 1, 0x00000001>;
+    using tim2en = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -257,10 +246,10 @@ private:
   class Apb2enrReg: public RegisterModel<address>
   {
   public:
-    using tim1en = FieldModel<address,  0, 0x00000001>;
-    using usart1en = FieldModel<address,  4, 0x00000001>;
-    using usart6en = FieldModel<address,  5, 0x00000001>;
-    using adc1en = FieldModel<address,  8, 0x00000001>;
+    using tim1en = FieldModel<address, 0, 0x00000001>;
+    using usart1en = FieldModel<address, 4, 0x00000001>;
+    using usart6en = FieldModel<address, 5, 0x00000001>;
+    using adc1en = FieldModel<address, 8, 0x00000001>;
     using sdioen = FieldModel<address, 11, 0x00000001>;
     using spi1en = FieldModel<address, 12, 0x00000001>;
     using spi4en = FieldModel<address, 13, 0x00000001>;
@@ -268,7 +257,6 @@ private:
     using tim9en = FieldModel<address, 16, 0x00000001>;
     using tim10en = FieldModel<address, 17, 0x00000001>;
     using tim11en = FieldModel<address, 18, 0x00000001>;
-
   };
 
 public:
@@ -284,13 +272,12 @@ private:
     using sram1lpen = FieldModel<address, 16, 0x00000001>;
     using flitflpen = FieldModel<address, 15, 0x00000001>;
     using crclpen = FieldModel<address, 12, 0x00000001>;
-    using gpiohlpen = FieldModel<address,  7, 0x00000001>;
-    using gpioelpen = FieldModel<address,  4, 0x00000001>;
-    using gpiodlpen = FieldModel<address,  3, 0x00000001>;
-    using gpioclpen = FieldModel<address,  2, 0x00000001>;
-    using gpioblpen = FieldModel<address,  1, 0x00000001>;
-    using gpioalpen = FieldModel<address,  0, 0x00000001>;
-
+    using gpiohlpen = FieldModel<address, 7, 0x00000001>;
+    using gpioelpen = FieldModel<address, 4, 0x00000001>;
+    using gpiodlpen = FieldModel<address, 3, 0x00000001>;
+    using gpioclpen = FieldModel<address, 2, 0x00000001>;
+    using gpioblpen = FieldModel<address, 1, 0x00000001>;
+    using gpioalpen = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -301,8 +288,7 @@ private:
   class Ahb2lpenrReg: public RegisterModel<address>
   {
   public:
-    using otgfslpen = FieldModel<address,  7, 0x00000001>;
-
+    using otgfslpen = FieldModel<address, 7, 0x00000001>;
   };
 
 public:
@@ -321,11 +307,10 @@ private:
     using spi3lpen = FieldModel<address, 15, 0x00000001>;
     using spi2lpen = FieldModel<address, 14, 0x00000001>;
     using wwdglpen = FieldModel<address, 11, 0x00000001>;
-    using tim5lpen = FieldModel<address,  3, 0x00000001>;
-    using tim4lpen = FieldModel<address,  2, 0x00000001>;
-    using tim3lpen = FieldModel<address,  1, 0x00000001>;
-    using tim2lpen = FieldModel<address,  0, 0x00000001>;
-
+    using tim5lpen = FieldModel<address, 3, 0x00000001>;
+    using tim4lpen = FieldModel<address, 2, 0x00000001>;
+    using tim3lpen = FieldModel<address, 1, 0x00000001>;
+    using tim2lpen = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -336,10 +321,10 @@ private:
   class Apb2lpenrReg: public RegisterModel<address>
   {
   public:
-    using tim1lpen = FieldModel<address,  0, 0x00000001>;
-    using usart1lpen = FieldModel<address,  4, 0x00000001>;
-    using usart6lpen = FieldModel<address,  5, 0x00000001>;
-    using adc1lpen = FieldModel<address,  8, 0x00000001>;
+    using tim1lpen = FieldModel<address, 0, 0x00000001>;
+    using usart1lpen = FieldModel<address, 4, 0x00000001>;
+    using usart6lpen = FieldModel<address, 5, 0x00000001>;
+    using adc1lpen = FieldModel<address, 8, 0x00000001>;
     using sdiolpen = FieldModel<address, 11, 0x00000001>;
     using spi1lpen = FieldModel<address, 12, 0x00000001>;
     using spi4lpen = FieldModel<address, 13, 0x00000001>;
@@ -347,7 +332,6 @@ private:
     using tim9lpen = FieldModel<address, 16, 0x00000001>;
     using tim10lpen = FieldModel<address, 17, 0x00000001>;
     using tim11lpen = FieldModel<address, 18, 0x00000001>;
-
   };
 
 public:
@@ -360,12 +344,11 @@ private:
   public:
     using bdrst = FieldModel<address, 16, 0x00000001>;
     using rtcen = FieldModel<address, 15, 0x00000001>;
-    using rtcsel1 = FieldModel<address,  9, 0x00000001>;
-    using rtcsel0 = FieldModel<address,  8, 0x00000001>;
-    using lsebyp = FieldModel<address,  2, 0x00000001>;
-    using lserdy = FieldModel<address,  1, 0x00000001>;
-    using lseon = FieldModel<address,  0, 0x00000001>;
-
+    using rtcsel1 = FieldModel<address, 9, 0x00000001>;
+    using rtcsel0 = FieldModel<address, 8, 0x00000001>;
+    using lsebyp = FieldModel<address, 2, 0x00000001>;
+    using lserdy = FieldModel<address, 1, 0x00000001>;
+    using lseon = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -384,9 +367,8 @@ private:
     using padrstf = FieldModel<address, 26, 0x00000001>;
     using borrstf = FieldModel<address, 25, 0x00000001>;
     using rmvf = FieldModel<address, 24, 0x00000001>;
-    using lsirdy = FieldModel<address,  1, 0x00000001>;
-    using lsion = FieldModel<address,  0, 0x00000001>;
-
+    using lsirdy = FieldModel<address, 1, 0x00000001>;
+    using lsion = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -400,8 +382,7 @@ private:
     using sscgen = FieldModel<address, 31, 0x00000001>;
     using spreadsel = FieldModel<address, 30, 0x00000001>;
     using incstep = FieldModel<address, 13, 0x00007FFF>;
-    using modper = FieldModel<address,  0, 0x00001FFF>;
-
+    using modper = FieldModel<address, 0, 0x00001FFF>;
   };
 
 public:
@@ -413,14 +394,11 @@ private:
   {
   public:
     using plli2srx = FieldModel<address, 28, 0x00000007>;
-    using plli2snx = FieldModel<address,  6, 0x000001FF>;
-
+    using plli2snx = FieldModel<address, 6, 0x000001FF>;
   };
 
 public:
   using plli2scfgr = Plli2scfgrReg<BaseAddress + 0x0084>;
-
-
 };
 
 }

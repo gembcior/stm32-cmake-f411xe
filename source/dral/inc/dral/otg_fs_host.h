@@ -15,9 +15,8 @@ private:
   class Fs_hcfgReg: public RegisterModel<address>
   {
   public:
-    using fslspcs = FieldModel<address,  0, 0x00000003>;
-    using fslss = FieldModel<address,  2, 0x00000001>;
-
+    using fslspcs = FieldModel<address, 0, 0x00000003>;
+    using fslss = FieldModel<address, 2, 0x00000001>;
   };
 
 public:
@@ -28,8 +27,7 @@ private:
   class HfirReg: public RegisterModel<address>
   {
   public:
-    using frivl = FieldModel<address,  0, 0x0000FFFF>;
-
+    using frivl = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -40,9 +38,8 @@ private:
   class Fs_hfnumReg: public RegisterModel<address>
   {
   public:
-    using frnum = FieldModel<address,  0, 0x0000FFFF>;
+    using frnum = FieldModel<address, 0, 0x0000FFFF>;
     using ftrem = FieldModel<address, 16, 0x0000FFFF>;
-
   };
 
 public:
@@ -53,10 +50,9 @@ private:
   class Fs_hptxstsReg: public RegisterModel<address>
   {
   public:
-    using ptxfsavl = FieldModel<address,  0, 0x0000FFFF>;
+    using ptxfsavl = FieldModel<address, 0, 0x0000FFFF>;
     using ptxqsav = FieldModel<address, 16, 0x000000FF>;
     using ptxqtop = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -67,8 +63,7 @@ private:
   class HaintReg: public RegisterModel<address>
   {
   public:
-    using haint = FieldModel<address,  0, 0x0000FFFF>;
-
+    using haint = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -79,8 +74,7 @@ private:
   class HaintmskReg: public RegisterModel<address>
   {
   public:
-    using haintm = FieldModel<address,  0, 0x0000FFFF>;
-
+    using haintm = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -91,20 +85,19 @@ private:
   class Fs_hprtReg: public RegisterModel<address>
   {
   public:
-    using pcsts = FieldModel<address,  0, 0x00000001>;
-    using pcdet = FieldModel<address,  1, 0x00000001>;
-    using pena = FieldModel<address,  2, 0x00000001>;
-    using penchng = FieldModel<address,  3, 0x00000001>;
-    using poca = FieldModel<address,  4, 0x00000001>;
-    using pocchng = FieldModel<address,  5, 0x00000001>;
-    using pres = FieldModel<address,  6, 0x00000001>;
-    using psusp = FieldModel<address,  7, 0x00000001>;
-    using prst = FieldModel<address,  8, 0x00000001>;
+    using pcsts = FieldModel<address, 0, 0x00000001>;
+    using pcdet = FieldModel<address, 1, 0x00000001>;
+    using pena = FieldModel<address, 2, 0x00000001>;
+    using penchng = FieldModel<address, 3, 0x00000001>;
+    using poca = FieldModel<address, 4, 0x00000001>;
+    using pocchng = FieldModel<address, 5, 0x00000001>;
+    using pres = FieldModel<address, 6, 0x00000001>;
+    using psusp = FieldModel<address, 7, 0x00000001>;
+    using prst = FieldModel<address, 8, 0x00000001>;
     using plsts = FieldModel<address, 10, 0x00000003>;
     using ppwr = FieldModel<address, 12, 0x00000001>;
     using ptctl = FieldModel<address, 13, 0x0000000F>;
     using pspd = FieldModel<address, 17, 0x00000003>;
-
   };
 
 public:
@@ -115,7 +108,7 @@ private:
   class Fs_hcchar0Reg: public RegisterModel<address>
   {
   public:
-    using mpsiz = FieldModel<address,  0, 0x000007FF>;
+    using mpsiz = FieldModel<address, 0, 0x000007FF>;
     using epnum = FieldModel<address, 11, 0x0000000F>;
     using epdir = FieldModel<address, 15, 0x00000001>;
     using lsdev = FieldModel<address, 17, 0x00000001>;
@@ -125,7 +118,6 @@ private:
     using oddfrm = FieldModel<address, 29, 0x00000001>;
     using chdis = FieldModel<address, 30, 0x00000001>;
     using chena = FieldModel<address, 31, 0x00000001>;
-
   };
 
 public:
@@ -136,7 +128,7 @@ private:
   class Fs_hcchar1Reg: public RegisterModel<address>
   {
   public:
-    using mpsiz = FieldModel<address,  0, 0x000007FF>;
+    using mpsiz = FieldModel<address, 0, 0x000007FF>;
     using epnum = FieldModel<address, 11, 0x0000000F>;
     using epdir = FieldModel<address, 15, 0x00000001>;
     using lsdev = FieldModel<address, 17, 0x00000001>;
@@ -146,7 +138,6 @@ private:
     using oddfrm = FieldModel<address, 29, 0x00000001>;
     using chdis = FieldModel<address, 30, 0x00000001>;
     using chena = FieldModel<address, 31, 0x00000001>;
-
   };
 
 public:
@@ -157,7 +148,7 @@ private:
   class Fs_hcchar2Reg: public RegisterModel<address>
   {
   public:
-    using mpsiz = FieldModel<address,  0, 0x000007FF>;
+    using mpsiz = FieldModel<address, 0, 0x000007FF>;
     using epnum = FieldModel<address, 11, 0x0000000F>;
     using epdir = FieldModel<address, 15, 0x00000001>;
     using lsdev = FieldModel<address, 17, 0x00000001>;
@@ -167,7 +158,6 @@ private:
     using oddfrm = FieldModel<address, 29, 0x00000001>;
     using chdis = FieldModel<address, 30, 0x00000001>;
     using chena = FieldModel<address, 31, 0x00000001>;
-
   };
 
 public:
@@ -178,7 +168,7 @@ private:
   class Fs_hcchar3Reg: public RegisterModel<address>
   {
   public:
-    using mpsiz = FieldModel<address,  0, 0x000007FF>;
+    using mpsiz = FieldModel<address, 0, 0x000007FF>;
     using epnum = FieldModel<address, 11, 0x0000000F>;
     using epdir = FieldModel<address, 15, 0x00000001>;
     using lsdev = FieldModel<address, 17, 0x00000001>;
@@ -188,7 +178,6 @@ private:
     using oddfrm = FieldModel<address, 29, 0x00000001>;
     using chdis = FieldModel<address, 30, 0x00000001>;
     using chena = FieldModel<address, 31, 0x00000001>;
-
   };
 
 public:
@@ -199,7 +188,7 @@ private:
   class Fs_hcchar4Reg: public RegisterModel<address>
   {
   public:
-    using mpsiz = FieldModel<address,  0, 0x000007FF>;
+    using mpsiz = FieldModel<address, 0, 0x000007FF>;
     using epnum = FieldModel<address, 11, 0x0000000F>;
     using epdir = FieldModel<address, 15, 0x00000001>;
     using lsdev = FieldModel<address, 17, 0x00000001>;
@@ -209,7 +198,6 @@ private:
     using oddfrm = FieldModel<address, 29, 0x00000001>;
     using chdis = FieldModel<address, 30, 0x00000001>;
     using chena = FieldModel<address, 31, 0x00000001>;
-
   };
 
 public:
@@ -220,7 +208,7 @@ private:
   class Fs_hcchar5Reg: public RegisterModel<address>
   {
   public:
-    using mpsiz = FieldModel<address,  0, 0x000007FF>;
+    using mpsiz = FieldModel<address, 0, 0x000007FF>;
     using epnum = FieldModel<address, 11, 0x0000000F>;
     using epdir = FieldModel<address, 15, 0x00000001>;
     using lsdev = FieldModel<address, 17, 0x00000001>;
@@ -230,7 +218,6 @@ private:
     using oddfrm = FieldModel<address, 29, 0x00000001>;
     using chdis = FieldModel<address, 30, 0x00000001>;
     using chena = FieldModel<address, 31, 0x00000001>;
-
   };
 
 public:
@@ -241,7 +228,7 @@ private:
   class Fs_hcchar6Reg: public RegisterModel<address>
   {
   public:
-    using mpsiz = FieldModel<address,  0, 0x000007FF>;
+    using mpsiz = FieldModel<address, 0, 0x000007FF>;
     using epnum = FieldModel<address, 11, 0x0000000F>;
     using epdir = FieldModel<address, 15, 0x00000001>;
     using lsdev = FieldModel<address, 17, 0x00000001>;
@@ -251,7 +238,6 @@ private:
     using oddfrm = FieldModel<address, 29, 0x00000001>;
     using chdis = FieldModel<address, 30, 0x00000001>;
     using chena = FieldModel<address, 31, 0x00000001>;
-
   };
 
 public:
@@ -262,7 +248,7 @@ private:
   class Fs_hcchar7Reg: public RegisterModel<address>
   {
   public:
-    using mpsiz = FieldModel<address,  0, 0x000007FF>;
+    using mpsiz = FieldModel<address, 0, 0x000007FF>;
     using epnum = FieldModel<address, 11, 0x0000000F>;
     using epdir = FieldModel<address, 15, 0x00000001>;
     using lsdev = FieldModel<address, 17, 0x00000001>;
@@ -272,7 +258,6 @@ private:
     using oddfrm = FieldModel<address, 29, 0x00000001>;
     using chdis = FieldModel<address, 30, 0x00000001>;
     using chena = FieldModel<address, 31, 0x00000001>;
-
   };
 
 public:
@@ -283,16 +268,15 @@ private:
   class Fs_hcint0Reg: public RegisterModel<address>
   {
   public:
-    using xfrc = FieldModel<address,  0, 0x00000001>;
-    using chh = FieldModel<address,  1, 0x00000001>;
-    using stall = FieldModel<address,  3, 0x00000001>;
-    using nak = FieldModel<address,  4, 0x00000001>;
-    using ack = FieldModel<address,  5, 0x00000001>;
-    using txerr = FieldModel<address,  7, 0x00000001>;
-    using bberr = FieldModel<address,  8, 0x00000001>;
-    using frmor = FieldModel<address,  9, 0x00000001>;
+    using xfrc = FieldModel<address, 0, 0x00000001>;
+    using chh = FieldModel<address, 1, 0x00000001>;
+    using stall = FieldModel<address, 3, 0x00000001>;
+    using nak = FieldModel<address, 4, 0x00000001>;
+    using ack = FieldModel<address, 5, 0x00000001>;
+    using txerr = FieldModel<address, 7, 0x00000001>;
+    using bberr = FieldModel<address, 8, 0x00000001>;
+    using frmor = FieldModel<address, 9, 0x00000001>;
     using dterr = FieldModel<address, 10, 0x00000001>;
-
   };
 
 public:
@@ -303,16 +287,15 @@ private:
   class Fs_hcint1Reg: public RegisterModel<address>
   {
   public:
-    using xfrc = FieldModel<address,  0, 0x00000001>;
-    using chh = FieldModel<address,  1, 0x00000001>;
-    using stall = FieldModel<address,  3, 0x00000001>;
-    using nak = FieldModel<address,  4, 0x00000001>;
-    using ack = FieldModel<address,  5, 0x00000001>;
-    using txerr = FieldModel<address,  7, 0x00000001>;
-    using bberr = FieldModel<address,  8, 0x00000001>;
-    using frmor = FieldModel<address,  9, 0x00000001>;
+    using xfrc = FieldModel<address, 0, 0x00000001>;
+    using chh = FieldModel<address, 1, 0x00000001>;
+    using stall = FieldModel<address, 3, 0x00000001>;
+    using nak = FieldModel<address, 4, 0x00000001>;
+    using ack = FieldModel<address, 5, 0x00000001>;
+    using txerr = FieldModel<address, 7, 0x00000001>;
+    using bberr = FieldModel<address, 8, 0x00000001>;
+    using frmor = FieldModel<address, 9, 0x00000001>;
     using dterr = FieldModel<address, 10, 0x00000001>;
-
   };
 
 public:
@@ -323,16 +306,15 @@ private:
   class Fs_hcint2Reg: public RegisterModel<address>
   {
   public:
-    using xfrc = FieldModel<address,  0, 0x00000001>;
-    using chh = FieldModel<address,  1, 0x00000001>;
-    using stall = FieldModel<address,  3, 0x00000001>;
-    using nak = FieldModel<address,  4, 0x00000001>;
-    using ack = FieldModel<address,  5, 0x00000001>;
-    using txerr = FieldModel<address,  7, 0x00000001>;
-    using bberr = FieldModel<address,  8, 0x00000001>;
-    using frmor = FieldModel<address,  9, 0x00000001>;
+    using xfrc = FieldModel<address, 0, 0x00000001>;
+    using chh = FieldModel<address, 1, 0x00000001>;
+    using stall = FieldModel<address, 3, 0x00000001>;
+    using nak = FieldModel<address, 4, 0x00000001>;
+    using ack = FieldModel<address, 5, 0x00000001>;
+    using txerr = FieldModel<address, 7, 0x00000001>;
+    using bberr = FieldModel<address, 8, 0x00000001>;
+    using frmor = FieldModel<address, 9, 0x00000001>;
     using dterr = FieldModel<address, 10, 0x00000001>;
-
   };
 
 public:
@@ -343,16 +325,15 @@ private:
   class Fs_hcint3Reg: public RegisterModel<address>
   {
   public:
-    using xfrc = FieldModel<address,  0, 0x00000001>;
-    using chh = FieldModel<address,  1, 0x00000001>;
-    using stall = FieldModel<address,  3, 0x00000001>;
-    using nak = FieldModel<address,  4, 0x00000001>;
-    using ack = FieldModel<address,  5, 0x00000001>;
-    using txerr = FieldModel<address,  7, 0x00000001>;
-    using bberr = FieldModel<address,  8, 0x00000001>;
-    using frmor = FieldModel<address,  9, 0x00000001>;
+    using xfrc = FieldModel<address, 0, 0x00000001>;
+    using chh = FieldModel<address, 1, 0x00000001>;
+    using stall = FieldModel<address, 3, 0x00000001>;
+    using nak = FieldModel<address, 4, 0x00000001>;
+    using ack = FieldModel<address, 5, 0x00000001>;
+    using txerr = FieldModel<address, 7, 0x00000001>;
+    using bberr = FieldModel<address, 8, 0x00000001>;
+    using frmor = FieldModel<address, 9, 0x00000001>;
     using dterr = FieldModel<address, 10, 0x00000001>;
-
   };
 
 public:
@@ -363,16 +344,15 @@ private:
   class Fs_hcint4Reg: public RegisterModel<address>
   {
   public:
-    using xfrc = FieldModel<address,  0, 0x00000001>;
-    using chh = FieldModel<address,  1, 0x00000001>;
-    using stall = FieldModel<address,  3, 0x00000001>;
-    using nak = FieldModel<address,  4, 0x00000001>;
-    using ack = FieldModel<address,  5, 0x00000001>;
-    using txerr = FieldModel<address,  7, 0x00000001>;
-    using bberr = FieldModel<address,  8, 0x00000001>;
-    using frmor = FieldModel<address,  9, 0x00000001>;
+    using xfrc = FieldModel<address, 0, 0x00000001>;
+    using chh = FieldModel<address, 1, 0x00000001>;
+    using stall = FieldModel<address, 3, 0x00000001>;
+    using nak = FieldModel<address, 4, 0x00000001>;
+    using ack = FieldModel<address, 5, 0x00000001>;
+    using txerr = FieldModel<address, 7, 0x00000001>;
+    using bberr = FieldModel<address, 8, 0x00000001>;
+    using frmor = FieldModel<address, 9, 0x00000001>;
     using dterr = FieldModel<address, 10, 0x00000001>;
-
   };
 
 public:
@@ -383,16 +363,15 @@ private:
   class Fs_hcint5Reg: public RegisterModel<address>
   {
   public:
-    using xfrc = FieldModel<address,  0, 0x00000001>;
-    using chh = FieldModel<address,  1, 0x00000001>;
-    using stall = FieldModel<address,  3, 0x00000001>;
-    using nak = FieldModel<address,  4, 0x00000001>;
-    using ack = FieldModel<address,  5, 0x00000001>;
-    using txerr = FieldModel<address,  7, 0x00000001>;
-    using bberr = FieldModel<address,  8, 0x00000001>;
-    using frmor = FieldModel<address,  9, 0x00000001>;
+    using xfrc = FieldModel<address, 0, 0x00000001>;
+    using chh = FieldModel<address, 1, 0x00000001>;
+    using stall = FieldModel<address, 3, 0x00000001>;
+    using nak = FieldModel<address, 4, 0x00000001>;
+    using ack = FieldModel<address, 5, 0x00000001>;
+    using txerr = FieldModel<address, 7, 0x00000001>;
+    using bberr = FieldModel<address, 8, 0x00000001>;
+    using frmor = FieldModel<address, 9, 0x00000001>;
     using dterr = FieldModel<address, 10, 0x00000001>;
-
   };
 
 public:
@@ -403,16 +382,15 @@ private:
   class Fs_hcint6Reg: public RegisterModel<address>
   {
   public:
-    using xfrc = FieldModel<address,  0, 0x00000001>;
-    using chh = FieldModel<address,  1, 0x00000001>;
-    using stall = FieldModel<address,  3, 0x00000001>;
-    using nak = FieldModel<address,  4, 0x00000001>;
-    using ack = FieldModel<address,  5, 0x00000001>;
-    using txerr = FieldModel<address,  7, 0x00000001>;
-    using bberr = FieldModel<address,  8, 0x00000001>;
-    using frmor = FieldModel<address,  9, 0x00000001>;
+    using xfrc = FieldModel<address, 0, 0x00000001>;
+    using chh = FieldModel<address, 1, 0x00000001>;
+    using stall = FieldModel<address, 3, 0x00000001>;
+    using nak = FieldModel<address, 4, 0x00000001>;
+    using ack = FieldModel<address, 5, 0x00000001>;
+    using txerr = FieldModel<address, 7, 0x00000001>;
+    using bberr = FieldModel<address, 8, 0x00000001>;
+    using frmor = FieldModel<address, 9, 0x00000001>;
     using dterr = FieldModel<address, 10, 0x00000001>;
-
   };
 
 public:
@@ -423,16 +401,15 @@ private:
   class Fs_hcint7Reg: public RegisterModel<address>
   {
   public:
-    using xfrc = FieldModel<address,  0, 0x00000001>;
-    using chh = FieldModel<address,  1, 0x00000001>;
-    using stall = FieldModel<address,  3, 0x00000001>;
-    using nak = FieldModel<address,  4, 0x00000001>;
-    using ack = FieldModel<address,  5, 0x00000001>;
-    using txerr = FieldModel<address,  7, 0x00000001>;
-    using bberr = FieldModel<address,  8, 0x00000001>;
-    using frmor = FieldModel<address,  9, 0x00000001>;
+    using xfrc = FieldModel<address, 0, 0x00000001>;
+    using chh = FieldModel<address, 1, 0x00000001>;
+    using stall = FieldModel<address, 3, 0x00000001>;
+    using nak = FieldModel<address, 4, 0x00000001>;
+    using ack = FieldModel<address, 5, 0x00000001>;
+    using txerr = FieldModel<address, 7, 0x00000001>;
+    using bberr = FieldModel<address, 8, 0x00000001>;
+    using frmor = FieldModel<address, 9, 0x00000001>;
     using dterr = FieldModel<address, 10, 0x00000001>;
-
   };
 
 public:
@@ -443,17 +420,16 @@ private:
   class Fs_hcintmsk0Reg: public RegisterModel<address>
   {
   public:
-    using xfrcm = FieldModel<address,  0, 0x00000001>;
-    using chhm = FieldModel<address,  1, 0x00000001>;
-    using stallm = FieldModel<address,  3, 0x00000001>;
-    using nakm = FieldModel<address,  4, 0x00000001>;
-    using ackm = FieldModel<address,  5, 0x00000001>;
-    using nyet = FieldModel<address,  6, 0x00000001>;
-    using txerrm = FieldModel<address,  7, 0x00000001>;
-    using bberrm = FieldModel<address,  8, 0x00000001>;
-    using frmorm = FieldModel<address,  9, 0x00000001>;
+    using xfrcm = FieldModel<address, 0, 0x00000001>;
+    using chhm = FieldModel<address, 1, 0x00000001>;
+    using stallm = FieldModel<address, 3, 0x00000001>;
+    using nakm = FieldModel<address, 4, 0x00000001>;
+    using ackm = FieldModel<address, 5, 0x00000001>;
+    using nyet = FieldModel<address, 6, 0x00000001>;
+    using txerrm = FieldModel<address, 7, 0x00000001>;
+    using bberrm = FieldModel<address, 8, 0x00000001>;
+    using frmorm = FieldModel<address, 9, 0x00000001>;
     using dterrm = FieldModel<address, 10, 0x00000001>;
-
   };
 
 public:
@@ -464,17 +440,16 @@ private:
   class Fs_hcintmsk1Reg: public RegisterModel<address>
   {
   public:
-    using xfrcm = FieldModel<address,  0, 0x00000001>;
-    using chhm = FieldModel<address,  1, 0x00000001>;
-    using stallm = FieldModel<address,  3, 0x00000001>;
-    using nakm = FieldModel<address,  4, 0x00000001>;
-    using ackm = FieldModel<address,  5, 0x00000001>;
-    using nyet = FieldModel<address,  6, 0x00000001>;
-    using txerrm = FieldModel<address,  7, 0x00000001>;
-    using bberrm = FieldModel<address,  8, 0x00000001>;
-    using frmorm = FieldModel<address,  9, 0x00000001>;
+    using xfrcm = FieldModel<address, 0, 0x00000001>;
+    using chhm = FieldModel<address, 1, 0x00000001>;
+    using stallm = FieldModel<address, 3, 0x00000001>;
+    using nakm = FieldModel<address, 4, 0x00000001>;
+    using ackm = FieldModel<address, 5, 0x00000001>;
+    using nyet = FieldModel<address, 6, 0x00000001>;
+    using txerrm = FieldModel<address, 7, 0x00000001>;
+    using bberrm = FieldModel<address, 8, 0x00000001>;
+    using frmorm = FieldModel<address, 9, 0x00000001>;
     using dterrm = FieldModel<address, 10, 0x00000001>;
-
   };
 
 public:
@@ -485,17 +460,16 @@ private:
   class Fs_hcintmsk2Reg: public RegisterModel<address>
   {
   public:
-    using xfrcm = FieldModel<address,  0, 0x00000001>;
-    using chhm = FieldModel<address,  1, 0x00000001>;
-    using stallm = FieldModel<address,  3, 0x00000001>;
-    using nakm = FieldModel<address,  4, 0x00000001>;
-    using ackm = FieldModel<address,  5, 0x00000001>;
-    using nyet = FieldModel<address,  6, 0x00000001>;
-    using txerrm = FieldModel<address,  7, 0x00000001>;
-    using bberrm = FieldModel<address,  8, 0x00000001>;
-    using frmorm = FieldModel<address,  9, 0x00000001>;
+    using xfrcm = FieldModel<address, 0, 0x00000001>;
+    using chhm = FieldModel<address, 1, 0x00000001>;
+    using stallm = FieldModel<address, 3, 0x00000001>;
+    using nakm = FieldModel<address, 4, 0x00000001>;
+    using ackm = FieldModel<address, 5, 0x00000001>;
+    using nyet = FieldModel<address, 6, 0x00000001>;
+    using txerrm = FieldModel<address, 7, 0x00000001>;
+    using bberrm = FieldModel<address, 8, 0x00000001>;
+    using frmorm = FieldModel<address, 9, 0x00000001>;
     using dterrm = FieldModel<address, 10, 0x00000001>;
-
   };
 
 public:
@@ -506,17 +480,16 @@ private:
   class Fs_hcintmsk3Reg: public RegisterModel<address>
   {
   public:
-    using xfrcm = FieldModel<address,  0, 0x00000001>;
-    using chhm = FieldModel<address,  1, 0x00000001>;
-    using stallm = FieldModel<address,  3, 0x00000001>;
-    using nakm = FieldModel<address,  4, 0x00000001>;
-    using ackm = FieldModel<address,  5, 0x00000001>;
-    using nyet = FieldModel<address,  6, 0x00000001>;
-    using txerrm = FieldModel<address,  7, 0x00000001>;
-    using bberrm = FieldModel<address,  8, 0x00000001>;
-    using frmorm = FieldModel<address,  9, 0x00000001>;
+    using xfrcm = FieldModel<address, 0, 0x00000001>;
+    using chhm = FieldModel<address, 1, 0x00000001>;
+    using stallm = FieldModel<address, 3, 0x00000001>;
+    using nakm = FieldModel<address, 4, 0x00000001>;
+    using ackm = FieldModel<address, 5, 0x00000001>;
+    using nyet = FieldModel<address, 6, 0x00000001>;
+    using txerrm = FieldModel<address, 7, 0x00000001>;
+    using bberrm = FieldModel<address, 8, 0x00000001>;
+    using frmorm = FieldModel<address, 9, 0x00000001>;
     using dterrm = FieldModel<address, 10, 0x00000001>;
-
   };
 
 public:
@@ -527,17 +500,16 @@ private:
   class Fs_hcintmsk4Reg: public RegisterModel<address>
   {
   public:
-    using xfrcm = FieldModel<address,  0, 0x00000001>;
-    using chhm = FieldModel<address,  1, 0x00000001>;
-    using stallm = FieldModel<address,  3, 0x00000001>;
-    using nakm = FieldModel<address,  4, 0x00000001>;
-    using ackm = FieldModel<address,  5, 0x00000001>;
-    using nyet = FieldModel<address,  6, 0x00000001>;
-    using txerrm = FieldModel<address,  7, 0x00000001>;
-    using bberrm = FieldModel<address,  8, 0x00000001>;
-    using frmorm = FieldModel<address,  9, 0x00000001>;
+    using xfrcm = FieldModel<address, 0, 0x00000001>;
+    using chhm = FieldModel<address, 1, 0x00000001>;
+    using stallm = FieldModel<address, 3, 0x00000001>;
+    using nakm = FieldModel<address, 4, 0x00000001>;
+    using ackm = FieldModel<address, 5, 0x00000001>;
+    using nyet = FieldModel<address, 6, 0x00000001>;
+    using txerrm = FieldModel<address, 7, 0x00000001>;
+    using bberrm = FieldModel<address, 8, 0x00000001>;
+    using frmorm = FieldModel<address, 9, 0x00000001>;
     using dterrm = FieldModel<address, 10, 0x00000001>;
-
   };
 
 public:
@@ -548,17 +520,16 @@ private:
   class Fs_hcintmsk5Reg: public RegisterModel<address>
   {
   public:
-    using xfrcm = FieldModel<address,  0, 0x00000001>;
-    using chhm = FieldModel<address,  1, 0x00000001>;
-    using stallm = FieldModel<address,  3, 0x00000001>;
-    using nakm = FieldModel<address,  4, 0x00000001>;
-    using ackm = FieldModel<address,  5, 0x00000001>;
-    using nyet = FieldModel<address,  6, 0x00000001>;
-    using txerrm = FieldModel<address,  7, 0x00000001>;
-    using bberrm = FieldModel<address,  8, 0x00000001>;
-    using frmorm = FieldModel<address,  9, 0x00000001>;
+    using xfrcm = FieldModel<address, 0, 0x00000001>;
+    using chhm = FieldModel<address, 1, 0x00000001>;
+    using stallm = FieldModel<address, 3, 0x00000001>;
+    using nakm = FieldModel<address, 4, 0x00000001>;
+    using ackm = FieldModel<address, 5, 0x00000001>;
+    using nyet = FieldModel<address, 6, 0x00000001>;
+    using txerrm = FieldModel<address, 7, 0x00000001>;
+    using bberrm = FieldModel<address, 8, 0x00000001>;
+    using frmorm = FieldModel<address, 9, 0x00000001>;
     using dterrm = FieldModel<address, 10, 0x00000001>;
-
   };
 
 public:
@@ -569,17 +540,16 @@ private:
   class Fs_hcintmsk6Reg: public RegisterModel<address>
   {
   public:
-    using xfrcm = FieldModel<address,  0, 0x00000001>;
-    using chhm = FieldModel<address,  1, 0x00000001>;
-    using stallm = FieldModel<address,  3, 0x00000001>;
-    using nakm = FieldModel<address,  4, 0x00000001>;
-    using ackm = FieldModel<address,  5, 0x00000001>;
-    using nyet = FieldModel<address,  6, 0x00000001>;
-    using txerrm = FieldModel<address,  7, 0x00000001>;
-    using bberrm = FieldModel<address,  8, 0x00000001>;
-    using frmorm = FieldModel<address,  9, 0x00000001>;
+    using xfrcm = FieldModel<address, 0, 0x00000001>;
+    using chhm = FieldModel<address, 1, 0x00000001>;
+    using stallm = FieldModel<address, 3, 0x00000001>;
+    using nakm = FieldModel<address, 4, 0x00000001>;
+    using ackm = FieldModel<address, 5, 0x00000001>;
+    using nyet = FieldModel<address, 6, 0x00000001>;
+    using txerrm = FieldModel<address, 7, 0x00000001>;
+    using bberrm = FieldModel<address, 8, 0x00000001>;
+    using frmorm = FieldModel<address, 9, 0x00000001>;
     using dterrm = FieldModel<address, 10, 0x00000001>;
-
   };
 
 public:
@@ -590,17 +560,16 @@ private:
   class Fs_hcintmsk7Reg: public RegisterModel<address>
   {
   public:
-    using xfrcm = FieldModel<address,  0, 0x00000001>;
-    using chhm = FieldModel<address,  1, 0x00000001>;
-    using stallm = FieldModel<address,  3, 0x00000001>;
-    using nakm = FieldModel<address,  4, 0x00000001>;
-    using ackm = FieldModel<address,  5, 0x00000001>;
-    using nyet = FieldModel<address,  6, 0x00000001>;
-    using txerrm = FieldModel<address,  7, 0x00000001>;
-    using bberrm = FieldModel<address,  8, 0x00000001>;
-    using frmorm = FieldModel<address,  9, 0x00000001>;
+    using xfrcm = FieldModel<address, 0, 0x00000001>;
+    using chhm = FieldModel<address, 1, 0x00000001>;
+    using stallm = FieldModel<address, 3, 0x00000001>;
+    using nakm = FieldModel<address, 4, 0x00000001>;
+    using ackm = FieldModel<address, 5, 0x00000001>;
+    using nyet = FieldModel<address, 6, 0x00000001>;
+    using txerrm = FieldModel<address, 7, 0x00000001>;
+    using bberrm = FieldModel<address, 8, 0x00000001>;
+    using frmorm = FieldModel<address, 9, 0x00000001>;
     using dterrm = FieldModel<address, 10, 0x00000001>;
-
   };
 
 public:
@@ -611,10 +580,9 @@ private:
   class Fs_hctsiz0Reg: public RegisterModel<address>
   {
   public:
-    using xfrsiz = FieldModel<address,  0, 0x0007FFFF>;
+    using xfrsiz = FieldModel<address, 0, 0x0007FFFF>;
     using pktcnt = FieldModel<address, 19, 0x000003FF>;
     using dpid = FieldModel<address, 29, 0x00000003>;
-
   };
 
 public:
@@ -625,10 +593,9 @@ private:
   class Fs_hctsiz1Reg: public RegisterModel<address>
   {
   public:
-    using xfrsiz = FieldModel<address,  0, 0x0007FFFF>;
+    using xfrsiz = FieldModel<address, 0, 0x0007FFFF>;
     using pktcnt = FieldModel<address, 19, 0x000003FF>;
     using dpid = FieldModel<address, 29, 0x00000003>;
-
   };
 
 public:
@@ -639,10 +606,9 @@ private:
   class Fs_hctsiz2Reg: public RegisterModel<address>
   {
   public:
-    using xfrsiz = FieldModel<address,  0, 0x0007FFFF>;
+    using xfrsiz = FieldModel<address, 0, 0x0007FFFF>;
     using pktcnt = FieldModel<address, 19, 0x000003FF>;
     using dpid = FieldModel<address, 29, 0x00000003>;
-
   };
 
 public:
@@ -653,10 +619,9 @@ private:
   class Fs_hctsiz3Reg: public RegisterModel<address>
   {
   public:
-    using xfrsiz = FieldModel<address,  0, 0x0007FFFF>;
+    using xfrsiz = FieldModel<address, 0, 0x0007FFFF>;
     using pktcnt = FieldModel<address, 19, 0x000003FF>;
     using dpid = FieldModel<address, 29, 0x00000003>;
-
   };
 
 public:
@@ -667,10 +632,9 @@ private:
   class Fs_hctsiz4Reg: public RegisterModel<address>
   {
   public:
-    using xfrsiz = FieldModel<address,  0, 0x0007FFFF>;
+    using xfrsiz = FieldModel<address, 0, 0x0007FFFF>;
     using pktcnt = FieldModel<address, 19, 0x000003FF>;
     using dpid = FieldModel<address, 29, 0x00000003>;
-
   };
 
 public:
@@ -681,10 +645,9 @@ private:
   class Fs_hctsiz5Reg: public RegisterModel<address>
   {
   public:
-    using xfrsiz = FieldModel<address,  0, 0x0007FFFF>;
+    using xfrsiz = FieldModel<address, 0, 0x0007FFFF>;
     using pktcnt = FieldModel<address, 19, 0x000003FF>;
     using dpid = FieldModel<address, 29, 0x00000003>;
-
   };
 
 public:
@@ -695,10 +658,9 @@ private:
   class Fs_hctsiz6Reg: public RegisterModel<address>
   {
   public:
-    using xfrsiz = FieldModel<address,  0, 0x0007FFFF>;
+    using xfrsiz = FieldModel<address, 0, 0x0007FFFF>;
     using pktcnt = FieldModel<address, 19, 0x000003FF>;
     using dpid = FieldModel<address, 29, 0x00000003>;
-
   };
 
 public:
@@ -709,10 +671,9 @@ private:
   class Fs_hctsiz7Reg: public RegisterModel<address>
   {
   public:
-    using xfrsiz = FieldModel<address,  0, 0x0007FFFF>;
+    using xfrsiz = FieldModel<address, 0, 0x0007FFFF>;
     using pktcnt = FieldModel<address, 19, 0x000003FF>;
     using dpid = FieldModel<address, 29, 0x00000003>;
-
   };
 
 public:
@@ -723,7 +684,7 @@ private:
   class Fs_hccharxBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using mpsiz = FieldModel<address,  0, 0x000007FF, bankOffset>;
+    using mpsiz = FieldModel<address, 0, 0x000007FF, bankOffset>;
     using epnum = FieldModel<address, 11, 0x0000000F, bankOffset>;
     using epdir = FieldModel<address, 15, 0x00000001, bankOffset>;
     using lsdev = FieldModel<address, 17, 0x00000001, bankOffset>;
@@ -733,7 +694,6 @@ private:
     using oddfrm = FieldModel<address, 29, 0x00000001, bankOffset>;
     using chdis = FieldModel<address, 30, 0x00000001, bankOffset>;
     using chena = FieldModel<address, 31, 0x00000001, bankOffset>;
-
   };
 
 public:
@@ -744,16 +704,15 @@ private:
   class Fs_hcintxBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using xfrc = FieldModel<address,  0, 0x00000001, bankOffset>;
-    using chh = FieldModel<address,  1, 0x00000001, bankOffset>;
-    using stall = FieldModel<address,  3, 0x00000001, bankOffset>;
-    using nak = FieldModel<address,  4, 0x00000001, bankOffset>;
-    using ack = FieldModel<address,  5, 0x00000001, bankOffset>;
-    using txerr = FieldModel<address,  7, 0x00000001, bankOffset>;
-    using bberr = FieldModel<address,  8, 0x00000001, bankOffset>;
-    using frmor = FieldModel<address,  9, 0x00000001, bankOffset>;
+    using xfrc = FieldModel<address, 0, 0x00000001, bankOffset>;
+    using chh = FieldModel<address, 1, 0x00000001, bankOffset>;
+    using stall = FieldModel<address, 3, 0x00000001, bankOffset>;
+    using nak = FieldModel<address, 4, 0x00000001, bankOffset>;
+    using ack = FieldModel<address, 5, 0x00000001, bankOffset>;
+    using txerr = FieldModel<address, 7, 0x00000001, bankOffset>;
+    using bberr = FieldModel<address, 8, 0x00000001, bankOffset>;
+    using frmor = FieldModel<address, 9, 0x00000001, bankOffset>;
     using dterr = FieldModel<address, 10, 0x00000001, bankOffset>;
-
   };
 
 public:
@@ -764,17 +723,16 @@ private:
   class Fs_hcintmskxBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using xfrcm = FieldModel<address,  0, 0x00000001, bankOffset>;
-    using chhm = FieldModel<address,  1, 0x00000001, bankOffset>;
-    using stallm = FieldModel<address,  3, 0x00000001, bankOffset>;
-    using nakm = FieldModel<address,  4, 0x00000001, bankOffset>;
-    using ackm = FieldModel<address,  5, 0x00000001, bankOffset>;
-    using nyet = FieldModel<address,  6, 0x00000001, bankOffset>;
-    using txerrm = FieldModel<address,  7, 0x00000001, bankOffset>;
-    using bberrm = FieldModel<address,  8, 0x00000001, bankOffset>;
-    using frmorm = FieldModel<address,  9, 0x00000001, bankOffset>;
+    using xfrcm = FieldModel<address, 0, 0x00000001, bankOffset>;
+    using chhm = FieldModel<address, 1, 0x00000001, bankOffset>;
+    using stallm = FieldModel<address, 3, 0x00000001, bankOffset>;
+    using nakm = FieldModel<address, 4, 0x00000001, bankOffset>;
+    using ackm = FieldModel<address, 5, 0x00000001, bankOffset>;
+    using nyet = FieldModel<address, 6, 0x00000001, bankOffset>;
+    using txerrm = FieldModel<address, 7, 0x00000001, bankOffset>;
+    using bberrm = FieldModel<address, 8, 0x00000001, bankOffset>;
+    using frmorm = FieldModel<address, 9, 0x00000001, bankOffset>;
     using dterrm = FieldModel<address, 10, 0x00000001, bankOffset>;
-
   };
 
 public:
@@ -785,16 +743,13 @@ private:
   class Fs_hctsizxBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using xfrsiz = FieldModel<address,  0, 0x0007FFFF, bankOffset>;
+    using xfrsiz = FieldModel<address, 0, 0x0007FFFF, bankOffset>;
     using pktcnt = FieldModel<address, 19, 0x000003FF, bankOffset>;
     using dpid = FieldModel<address, 29, 0x00000003, bankOffset>;
-
   };
 
 public:
   using fs_hctsizx = Fs_hctsizxBankReg<BaseAddress + 0x0110, 0x0020>;
-
-
 };
 
 }

@@ -15,8 +15,7 @@ private:
   class Iser0Reg: public RegisterModel<address>
   {
   public:
-    using setena = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using setena = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -27,8 +26,7 @@ private:
   class Iser1Reg: public RegisterModel<address>
   {
   public:
-    using setena = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using setena = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -39,8 +37,7 @@ private:
   class Iser2Reg: public RegisterModel<address>
   {
   public:
-    using setena = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using setena = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -51,8 +48,7 @@ private:
   class Icer0Reg: public RegisterModel<address>
   {
   public:
-    using clrena = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using clrena = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -63,8 +59,7 @@ private:
   class Icer1Reg: public RegisterModel<address>
   {
   public:
-    using clrena = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using clrena = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -75,8 +70,7 @@ private:
   class Icer2Reg: public RegisterModel<address>
   {
   public:
-    using clrena = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using clrena = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -87,8 +81,7 @@ private:
   class Ispr0Reg: public RegisterModel<address>
   {
   public:
-    using setpend = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using setpend = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -99,8 +92,7 @@ private:
   class Ispr1Reg: public RegisterModel<address>
   {
   public:
-    using setpend = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using setpend = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -111,8 +103,7 @@ private:
   class Ispr2Reg: public RegisterModel<address>
   {
   public:
-    using setpend = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using setpend = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -123,8 +114,7 @@ private:
   class Icpr0Reg: public RegisterModel<address>
   {
   public:
-    using clrpend = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using clrpend = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -135,8 +125,7 @@ private:
   class Icpr1Reg: public RegisterModel<address>
   {
   public:
-    using clrpend = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using clrpend = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -147,8 +136,7 @@ private:
   class Icpr2Reg: public RegisterModel<address>
   {
   public:
-    using clrpend = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using clrpend = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -159,8 +147,7 @@ private:
   class Iabr0Reg: public RegisterModel<address>
   {
   public:
-    using active = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using active = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -171,8 +158,7 @@ private:
   class Iabr1Reg: public RegisterModel<address>
   {
   public:
-    using active = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using active = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -183,8 +169,7 @@ private:
   class Iabr2Reg: public RegisterModel<address>
   {
   public:
-    using active = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using active = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -195,11 +180,10 @@ private:
   class Ipr0Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -210,11 +194,10 @@ private:
   class Ipr1Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -225,11 +208,10 @@ private:
   class Ipr2Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -240,11 +222,10 @@ private:
   class Ipr3Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -255,11 +236,10 @@ private:
   class Ipr4Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -270,11 +250,10 @@ private:
   class Ipr5Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -285,11 +264,10 @@ private:
   class Ipr6Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -300,11 +278,10 @@ private:
   class Ipr7Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -315,11 +292,10 @@ private:
   class Ipr8Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -330,11 +306,10 @@ private:
   class Ipr9Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -345,11 +320,10 @@ private:
   class Ipr10Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -360,11 +334,10 @@ private:
   class Ipr11Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -375,11 +348,10 @@ private:
   class Ipr12Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -390,11 +362,10 @@ private:
   class Ipr13Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -405,11 +376,10 @@ private:
   class Ipr14Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -420,11 +390,10 @@ private:
   class Ipr15Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -435,11 +404,10 @@ private:
   class Ipr16Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -450,11 +418,10 @@ private:
   class Ipr17Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -465,11 +432,10 @@ private:
   class Ipr18Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -480,11 +446,10 @@ private:
   class Ipr19Reg: public RegisterModel<address>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -495,8 +460,7 @@ private:
   class IserxBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using setena = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
-
+    using setena = FieldModel<address, 0, 0xFFFFFFFF, bankOffset>;
   };
 
 public:
@@ -507,8 +471,7 @@ private:
   class IcerxBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using clrena = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
-
+    using clrena = FieldModel<address, 0, 0xFFFFFFFF, bankOffset>;
   };
 
 public:
@@ -519,8 +482,7 @@ private:
   class IsprxBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using setpend = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
-
+    using setpend = FieldModel<address, 0, 0xFFFFFFFF, bankOffset>;
   };
 
 public:
@@ -531,8 +493,7 @@ private:
   class IcprxBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using clrpend = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
-
+    using clrpend = FieldModel<address, 0, 0xFFFFFFFF, bankOffset>;
   };
 
 public:
@@ -543,8 +504,7 @@ private:
   class IabrxBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using active = FieldModel<address,  0, 0xFFFFFFFF, bankOffset>;
-
+    using active = FieldModel<address, 0, 0xFFFFFFFF, bankOffset>;
   };
 
 public:
@@ -555,17 +515,14 @@ private:
   class IprxBankReg: public RegisterBankModel<address, bankOffset>
   {
   public:
-    using ipr_n0 = FieldModel<address,  0, 0x000000FF, bankOffset>;
-    using ipr_n1 = FieldModel<address,  8, 0x000000FF, bankOffset>;
+    using ipr_n0 = FieldModel<address, 0, 0x000000FF, bankOffset>;
+    using ipr_n1 = FieldModel<address, 8, 0x000000FF, bankOffset>;
     using ipr_n2 = FieldModel<address, 16, 0x000000FF, bankOffset>;
     using ipr_n3 = FieldModel<address, 24, 0x000000FF, bankOffset>;
-
   };
 
 public:
   using iprx = IprxBankReg<BaseAddress + 0x0300, 0x0004>;
-
-
 };
 
 }

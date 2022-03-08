@@ -16,13 +16,10 @@ private:
   {
   public:
     using cp = FieldModel<address, 20, 0x0000000F>;
-
   };
 
 public:
   using cpacr = CpacrReg<BaseAddress + 0x0000>;
-
-
 };
 
 }

@@ -25,15 +25,14 @@ private:
     using strt2 = FieldModel<address, 12, 0x00000001>;
     using jstrt2 = FieldModel<address, 11, 0x00000001>;
     using jeoc2 = FieldModel<address, 10, 0x00000001>;
-    using eoc2 = FieldModel<address,  9, 0x00000001>;
-    using awd2 = FieldModel<address,  8, 0x00000001>;
-    using ovr1 = FieldModel<address,  5, 0x00000001>;
-    using strt1 = FieldModel<address,  4, 0x00000001>;
-    using jstrt1 = FieldModel<address,  3, 0x00000001>;
-    using jeoc1 = FieldModel<address,  2, 0x00000001>;
-    using eoc1 = FieldModel<address,  1, 0x00000001>;
-    using awd1 = FieldModel<address,  0, 0x00000001>;
-
+    using eoc2 = FieldModel<address, 9, 0x00000001>;
+    using awd2 = FieldModel<address, 8, 0x00000001>;
+    using ovr1 = FieldModel<address, 5, 0x00000001>;
+    using strt1 = FieldModel<address, 4, 0x00000001>;
+    using jstrt1 = FieldModel<address, 3, 0x00000001>;
+    using jeoc1 = FieldModel<address, 2, 0x00000001>;
+    using eoc1 = FieldModel<address, 1, 0x00000001>;
+    using awd1 = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -49,14 +48,11 @@ private:
     using adcpre = FieldModel<address, 16, 0x00000003>;
     using dma = FieldModel<address, 14, 0x00000003>;
     using dds = FieldModel<address, 13, 0x00000001>;
-    using delay = FieldModel<address,  8, 0x0000000F>;
-
+    using delay = FieldModel<address, 8, 0x0000000F>;
   };
 
 public:
   using ccr = CcrReg<BaseAddress + 0x0004>;
-
-
 };
 
 }

@@ -21,15 +21,14 @@ private:
     using crcnext = FieldModel<address, 12, 0x00000001>;
     using dff = FieldModel<address, 11, 0x00000001>;
     using rxonly = FieldModel<address, 10, 0x00000001>;
-    using ssm = FieldModel<address,  9, 0x00000001>;
-    using ssi = FieldModel<address,  8, 0x00000001>;
-    using lsbfirst = FieldModel<address,  7, 0x00000001>;
-    using spe = FieldModel<address,  6, 0x00000001>;
-    using br = FieldModel<address,  3, 0x00000007>;
-    using mstr = FieldModel<address,  2, 0x00000001>;
-    using cpol = FieldModel<address,  1, 0x00000001>;
-    using cpha = FieldModel<address,  0, 0x00000001>;
-
+    using ssm = FieldModel<address, 9, 0x00000001>;
+    using ssi = FieldModel<address, 8, 0x00000001>;
+    using lsbfirst = FieldModel<address, 7, 0x00000001>;
+    using spe = FieldModel<address, 6, 0x00000001>;
+    using br = FieldModel<address, 3, 0x00000007>;
+    using mstr = FieldModel<address, 2, 0x00000001>;
+    using cpol = FieldModel<address, 1, 0x00000001>;
+    using cpha = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -40,14 +39,13 @@ private:
   class Cr2Reg: public RegisterModel<address>
   {
   public:
-    using txeie = FieldModel<address,  7, 0x00000001>;
-    using rxneie = FieldModel<address,  6, 0x00000001>;
-    using errie = FieldModel<address,  5, 0x00000001>;
-    using frf = FieldModel<address,  4, 0x00000001>;
-    using ssoe = FieldModel<address,  2, 0x00000001>;
-    using txdmaen = FieldModel<address,  1, 0x00000001>;
-    using rxdmaen = FieldModel<address,  0, 0x00000001>;
-
+    using txeie = FieldModel<address, 7, 0x00000001>;
+    using rxneie = FieldModel<address, 6, 0x00000001>;
+    using errie = FieldModel<address, 5, 0x00000001>;
+    using frf = FieldModel<address, 4, 0x00000001>;
+    using ssoe = FieldModel<address, 2, 0x00000001>;
+    using txdmaen = FieldModel<address, 1, 0x00000001>;
+    using rxdmaen = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -58,16 +56,15 @@ private:
   class SrReg: public RegisterModel<address>
   {
   public:
-    using tifrfe = FieldModel<address,  8, 0x00000001>;
-    using bsy = FieldModel<address,  7, 0x00000001>;
-    using ovr = FieldModel<address,  6, 0x00000001>;
-    using modf = FieldModel<address,  5, 0x00000001>;
-    using crcerr = FieldModel<address,  4, 0x00000001>;
-    using udr = FieldModel<address,  3, 0x00000001>;
-    using chside = FieldModel<address,  2, 0x00000001>;
-    using txe = FieldModel<address,  1, 0x00000001>;
-    using rxne = FieldModel<address,  0, 0x00000001>;
-
+    using tifrfe = FieldModel<address, 8, 0x00000001>;
+    using bsy = FieldModel<address, 7, 0x00000001>;
+    using ovr = FieldModel<address, 6, 0x00000001>;
+    using modf = FieldModel<address, 5, 0x00000001>;
+    using crcerr = FieldModel<address, 4, 0x00000001>;
+    using udr = FieldModel<address, 3, 0x00000001>;
+    using chside = FieldModel<address, 2, 0x00000001>;
+    using txe = FieldModel<address, 1, 0x00000001>;
+    using rxne = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -78,8 +75,7 @@ private:
   class DrReg: public RegisterModel<address>
   {
   public:
-    using dr = FieldModel<address,  0, 0x0000FFFF>;
-
+    using dr = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -90,8 +86,7 @@ private:
   class CrcprReg: public RegisterModel<address>
   {
   public:
-    using crcpoly = FieldModel<address,  0, 0x0000FFFF>;
-
+    using crcpoly = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -102,8 +97,7 @@ private:
   class RxcrcrReg: public RegisterModel<address>
   {
   public:
-    using rxcrc = FieldModel<address,  0, 0x0000FFFF>;
-
+    using rxcrc = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -114,8 +108,7 @@ private:
   class TxcrcrReg: public RegisterModel<address>
   {
   public:
-    using txcrc = FieldModel<address,  0, 0x0000FFFF>;
-
+    using txcrc = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -128,13 +121,12 @@ private:
   public:
     using i2smod = FieldModel<address, 11, 0x00000001>;
     using i2se = FieldModel<address, 10, 0x00000001>;
-    using i2scfg = FieldModel<address,  8, 0x00000003>;
-    using pcmsync = FieldModel<address,  7, 0x00000001>;
-    using i2sstd = FieldModel<address,  4, 0x00000003>;
-    using ckpol = FieldModel<address,  3, 0x00000001>;
-    using datlen = FieldModel<address,  1, 0x00000003>;
-    using chlen = FieldModel<address,  0, 0x00000001>;
-
+    using i2scfg = FieldModel<address, 8, 0x00000003>;
+    using pcmsync = FieldModel<address, 7, 0x00000001>;
+    using i2sstd = FieldModel<address, 4, 0x00000003>;
+    using ckpol = FieldModel<address, 3, 0x00000001>;
+    using datlen = FieldModel<address, 1, 0x00000003>;
+    using chlen = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -145,16 +137,13 @@ private:
   class I2sprReg: public RegisterModel<address>
   {
   public:
-    using mckoe = FieldModel<address,  9, 0x00000001>;
-    using odd = FieldModel<address,  8, 0x00000001>;
-    using i2sdiv = FieldModel<address,  0, 0x000000FF>;
-
+    using mckoe = FieldModel<address, 9, 0x00000001>;
+    using odd = FieldModel<address, 8, 0x00000001>;
+    using i2sdiv = FieldModel<address, 0, 0x000000FF>;
   };
 
 public:
   using i2spr = I2sprReg<BaseAddress + 0x0020>;
-
-
 };
 
 }

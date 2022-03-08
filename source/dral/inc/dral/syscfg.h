@@ -15,8 +15,7 @@ private:
   class MemrmReg: public RegisterModel<address>
   {
   public:
-    using mem_mode = FieldModel<address,  0, 0x00000003>;
-
+    using mem_mode = FieldModel<address, 0, 0x00000003>;
   };
 
 public:
@@ -28,7 +27,6 @@ private:
   {
   public:
     using adc1dc2 = FieldModel<address, 16, 0x00000001>;
-
   };
 
 public:
@@ -40,10 +38,9 @@ private:
   {
   public:
     using exti3 = FieldModel<address, 12, 0x0000000F>;
-    using exti2 = FieldModel<address,  8, 0x0000000F>;
-    using exti1 = FieldModel<address,  4, 0x0000000F>;
-    using exti0 = FieldModel<address,  0, 0x0000000F>;
-
+    using exti2 = FieldModel<address, 8, 0x0000000F>;
+    using exti1 = FieldModel<address, 4, 0x0000000F>;
+    using exti0 = FieldModel<address, 0, 0x0000000F>;
   };
 
 public:
@@ -55,10 +52,9 @@ private:
   {
   public:
     using exti7 = FieldModel<address, 12, 0x0000000F>;
-    using exti6 = FieldModel<address,  8, 0x0000000F>;
-    using exti5 = FieldModel<address,  4, 0x0000000F>;
-    using exti4 = FieldModel<address,  0, 0x0000000F>;
-
+    using exti6 = FieldModel<address, 8, 0x0000000F>;
+    using exti5 = FieldModel<address, 4, 0x0000000F>;
+    using exti4 = FieldModel<address, 0, 0x0000000F>;
   };
 
 public:
@@ -70,10 +66,9 @@ private:
   {
   public:
     using exti11 = FieldModel<address, 12, 0x0000000F>;
-    using exti10 = FieldModel<address,  8, 0x0000000F>;
-    using exti9 = FieldModel<address,  4, 0x0000000F>;
-    using exti8 = FieldModel<address,  0, 0x0000000F>;
-
+    using exti10 = FieldModel<address, 8, 0x0000000F>;
+    using exti9 = FieldModel<address, 4, 0x0000000F>;
+    using exti8 = FieldModel<address, 0, 0x0000000F>;
   };
 
 public:
@@ -85,10 +80,9 @@ private:
   {
   public:
     using exti15 = FieldModel<address, 12, 0x0000000F>;
-    using exti14 = FieldModel<address,  8, 0x0000000F>;
-    using exti13 = FieldModel<address,  4, 0x0000000F>;
-    using exti12 = FieldModel<address,  0, 0x0000000F>;
-
+    using exti14 = FieldModel<address, 8, 0x0000000F>;
+    using exti13 = FieldModel<address, 4, 0x0000000F>;
+    using exti12 = FieldModel<address, 0, 0x0000000F>;
   };
 
 public:
@@ -99,15 +93,12 @@ private:
   class CmpcrReg: public RegisterModel<address>
   {
   public:
-    using ready = FieldModel<address,  8, 0x00000001>;
-    using cmp_pd = FieldModel<address,  0, 0x00000001>;
-
+    using ready = FieldModel<address, 8, 0x00000001>;
+    using cmp_pd = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
   using cmpcr = CmpcrReg<BaseAddress + 0x0020>;
-
-
 };
 
 }

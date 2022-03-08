@@ -17,15 +17,14 @@ private:
   public:
     using vos = FieldModel<address, 14, 0x00000003>;
     using adcdc1 = FieldModel<address, 13, 0x00000001>;
-    using fpds = FieldModel<address,  9, 0x00000001>;
-    using dbp = FieldModel<address,  8, 0x00000001>;
-    using pls = FieldModel<address,  5, 0x00000007>;
-    using pvde = FieldModel<address,  4, 0x00000001>;
-    using csbf = FieldModel<address,  3, 0x00000001>;
-    using cwuf = FieldModel<address,  2, 0x00000001>;
-    using pdds = FieldModel<address,  1, 0x00000001>;
-    using lpds = FieldModel<address,  0, 0x00000001>;
-
+    using fpds = FieldModel<address, 9, 0x00000001>;
+    using dbp = FieldModel<address, 8, 0x00000001>;
+    using pls = FieldModel<address, 5, 0x00000007>;
+    using pvde = FieldModel<address, 4, 0x00000001>;
+    using csbf = FieldModel<address, 3, 0x00000001>;
+    using cwuf = FieldModel<address, 2, 0x00000001>;
+    using pdds = FieldModel<address, 1, 0x00000001>;
+    using lpds = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -36,20 +35,17 @@ private:
   class CsrReg: public RegisterModel<address>
   {
   public:
-    using wuf = FieldModel<address,  0, 0x00000001>;
-    using sbf = FieldModel<address,  1, 0x00000001>;
-    using pvdo = FieldModel<address,  2, 0x00000001>;
-    using brr = FieldModel<address,  3, 0x00000001>;
-    using ewup = FieldModel<address,  8, 0x00000001>;
-    using bre = FieldModel<address,  9, 0x00000001>;
+    using wuf = FieldModel<address, 0, 0x00000001>;
+    using sbf = FieldModel<address, 1, 0x00000001>;
+    using pvdo = FieldModel<address, 2, 0x00000001>;
+    using brr = FieldModel<address, 3, 0x00000001>;
+    using ewup = FieldModel<address, 8, 0x00000001>;
+    using bre = FieldModel<address, 9, 0x00000001>;
     using vosrdy = FieldModel<address, 14, 0x00000001>;
-
   };
 
 public:
   using csr = CsrReg<BaseAddress + 0x0004>;
-
-
 };
 
 }

@@ -15,14 +15,11 @@ private:
   class StirReg: public RegisterModel<address>
   {
   public:
-    using intid = FieldModel<address,  0, 0x000001FF>;
-
+    using intid = FieldModel<address, 0, 0x000001FF>;
   };
 
 public:
   using stir = StirReg<BaseAddress + 0x0000>;
-
-
 };
 
 }

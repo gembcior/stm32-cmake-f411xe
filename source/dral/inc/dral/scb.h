@@ -15,12 +15,11 @@ private:
   class CpuidReg: public RegisterModel<address>
   {
   public:
-    using revision = FieldModel<address,  0, 0x0000000F>;
-    using partno = FieldModel<address,  4, 0x00000FFF>;
+    using revision = FieldModel<address, 0, 0x0000000F>;
+    using partno = FieldModel<address, 4, 0x00000FFF>;
     using constant = FieldModel<address, 16, 0x0000000F>;
     using variant = FieldModel<address, 20, 0x0000000F>;
     using implementer = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -31,7 +30,7 @@ private:
   class IcsrReg: public RegisterModel<address>
   {
   public:
-    using vectactive = FieldModel<address,  0, 0x000001FF>;
+    using vectactive = FieldModel<address, 0, 0x000001FF>;
     using rettobase = FieldModel<address, 11, 0x00000001>;
     using vectpending = FieldModel<address, 12, 0x0000007F>;
     using isrpending = FieldModel<address, 22, 0x00000001>;
@@ -40,7 +39,6 @@ private:
     using pendsvclr = FieldModel<address, 27, 0x00000001>;
     using pendsvset = FieldModel<address, 28, 0x00000001>;
     using nmipendset = FieldModel<address, 31, 0x00000001>;
-
   };
 
 public:
@@ -51,8 +49,7 @@ private:
   class VtorReg: public RegisterModel<address>
   {
   public:
-    using tbloff = FieldModel<address,  9, 0x001FFFFF>;
-
+    using tbloff = FieldModel<address, 9, 0x001FFFFF>;
   };
 
 public:
@@ -63,13 +60,12 @@ private:
   class AircrReg: public RegisterModel<address>
   {
   public:
-    using vectreset = FieldModel<address,  0, 0x00000001>;
-    using vectclractive = FieldModel<address,  1, 0x00000001>;
-    using sysresetreq = FieldModel<address,  2, 0x00000001>;
-    using prigroup = FieldModel<address,  8, 0x00000007>;
+    using vectreset = FieldModel<address, 0, 0x00000001>;
+    using vectclractive = FieldModel<address, 1, 0x00000001>;
+    using sysresetreq = FieldModel<address, 2, 0x00000001>;
+    using prigroup = FieldModel<address, 8, 0x00000007>;
     using endianess = FieldModel<address, 15, 0x00000001>;
     using vectkeystat = FieldModel<address, 16, 0x0000FFFF>;
-
   };
 
 public:
@@ -80,10 +76,9 @@ private:
   class ScrReg: public RegisterModel<address>
   {
   public:
-    using sleeponexit = FieldModel<address,  1, 0x00000001>;
-    using sleepdeep = FieldModel<address,  2, 0x00000001>;
-    using seveonpend = FieldModel<address,  4, 0x00000001>;
-
+    using sleeponexit = FieldModel<address, 1, 0x00000001>;
+    using sleepdeep = FieldModel<address, 2, 0x00000001>;
+    using seveonpend = FieldModel<address, 4, 0x00000001>;
   };
 
 public:
@@ -94,13 +89,12 @@ private:
   class CcrReg: public RegisterModel<address>
   {
   public:
-    using nonbasethrdena = FieldModel<address,  0, 0x00000001>;
-    using usersetmpend = FieldModel<address,  1, 0x00000001>;
-    using unalign__trp = FieldModel<address,  3, 0x00000001>;
-    using div_0_trp = FieldModel<address,  4, 0x00000001>;
-    using bfhfnmign = FieldModel<address,  8, 0x00000001>;
-    using stkalign = FieldModel<address,  9, 0x00000001>;
-
+    using nonbasethrdena = FieldModel<address, 0, 0x00000001>;
+    using usersetmpend = FieldModel<address, 1, 0x00000001>;
+    using unalign__trp = FieldModel<address, 3, 0x00000001>;
+    using div_0_trp = FieldModel<address, 4, 0x00000001>;
+    using bfhfnmign = FieldModel<address, 8, 0x00000001>;
+    using stkalign = FieldModel<address, 9, 0x00000001>;
   };
 
 public:
@@ -111,10 +105,9 @@ private:
   class Shpr1Reg: public RegisterModel<address>
   {
   public:
-    using pri_4 = FieldModel<address,  0, 0x000000FF>;
-    using pri_5 = FieldModel<address,  8, 0x000000FF>;
+    using pri_4 = FieldModel<address, 0, 0x000000FF>;
+    using pri_5 = FieldModel<address, 8, 0x000000FF>;
     using pri_6 = FieldModel<address, 16, 0x000000FF>;
-
   };
 
 public:
@@ -126,7 +119,6 @@ private:
   {
   public:
     using pri_11 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -139,7 +131,6 @@ private:
   public:
     using pri_14 = FieldModel<address, 16, 0x000000FF>;
     using pri_15 = FieldModel<address, 24, 0x000000FF>;
-
   };
 
 public:
@@ -150,11 +141,11 @@ private:
   class ShcrsReg: public RegisterModel<address>
   {
   public:
-    using memfaultact = FieldModel<address,  0, 0x00000001>;
-    using busfaultact = FieldModel<address,  1, 0x00000001>;
-    using usgfaultact = FieldModel<address,  3, 0x00000001>;
-    using svcallact = FieldModel<address,  7, 0x00000001>;
-    using monitoract = FieldModel<address,  8, 0x00000001>;
+    using memfaultact = FieldModel<address, 0, 0x00000001>;
+    using busfaultact = FieldModel<address, 1, 0x00000001>;
+    using usgfaultact = FieldModel<address, 3, 0x00000001>;
+    using svcallact = FieldModel<address, 7, 0x00000001>;
+    using monitoract = FieldModel<address, 8, 0x00000001>;
     using pendsvact = FieldModel<address, 10, 0x00000001>;
     using systickact = FieldModel<address, 11, 0x00000001>;
     using usgfaultpended = FieldModel<address, 12, 0x00000001>;
@@ -164,7 +155,6 @@ private:
     using memfaultena = FieldModel<address, 16, 0x00000001>;
     using busfaultena = FieldModel<address, 17, 0x00000001>;
     using usgfaultena = FieldModel<address, 18, 0x00000001>;
-
   };
 
 public:
@@ -175,13 +165,13 @@ private:
   class Cfsr_ufsr_bfsr_mmfsrReg: public RegisterModel<address>
   {
   public:
-    using iaccviol = FieldModel<address,  1, 0x00000001>;
-    using munstkerr = FieldModel<address,  3, 0x00000001>;
-    using mstkerr = FieldModel<address,  4, 0x00000001>;
-    using mlsperr = FieldModel<address,  5, 0x00000001>;
-    using mmarvalid = FieldModel<address,  7, 0x00000001>;
-    using ibuserr = FieldModel<address,  8, 0x00000001>;
-    using preciserr = FieldModel<address,  9, 0x00000001>;
+    using iaccviol = FieldModel<address, 1, 0x00000001>;
+    using munstkerr = FieldModel<address, 3, 0x00000001>;
+    using mstkerr = FieldModel<address, 4, 0x00000001>;
+    using mlsperr = FieldModel<address, 5, 0x00000001>;
+    using mmarvalid = FieldModel<address, 7, 0x00000001>;
+    using ibuserr = FieldModel<address, 8, 0x00000001>;
+    using preciserr = FieldModel<address, 9, 0x00000001>;
     using impreciserr = FieldModel<address, 10, 0x00000001>;
     using unstkerr = FieldModel<address, 11, 0x00000001>;
     using stkerr = FieldModel<address, 12, 0x00000001>;
@@ -193,7 +183,6 @@ private:
     using nocp = FieldModel<address, 19, 0x00000001>;
     using unaligned = FieldModel<address, 24, 0x00000001>;
     using divbyzero = FieldModel<address, 25, 0x00000001>;
-
   };
 
 public:
@@ -204,10 +193,9 @@ private:
   class HfsrReg: public RegisterModel<address>
   {
   public:
-    using vecttbl = FieldModel<address,  1, 0x00000001>;
+    using vecttbl = FieldModel<address, 1, 0x00000001>;
     using forced = FieldModel<address, 30, 0x00000001>;
     using debug_vt = FieldModel<address, 31, 0x00000001>;
-
   };
 
 public:
@@ -218,8 +206,7 @@ private:
   class MmfarReg: public RegisterModel<address>
   {
   public:
-    using mmfar = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using mmfar = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -230,8 +217,7 @@ private:
   class BfarReg: public RegisterModel<address>
   {
   public:
-    using bfar = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using bfar = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -242,14 +228,11 @@ private:
   class AfsrReg: public RegisterModel<address>
   {
   public:
-    using impdef = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using impdef = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
   using afsr = AfsrReg<BaseAddress + 0x003C>;
-
-
 };
 
 }
