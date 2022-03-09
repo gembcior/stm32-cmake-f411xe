@@ -154,14 +154,14 @@ tu_fifo_t* getXferFifo(uint32_t number, OtgFsEndpointDirection direction)
   }
 }
 
+
+uint32_t TxFifoAllocatedWords = 16;
+bool OutEndpointClosed = false;
+uint16_t Endpoint0Pending[2];
+TU_ATTR_ALIGNED(4) uint32_t SetupPacket[2];
+
+
 #if 0
-
-static uint32_t TxFifoAllocatedWords = 16;
-static bool OutEndpointClosed = false;
-static uint16_t Endpoint0Pending[2];
-static TU_ATTR_ALIGNED(4) uint32_t SetupPacket[2];
-
-
 bool dcd_edpt_open (uint8_t rhport, tusb_desc_endpoint_t const * ep_desc)
 {
   (void) rhport;
@@ -274,6 +274,10 @@ bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t 
 
   endpoint.buffer = buffer;
   endpoint.xferLen = total_bytes;
+
+  tu_fifo_t* xferFifo = getXferFifo(endpointNumber, endpointDirection);
+  xferFifo = nullptr;
+  (void) xferFifo;
 
   auto& device = getObject<OtgFsDeviceHal>();
 
