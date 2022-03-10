@@ -103,8 +103,8 @@ enum class OtgFsEndpointDirection {
 };
 
 
-enum class OtgFsEndpointType {
-  Control,
+enum class OtgFsEndpointType : uint32_t {
+  Control = 0,
   Isochronous,
   Bulk,
   Interrupt,
@@ -119,7 +119,6 @@ struct OtgFsEndpoint
   uint32_t maxPacketSize;
   uint32_t xferLen;
   uint32_t interval;
-  uint8_t* buffer;
 };
 
 } // namespace

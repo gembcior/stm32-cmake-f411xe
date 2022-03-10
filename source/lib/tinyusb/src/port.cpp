@@ -9,6 +9,7 @@
 #include "dral/otg_fs_global.h"
 
 #include "tinyusb/tusb_config.h"
+#include "tinyusb/port.h"
 
 extern "C" {
 
@@ -112,40 +113,30 @@ void dcd_disconnect(uint8_t rhport)
 
 /* Endpoints API */
 
-OtgFsEndpoint& getEndpoint(uint32_t number, OtgFsEndpointDirection direction)
+
+TuEndpoint& getEndpoint(uint32_t number, OtgFsEndpointDirection direction)
 {
-  static std::array<OtgFsEndpoint, MaxEndpoints> in = [] {
-    std::array<OtgFsEndpoint, MaxEndpoints> init = {};
+  static std::array<TuEndpoint, MaxEndpoints> in = [] {
+    std::array<TuEndpoint, MaxEndpoints> init = {};
     for (unsigned i = 0; i < MaxEndpoints; i++) {
       init[i].number = i;
       init[i].direction = OtgFsEndpointDirection::In;
-      init[i].buffer = nullptr;
+      init[i].xferBuffer = nullptr;
+      init[i].xferFifo = nullptr;
     }
     return init;
   }();
 
-  static std::array<OtgFsEndpoint, MaxEndpoints> out = [] {
-    std::array<OtgFsEndpoint, MaxEndpoints> init = {};
+  static std::array<TuEndpoint, MaxEndpoints> out = [] {
+    std::array<TuEndpoint, MaxEndpoints> init = {};
     for (unsigned i = 0; i < MaxEndpoints; i++) {
       init[i].number = i;
       init[i].direction = OtgFsEndpointDirection::Out;
-      init[i].buffer = nullptr;
+      init[i].xferBuffer = nullptr;
+      init[i].xferFifo = nullptr;
     }
     return init;
   }();
-
-  if (direction == OtgFsEndpointDirection::In) {
-    return in[number];
-  } else {
-    return out[number];
-  }
-}
-
-
-tu_fifo_t* getXferFifo(uint32_t number, OtgFsEndpointDirection direction)
-{
-  static std::array<tu_fifo_t*, MaxEndpoints> in = {nullptr};
-  static std::array<tu_fifo_t*, MaxEndpoints> out = {nullptr};
 
   if (direction == OtgFsEndpointDirection::In) {
     return in[number];
@@ -157,36 +148,39 @@ tu_fifo_t* getXferFifo(uint32_t number, OtgFsEndpointDirection direction)
 
 uint32_t TxFifoAllocatedWords = 16;
 bool OutEndpointClosed = false;
-uint16_t Endpoint0Pending[2];
+uint32_t Endpoint0Pending[2];
 TU_ATTR_ALIGNED(4) uint32_t SetupPacket[2];
 
 
-#if 0
 bool dcd_edpt_open (uint8_t rhport, tusb_desc_endpoint_t const * ep_desc)
 {
   (void) rhport;
 
-  TU_LOG(1, "dcd_edpt_open\n\r");
-
   const auto endpointNumber = tu_edpt_number(ep_desc->bEndpointAddress);
   const auto endpointDirection = static_cast<OtgFsEndpointDirection>(tu_edpt_dir(ep_desc->bEndpointAddress));
+
+  TU_ASSERT(endpointNumber < MaxEndpoints);
 
   auto& device = getObject<OtgFsDeviceHal>();
   auto& endpoint = getEndpoint(endpointNumber, endpointDirection);
 
   endpoint.maxPacketSize = ep_desc->wMaxPacketSize.size;
   endpoint.interval = ep_desc->bInterval;
+  endpoint.type = static_cast<OtgFsEndpointType>(ep_desc->bmAttributes.xfer);
 
   const uint32_t fifoSize = (endpoint.maxPacketSize + 3) / 4;
 
   if (endpoint.direction == OtgFsEndpointDirection::Out) {
     const uint32_t rxFifoSize = device.getRxFifoSize(4 * fifoSize);
     if (otg_fs_global::fs_grxfsiz::rxfd::read() < rxFifoSize) {
+      TU_ASSERT((rxFifoSize + TxFifoAllocatedWords) <= (EndpointFifoSize / 4));
       otg_fs_global::fs_grxfsiz::rxfd::write(rxFifoSize);
     }
   } else {
+    TU_ASSERT((TxFifoAllocatedWords + fifoSize + otg_fs_global::fs_grxfsiz::rxfd::read()) <= (EndpointFifoSize / 4));
+
     TxFifoAllocatedWords += fifoSize;
-    const uint32_t txFifoStartAddress = EndpointFifoSize / 4 - TxFifoAllocatedWords;
+    const uint32_t txFifoStartAddress = (EndpointFifoSize / 4) - TxFifoAllocatedWords;
     if (endpoint.number == 1) {
       otg_fs_global::fs_dieptxf1::ineptxfd::write(fifoSize);
       otg_fs_global::fs_dieptxf1::ineptxsa::write(txFifoStartAddress);
@@ -207,22 +201,17 @@ bool dcd_edpt_open (uint8_t rhport, tusb_desc_endpoint_t const * ep_desc)
 
 void dcd_edpt_close_all (uint8_t rhport)
 {
-  TU_LOG(1, "dcd_edpt_close_all\n\r");
+  (void) rhport;
 
   auto& device = getObject<OtgFsDeviceHal>();
 
-  device.setAllInEndpointInterruptMask(0, OtgFsInterruptMask::UnMasked);
-  device.setAllOutEndpointInterruptMask(0, OtgFsInterruptMask::UnMasked);
-
   for (uint32_t i = 1; i < MaxEndpoints; i++) {
-    uint32_t endpointRegNumber = i - 1;
-
-    otg_fs_device::doepctlx::write(endpointRegNumber, 0);
     auto& outEndpoint = getEndpoint(i, OtgFsEndpointDirection::Out);
-    outEndpoint.maxPacketSize = 0;
-    otg_fs_device::diepctlx::write(endpointRegNumber, 0);
+    device.deactivateEndpoint(outEndpoint);
+
     auto& inEndpoint = getEndpoint(i, OtgFsEndpointDirection::In);
-    inEndpoint.maxPacketSize = 0;
+    device.deactivateEndpoint(inEndpoint);
+    device.flushTxFifo(i);
   }
 
   TxFifoAllocatedWords = 16;
@@ -231,9 +220,8 @@ void dcd_edpt_close_all (uint8_t rhport)
 
 void dcd_edpt_close (uint8_t rhport, uint8_t ep_addr)
 {
-  TU_LOG(1, "dcd_edpt_close\n\r");
-
   (void) rhport;
+
   const auto endpointNumber = tu_edpt_number(ep_addr);
   const auto endpointDirection = static_cast<OtgFsEndpointDirection>(tu_edpt_dir(ep_addr));
 
@@ -241,20 +229,23 @@ void dcd_edpt_close (uint8_t rhport, uint8_t ep_addr)
   auto& device = getObject<OtgFsDeviceHal>();
 
   device.deactivateEndpoint(endpoint);
+
   if (endpoint.direction == OtgFsEndpointDirection::In) {
     device.flushTxFifo(endpoint.number);
-  }
 
-  endpoint.maxPacketSize = 0;
-  if (endpoint.direction == OtgFsEndpointDirection::In) {
     uint32_t fifoSize = 0;
+    uint32_t fifoStart = 0;
     if (endpoint.number == 1) {
+      fifoStart = otg_fs_global::fs_dieptxf1::ineptxsa::read();
       fifoSize = otg_fs_global::fs_dieptxf1::ineptxfd::read();
     } else if (endpoint.number == 2) {
+      fifoStart = otg_fs_global::fs_dieptxf2::ineptxsa::read();
       fifoSize = otg_fs_global::fs_dieptxf2::ineptxfd::read();
     } else if (endpoint.number == 3) {
+      fifoStart = otg_fs_global::fs_dieptxf3::ineptxsa::read();
       fifoSize = otg_fs_global::fs_dieptxf3::ineptxfd::read();
     }
+    TU_ASSERT(fifoStart == ((EndpointFifoSize / 4) - TxFifoAllocatedWords),);
     TxFifoAllocatedWords -= fifoSize;
   } else {
     OutEndpointClosed = true;
@@ -264,7 +255,6 @@ void dcd_edpt_close (uint8_t rhport, uint8_t ep_addr)
 
 bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t total_bytes)
 {
-  TU_LOG(1, "dcd_edpt_xfer\n\r");
   (void) rhport;
 
   const auto endpointNumber = tu_edpt_number(ep_addr);
@@ -272,24 +262,17 @@ bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t 
 
   auto& endpoint = getEndpoint(endpointNumber, endpointDirection);
 
-  endpoint.buffer = buffer;
+  endpoint.xferBuffer = buffer;
+  endpoint.xferFifo = nullptr;
   endpoint.xferLen = total_bytes;
 
-  tu_fifo_t* xferFifo = getXferFifo(endpointNumber, endpointDirection);
-  xferFifo = nullptr;
-  (void) xferFifo;
-
-  auto& device = getObject<OtgFsDeviceHal>();
-
   if (endpoint.number == 0) {
-    Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] = total_bytes;
-
-    // TODO check if needed
-    uint32_t totalBytes = tu_min16(Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)], endpoint.maxPacketSize);
-    endpoint.xferLen = totalBytes;
-    Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] -= totalBytes;
+    Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] = endpoint.xferLen;
+    endpoint.xferLen = tu_min16(endpoint.xferLen, endpoint.maxPacketSize);
+    Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] -= endpoint.xferLen;
   }
 
+  auto& device = getObject<OtgFsDeviceHal>();
   device.startXfer(endpoint);
 
   return true;
@@ -298,7 +281,7 @@ bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t 
 
 bool dcd_edpt_xfer_fifo (uint8_t rhport, uint8_t ep_addr, tu_fifo_t * ff, uint16_t total_bytes)
 {
-  TU_LOG(1, "dcd_edpt_xfer_fifo\n\r");
+  TU_LOG(1, "#TG dcd_edpt_xfer_fifo #TG\n\r");
   (void) rhport;
 
   TU_ASSERT(ff->item_size == 1);
@@ -306,20 +289,10 @@ bool dcd_edpt_xfer_fifo (uint8_t rhport, uint8_t ep_addr, tu_fifo_t * ff, uint16
   const auto endpointNumber = tu_edpt_number(ep_addr);
   const auto endpointDirection = static_cast<OtgFsEndpointDirection>(tu_edpt_dir(ep_addr));
 
-  tu_fifo_t* xferFifo = getXferFifo(endpointNumber, endpointDirection);
-  xferFifo = ff;
-  (void) xferFifo;
-
   auto& endpoint = getEndpoint(endpointNumber, endpointDirection);
-  endpoint.buffer = nullptr;
+  endpoint.xferFifo = ff;
+  endpoint.xferBuffer = nullptr;
   endpoint.xferLen = total_bytes;
-
-  if (endpoint.number == 0) {
-    // TODO check if needed
-    uint32_t totalBytes = tu_min16(Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)], endpoint.maxPacketSize);
-    endpoint.xferLen = totalBytes;
-    Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] -= totalBytes;
-  }
 
   auto& device = getObject<OtgFsDeviceHal>();
   device.startXfer(endpoint);
@@ -327,6 +300,7 @@ bool dcd_edpt_xfer_fifo (uint8_t rhport, uint8_t ep_addr, tu_fifo_t * ff, uint16
   return true;
 }
 
+#if 0
 
 void dcd_edpt_stall (uint8_t rhport, uint8_t ep_addr)
 {
