@@ -267,9 +267,9 @@ bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t 
   endpoint.xferLen = total_bytes;
 
   if (endpoint.number == 0) {
-    Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] = endpoint.xferLen;
-    endpoint.xferLen = tu_min16(endpoint.xferLen, endpoint.maxPacketSize);
-    Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] -= endpoint.xferLen;
+    endpoint.pending = endpoint.xferLen;
+    endpoint.xferLen = tu_min32(endpoint.xferLen, endpoint.maxPacketSize);
+    endpoint.pending -= endpoint.xferLen;
   }
 
   auto& device = getObject<OtgFsDeviceHal>();

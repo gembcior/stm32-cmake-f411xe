@@ -290,7 +290,6 @@ void OtgFsDeviceHal::startEndpoint0Xfer(OtgFsEndpoint& ep)
   } else {
     xferLen = ep.xferLen;
   }
-//  ep.xferLen -= xferLen;
 
   if (ep.direction == OtgFsEndpointDirection::In) {
     otg_fs_device::dieptsiz0::pktcnt::write(1);
@@ -337,14 +336,13 @@ void OtgFsDeviceHal::startEndpointXXfer(OtgFsEndpoint& ep)
       }
     }
 
+    otg_fs_device::diepctlx::cnak::write(endpointRegNumber, 1);
+    otg_fs_device::diepctlx::epena::write(endpointRegNumber, 1);
+
     if (ep.xferLen > 0) {
       uint32_t ineptxfem = otg_fs_device::diepempmsk::ineptxfem::read();
       otg_fs_device::diepempmsk::ineptxfem::write(ineptxfem | (1 << ep.number));
     }
-
-    otg_fs_device::diepctlx::cnak::write(endpointRegNumber, 1);
-    otg_fs_device::diepctlx::epena::write(endpointRegNumber, 1);
-
   } else {
     otg_fs_device::doeptsizx::pktcnt::write(endpointRegNumber, packetCount);
 //    otg_fs_device::doeptsizx::xfrsiz::write(endpointRegNumber, ep.maxPacketSize * packetCount);

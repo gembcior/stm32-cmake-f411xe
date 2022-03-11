@@ -332,12 +332,11 @@ static void handle_rxflvl_ints(uint8_t rhport, USB_OTG_OUTEndpointTypeDef * out_
       }
 
       // Truncate transfer length in case of short packet
-      if(bcnt < endpoint.maxPacketSize) {
+      if (bcnt < endpoint.maxPacketSize) {
         endpoint.xferLen -= (out_ep[epnum].DOEPTSIZ & USB_OTG_DOEPTSIZ_XFRSIZ_Msk) >> USB_OTG_DOEPTSIZ_XFRSIZ_Pos;
-        if(epnum == 0) {
-          endpoint.xferLen -= Endpoint0Pending[TUSB_DIR_OUT];
-          Endpoint0Pending[TUSB_DIR_OUT] = 0;
+        if (endpoint.number == 0) {
           endpoint.xferLen = 0;
+          endpoint.pending = 0;
         }
       }
     }
@@ -381,13 +380,18 @@ static void handle_epout_ints(uint8_t rhport, USB_OTG_DeviceTypeDef * dev, USB_O
         out_ep[n].DOEPINT = USB_OTG_DOEPINT_XFRC;
 
         // EP0 can only handle one packet
-        if((n == 0) && Endpoint0Pending[TUSB_DIR_OUT]) {
+        if((n == 0) && (endpoint.pending > 0)) {
           // Schedule another packet to be received.
-          endpoint.xferLen = Endpoint0Pending[TUSB_DIR_OUT];
-//          edpt_schedule_packets2(rhport, n, TUSB_DIR_OUT, Endpoint0Pending[TUSB_DIR_OUT]);
-//          edpt_schedule_packets2(rhport, n, TUSB_DIR_OUT, endpoint.xferLen);
+          endpoint.xferLen = endpoint.pending;
           auto& device = getObject<OtgFsDeviceHal>();
           device.startXfer(endpoint);
+          if (endpoint.xferLen > endpoint.maxPacketSize) {
+            endpoint.xferLen -= endpoint.maxPacketSize;
+            endpoint.pending = true;
+          } else {
+            endpoint.xferLen = 0;
+            endpoint.pending = false;
+          }
         } else {
           dcd_event_xfer_complete(rhport, n, endpoint.xferLen, XFER_RESULT_SUCCESS, true);
         }
@@ -411,13 +415,12 @@ static void handle_epin_ints(uint8_t rhport, USB_OTG_DeviceTypeDef * dev, USB_OT
         in_ep[n].DIEPINT = USB_OTG_DIEPINT_XFRC;
 
         // EP0 can only handle one packet
-        if((n == 0) && Endpoint0Pending[TUSB_DIR_IN]) {
+        if((n == 0) && (endpoint.pending > 0)) {
           // Schedule another packet to be transmitted.
-          endpoint.xferLen = Endpoint0Pending[TUSB_DIR_IN];
-//          edpt_schedule_packets2(rhport, n, TUSB_DIR_IN, Endpoint0Pending[TUSB_DIR_IN]);
-//          edpt_schedule_packets2(rhport, n, TUSB_DIR_IN, endpoint.xferLen);
+          endpoint.xferLen = endpoint.pending;
           auto& device = getObject<OtgFsDeviceHal>();
           device.startXfer(endpoint);
+
         } else {
           dcd_event_xfer_complete(rhport, n | TUSB_DIR_IN_MASK, endpoint.xferLen, XFER_RESULT_SUCCESS, true);
         }
