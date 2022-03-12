@@ -214,6 +214,8 @@ static tusb_speed_t get_speed(uint8_t rhport)
 }
 
 
+#if 0
+
 static void dcd_edpt_disable (uint8_t rhport, uint8_t ep_addr, bool stall)
 {
   (void) rhport;
@@ -293,6 +295,8 @@ void dcd_edpt_clear_stall (uint8_t rhport, uint8_t ep_addr)
     out_ep[epnum].DOEPCTL |= USB_OTG_DOEPCTL_SD0PID_SEVNFRM;
   }
 }
+#endif
+
 
 /*------------------------------------------------------------------*/
 
@@ -336,7 +340,7 @@ static void handle_rxflvl_ints(uint8_t rhport, USB_OTG_OUTEndpointTypeDef * out_
         endpoint.xferLen -= (out_ep[epnum].DOEPTSIZ & USB_OTG_DOEPTSIZ_XFRSIZ_Msk) >> USB_OTG_DOEPTSIZ_XFRSIZ_Pos;
         if (endpoint.number == 0) {
           endpoint.xferLen = 0;
-          endpoint.pending = 0;
+          Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] = 0;
         }
       }
     }
@@ -350,10 +354,7 @@ static void handle_rxflvl_ints(uint8_t rhport, USB_OTG_OUTEndpointTypeDef * out_
       break;
 
     case 0x06: // Setup packet recvd
-      // We can receive up to three setup packets in succession, but
-      // only the last one is valid.
-      SetupPacket[0] = (* rx_fifo);
-      SetupPacket[1] = (* rx_fifo);
+      device.readFifoPacket(reinterpret_cast<uint8_t*>(SetupPacket), bcnt);
       break;
 
     default: // Invalid
@@ -380,18 +381,11 @@ static void handle_epout_ints(uint8_t rhport, USB_OTG_DeviceTypeDef * dev, USB_O
         out_ep[n].DOEPINT = USB_OTG_DOEPINT_XFRC;
 
         // EP0 can only handle one packet
-        if((n == 0) && (endpoint.pending > 0)) {
-          // Schedule another packet to be received.
-          endpoint.xferLen = endpoint.pending;
+        if((n == 0) && (Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] > 0)) {
           auto& device = getObject<OtgFsDeviceHal>();
-          device.startXfer(endpoint);
-          if (endpoint.xferLen > endpoint.maxPacketSize) {
-            endpoint.xferLen -= endpoint.maxPacketSize;
-            endpoint.pending = true;
-          } else {
-            endpoint.xferLen = 0;
-            endpoint.pending = false;
-          }
+          TuEndpoint copyEndpoint = endpoint;
+          copyEndpoint.xferLen = Endpoint0Pending[static_cast<uint32_t>(copyEndpoint.direction)];
+          device.startXfer(copyEndpoint);
         } else {
           dcd_event_xfer_complete(rhport, n, endpoint.xferLen, XFER_RESULT_SUCCESS, true);
         }
@@ -415,12 +409,11 @@ static void handle_epin_ints(uint8_t rhport, USB_OTG_DeviceTypeDef * dev, USB_OT
         in_ep[n].DIEPINT = USB_OTG_DIEPINT_XFRC;
 
         // EP0 can only handle one packet
-        if((n == 0) && (endpoint.pending > 0)) {
-          // Schedule another packet to be transmitted.
-          endpoint.xferLen = endpoint.pending;
+        if((n == 0) && (Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] > 0)) {
           auto& device = getObject<OtgFsDeviceHal>();
-          device.startXfer(endpoint);
-
+          TuEndpoint copyEndpoint = endpoint;
+          copyEndpoint.xferLen = Endpoint0Pending[static_cast<uint32_t>(copyEndpoint.direction)];
+          device.startXfer(copyEndpoint);
         } else {
           dcd_event_xfer_complete(rhport, n | TUSB_DIR_IN_MASK, endpoint.xferLen, XFER_RESULT_SUCCESS, true);
         }

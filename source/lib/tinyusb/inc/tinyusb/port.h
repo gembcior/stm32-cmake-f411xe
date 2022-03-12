@@ -9,7 +9,7 @@
 struct TuEndpoint : public stm32::hal::OtgFsEndpoint {
   uint8_t* xferBuffer;
   tu_fifo_t* xferFifo;
-  uint32_t pending;
+  bool pending;
 };
 
 #endif // !TU_PORT_H

@@ -369,20 +369,24 @@ void OtgFsDeviceHal::setStall(OtgFsEndpoint& ep)
   if (ep.direction == OtgFsEndpointDirection::In) {
     if (ep.number == 0) {
       otg_fs_device::fs_diepctl0::stall::write(1);
+      otg_fs_device::fs_diepctl0::snak::write(1);
     } else {
       if (otg_fs_device::diepctlx::epena::read(endpointRegNumber) == 0U) {
         otg_fs_device::diepctlx::epdis::write(endpointRegNumber, 0);
       }
       otg_fs_device::diepctlx::stall::write(endpointRegNumber, 1);
+      otg_fs_device::diepctlx::snak::write(endpointRegNumber, 1);
     }
   } else if (ep.direction == OtgFsEndpointDirection::Out) {
     if (ep.number == 0) {
       otg_fs_device::doepctl0::stall::write(1);
+      otg_fs_device::doepctl0::snak::write(1);
     } else {
       if (otg_fs_device::doepctlx::epena::read(endpointRegNumber) == 0U) {
         otg_fs_device::doepctlx::epdis::write(endpointRegNumber, 0);
       }
       otg_fs_device::doepctlx::stall::write(endpointRegNumber, 1);
+      otg_fs_device::doepctlx::snak::write(endpointRegNumber, 1);
     }
   }
 }

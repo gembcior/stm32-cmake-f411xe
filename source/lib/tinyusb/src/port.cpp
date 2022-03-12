@@ -123,6 +123,7 @@ TuEndpoint& getEndpoint(uint32_t number, OtgFsEndpointDirection direction)
       init[i].direction = OtgFsEndpointDirection::In;
       init[i].xferBuffer = nullptr;
       init[i].xferFifo = nullptr;
+      init[i].pending = false;
     }
     return init;
   }();
@@ -134,6 +135,7 @@ TuEndpoint& getEndpoint(uint32_t number, OtgFsEndpointDirection direction)
       init[i].direction = OtgFsEndpointDirection::Out;
       init[i].xferBuffer = nullptr;
       init[i].xferFifo = nullptr;
+      init[i].pending = false;
     }
     return init;
   }();
@@ -143,6 +145,13 @@ TuEndpoint& getEndpoint(uint32_t number, OtgFsEndpointDirection direction)
   } else {
     return out[number];
   }
+}
+
+
+uint32_t& getEndpoint0PendingXfer(OtgFsEndpointDirection direction)
+{
+  static std::array<uint32_t, 2> pendingXfer = {0};
+  return pendingXfer[static_cast<uint32_t>(direction)];
 }
 
 
@@ -267,9 +276,9 @@ bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t 
   endpoint.xferLen = total_bytes;
 
   if (endpoint.number == 0) {
-    endpoint.pending = endpoint.xferLen;
+    Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] = endpoint.xferLen;
     endpoint.xferLen = tu_min32(endpoint.xferLen, endpoint.maxPacketSize);
-    endpoint.pending -= endpoint.xferLen;
+    Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] -= endpoint.xferLen;
   }
 
   auto& device = getObject<OtgFsDeviceHal>();
@@ -281,7 +290,6 @@ bool dcd_edpt_xfer (uint8_t rhport, uint8_t ep_addr, uint8_t * buffer, uint16_t 
 
 bool dcd_edpt_xfer_fifo (uint8_t rhport, uint8_t ep_addr, tu_fifo_t * ff, uint16_t total_bytes)
 {
-  TU_LOG(1, "#TG dcd_edpt_xfer_fifo #TG\n\r");
   (void) rhport;
 
   TU_ASSERT(ff->item_size == 1);
@@ -300,11 +308,9 @@ bool dcd_edpt_xfer_fifo (uint8_t rhport, uint8_t ep_addr, tu_fifo_t * ff, uint16
   return true;
 }
 
-#if 0
 
 void dcd_edpt_stall (uint8_t rhport, uint8_t ep_addr)
 {
-  TU_LOG(1, "dcd_edpt_stall\n\r");
   (void) rhport;
 
   const auto endpointNumber = tu_edpt_number(ep_addr);
@@ -313,18 +319,12 @@ void dcd_edpt_stall (uint8_t rhport, uint8_t ep_addr)
   auto& endpoint = getEndpoint(endpointNumber, endpointDirection);
   auto& device = getObject<OtgFsDeviceHal>();
 
-  // TODO set NAK ???
   device.setStall(endpoint);
-  device.deactivateEndpoint(endpoint);
-  if (endpoint.direction == OtgFsEndpointDirection::In) {
-    device.flushTxFifo(endpoint.number);
-  }
 }
 
 
 void dcd_edpt_clear_stall (uint8_t rhport, uint8_t ep_addr)
 {
-  TU_LOG(1, "dcd_edpt_clear_stall\n\r");
   (void) rhport;
 
   const auto endpointNumber = tu_edpt_number(ep_addr);
@@ -335,6 +335,8 @@ void dcd_edpt_clear_stall (uint8_t rhport, uint8_t ep_addr)
 
   device.clearStall(endpoint);
 }
+
+#if 0
 
 
 void updateRxFifoSize()
