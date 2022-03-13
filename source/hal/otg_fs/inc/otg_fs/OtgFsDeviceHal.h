@@ -34,6 +34,11 @@ public:
   void setStall(OtgFsEndpoint& ep);
   void clearStall(OtgFsEndpoint& ep);
 
+  bool getInEndpointInterruptStatus(OtgFsEndpoint& ep, OtgFsDeviceInEndpointInterrupt interrupt);
+  void clearInEndpointInterruptStatus(OtgFsEndpoint& ep, OtgFsDeviceInEndpointInterrupt interrupt);
+  bool getOutEndpointInterruptStatus(OtgFsEndpoint& ep, OtgFsDeviceOutEndpointInterrupt interrupt);
+  void clearOutEndpointInterruptStatus(OtgFsEndpoint& ep, OtgFsDeviceOutEndpointInterrupt interrupt);
+
 
 private:
   void startEndpoint0Xfer(OtgFsEndpoint& ep);

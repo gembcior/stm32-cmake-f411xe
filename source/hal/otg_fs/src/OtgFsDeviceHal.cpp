@@ -444,4 +444,28 @@ void OtgFsDeviceHal::busReset()
   otg_fs_device::doeptsiz0::stupcnt::write(3);
 }
 
+
+bool OtgFsDeviceHal::getInEndpointInterruptStatus(OtgFsEndpoint& ep, OtgFsDeviceInEndpointInterrupt interrupt)
+{
+  return (otg_fs_device::diepintx::read(ep.number) >> static_cast<uint32_t>(interrupt)) & 0x1U;
+}
+
+
+void OtgFsDeviceHal::clearInEndpointInterruptStatus(OtgFsEndpoint& ep, OtgFsDeviceInEndpointInterrupt interrupt)
+{
+  otg_fs_device::diepintx::write(ep.number, 1U << static_cast<uint32_t>(interrupt));
+}
+
+
+bool OtgFsDeviceHal::getOutEndpointInterruptStatus(OtgFsEndpoint& ep, OtgFsDeviceOutEndpointInterrupt interrupt)
+{
+  return (otg_fs_device::doepintx::read(ep.number) >> static_cast<uint32_t>(interrupt)) & 0x1U;
+}
+
+
+void OtgFsDeviceHal::clearOutEndpointInterruptStatus(OtgFsEndpoint& ep, OtgFsDeviceOutEndpointInterrupt interrupt)
+{
+  otg_fs_device::diepintx::write(ep.number, 1U << static_cast<uint32_t>(interrupt));
+}
+
 } // namespace

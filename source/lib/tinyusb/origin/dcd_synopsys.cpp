@@ -64,6 +64,10 @@ extern TuEndpoint& getEndpoint(uint32_t number, OtgFsEndpointDirection direction
 #include "objects/objects.h"
 using namespace stm32::objects;
 #include "dral/otg_fs_device.h"
+extern void handleRxFifoNonEmpty();
+#include "dral/otg_fs_global.h"
+extern void handleOutEndpointInterrupt(uint8_t rhport);
+extern void handleInEndpointInterrupt(uint8_t rhport);
 /* D-RAL END */
 
 enum {
@@ -216,183 +220,7 @@ static tusb_speed_t get_speed(uint8_t rhport)
 
 #if 0
 
-static void dcd_edpt_disable (uint8_t rhport, uint8_t ep_addr, bool stall)
-{
-  (void) rhport;
 
-  USB_OTG_GlobalTypeDef * usb_otg = GLOBAL_BASE(rhport);
-  USB_OTG_DeviceTypeDef * dev = DEVICE_BASE(rhport);
-  USB_OTG_OUTEndpointTypeDef * out_ep = OUT_EP_BASE(rhport);
-  USB_OTG_INEndpointTypeDef * in_ep = IN_EP_BASE(rhport);
-
-  uint8_t const epnum = tu_edpt_number(ep_addr);
-  uint8_t const dir   = tu_edpt_dir(ep_addr);
-
-  if(dir == TUSB_DIR_IN) {
-    // Only disable currently enabled non-control endpoint
-    if ( (epnum == 0) || !(in_ep[epnum].DIEPCTL & USB_OTG_DIEPCTL_EPENA) ){
-      in_ep[epnum].DIEPCTL |= USB_OTG_DIEPCTL_SNAK | (stall ? USB_OTG_DIEPCTL_STALL : 0);
-    } else {
-      // Stop transmitting packets and NAK IN xfers.
-      in_ep[epnum].DIEPCTL |= USB_OTG_DIEPCTL_SNAK;
-      while((in_ep[epnum].DIEPINT & USB_OTG_DIEPINT_INEPNE) == 0);
-
-      // Disable the endpoint.
-      in_ep[epnum].DIEPCTL |= USB_OTG_DIEPCTL_EPDIS | (stall ? USB_OTG_DIEPCTL_STALL : 0);
-      while((in_ep[epnum].DIEPINT & USB_OTG_DIEPINT_EPDISD_Msk) == 0);
-      in_ep[epnum].DIEPINT = USB_OTG_DIEPINT_EPDISD;
-    }
-
-    // Flush the FIFO, and wait until we have confirmed it cleared.
-    usb_otg->GRSTCTL |= (epnum << USB_OTG_GRSTCTL_TXFNUM_Pos);
-    usb_otg->GRSTCTL |= USB_OTG_GRSTCTL_TXFFLSH;
-    while((usb_otg->GRSTCTL & USB_OTG_GRSTCTL_TXFFLSH_Msk) != 0);
-  } else {
-    // Only disable currently enabled non-control endpoint
-    if ( (epnum == 0) || !(out_ep[epnum].DOEPCTL & USB_OTG_DOEPCTL_EPENA) ){
-      out_ep[epnum].DOEPCTL |= stall ? USB_OTG_DOEPCTL_STALL : 0;
-    } else {
-      // Asserting GONAK is required to STALL an OUT endpoint.
-      // Simpler to use polling here, we don't use the "B"OUTNAKEFF interrupt
-      // anyway, and it can't be cleared by user code. If this while loop never
-      // finishes, we have bigger problems than just the stack.
-      dev->DCTL |= USB_OTG_DCTL_SGONAK;
-      while((usb_otg->GINTSTS & USB_OTG_GINTSTS_BOUTNAKEFF_Msk) == 0);
-
-      // Ditto here- disable the endpoint.
-      out_ep[epnum].DOEPCTL |= USB_OTG_DOEPCTL_EPDIS | (stall ? USB_OTG_DOEPCTL_STALL : 0);
-      while((out_ep[epnum].DOEPINT & USB_OTG_DOEPINT_EPDISD_Msk) == 0);
-      out_ep[epnum].DOEPINT = USB_OTG_DOEPINT_EPDISD;
-
-      // Allow other OUT endpoints to keep receiving.
-      dev->DCTL |= USB_OTG_DCTL_CGONAK;
-    }
-  }
-}
-
-
-void dcd_edpt_stall (uint8_t rhport, uint8_t ep_addr)
-{
-  dcd_edpt_disable(rhport, ep_addr, true);
-}
-
-void dcd_edpt_clear_stall (uint8_t rhport, uint8_t ep_addr)
-{
-  (void) rhport;
-
-  USB_OTG_OUTEndpointTypeDef * out_ep = OUT_EP_BASE(rhport);
-  USB_OTG_INEndpointTypeDef * in_ep = IN_EP_BASE(rhport);
-
-  uint8_t const epnum = tu_edpt_number(ep_addr);
-  uint8_t const dir   = tu_edpt_dir(ep_addr);
-
-  // Clear stall and reset data toggle
-  if(dir == TUSB_DIR_IN) {
-    in_ep[epnum].DIEPCTL &= ~USB_OTG_DIEPCTL_STALL;
-    in_ep[epnum].DIEPCTL |= USB_OTG_DIEPCTL_SD0PID_SEVNFRM;
-  } else {
-    out_ep[epnum].DOEPCTL &= ~USB_OTG_DOEPCTL_STALL;
-    out_ep[epnum].DOEPCTL |= USB_OTG_DOEPCTL_SD0PID_SEVNFRM;
-  }
-}
-#endif
-
-
-/*------------------------------------------------------------------*/
-
-static void handle_rxflvl_ints(uint8_t rhport, USB_OTG_OUTEndpointTypeDef * out_ep) {
-  USB_OTG_GlobalTypeDef * usb_otg = GLOBAL_BASE(rhport);
-  usb_fifo_t rx_fifo = FIFO_BASE(rhport, 0);
-
-  // Pop control word off FIFO
-  uint32_t ctl_word = usb_otg->GRXSTSP;
-  uint8_t pktsts = (ctl_word & USB_OTG_GRXSTSP_PKTSTS_Msk) >> USB_OTG_GRXSTSP_PKTSTS_Pos;
-  uint8_t epnum = (ctl_word &  USB_OTG_GRXSTSP_EPNUM_Msk) >>  USB_OTG_GRXSTSP_EPNUM_Pos;
-  uint16_t bcnt = (ctl_word & USB_OTG_GRXSTSP_BCNT_Msk) >> USB_OTG_GRXSTSP_BCNT_Pos;
-
-  auto& device = getObject<OtgFsDeviceHal>();
-
-  switch(pktsts) {
-    case 0x01: // Global OUT NAK (Interrupt)
-      break;
-
-    case 0x02: // Out packet recvd
-    {
-      auto& endpoint = getEndpoint(epnum, OtgFsEndpointDirection::Out);
-
-      // Read packet off RxFIFO
-      if (endpoint.xferFifo)
-      {
-        // Ring buffer
-        tu_fifo_write_n_const_addr_full_words(endpoint.xferFifo, (const void *) rx_fifo, bcnt);
-      }
-      else
-      {
-        // Linear buffer
-        device.readFifoPacket(endpoint.xferBuffer, bcnt);
-
-        // Increment pointer to xfer data
-        endpoint.xferBuffer += bcnt;
-      }
-
-      // Truncate transfer length in case of short packet
-      if (bcnt < endpoint.maxPacketSize) {
-        endpoint.xferLen -= (out_ep[epnum].DOEPTSIZ & USB_OTG_DOEPTSIZ_XFRSIZ_Msk) >> USB_OTG_DOEPTSIZ_XFRSIZ_Pos;
-        if (endpoint.number == 0) {
-          endpoint.xferLen = 0;
-          Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] = 0;
-        }
-      }
-    }
-    break;
-
-    case 0x03: // Out packet done (Interrupt)
-      break;
-
-    case 0x04: // Setup packet done (Interrupt)
-      out_ep[epnum].DOEPTSIZ |= (3 << USB_OTG_DOEPTSIZ_STUPCNT_Pos);
-      break;
-
-    case 0x06: // Setup packet recvd
-      device.readFifoPacket(reinterpret_cast<uint8_t*>(SetupPacket), bcnt);
-      break;
-
-    default: // Invalid
-      TU_BREAKPOINT();
-      break;
-  }
-}
-
-static void handle_epout_ints(uint8_t rhport, USB_OTG_DeviceTypeDef * dev, USB_OTG_OUTEndpointTypeDef * out_ep) {
-  // DAINT for a given EP clears when DOEPINTx is cleared.
-  // OEPINT will be cleared when DAINT's out bits are cleared.
-  for(uint8_t n = 0; n < EP_MAX; n++) {
-    auto& endpoint = getEndpoint(n, OtgFsEndpointDirection::Out);
-
-    if(dev->DAINT & (1 << (USB_OTG_DAINT_OEPINT_Pos + n))) {
-      // SETUP packet Setup Phase done.
-      if(out_ep[n].DOEPINT & USB_OTG_DOEPINT_STUP) {
-        out_ep[n].DOEPINT =  USB_OTG_DOEPINT_STUP;
-        dcd_event_setup_received(rhport, (uint8_t*) &SetupPacket[0], true);
-      }
-
-      // OUT XFER complete
-      if(out_ep[n].DOEPINT & USB_OTG_DOEPINT_XFRC) {
-        out_ep[n].DOEPINT = USB_OTG_DOEPINT_XFRC;
-
-        // EP0 can only handle one packet
-        if((n == 0) && (Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] > 0)) {
-          auto& device = getObject<OtgFsDeviceHal>();
-          TuEndpoint copyEndpoint = endpoint;
-          copyEndpoint.xferLen = Endpoint0Pending[static_cast<uint32_t>(copyEndpoint.direction)];
-          device.startXfer(copyEndpoint);
-        } else {
-          dcd_event_xfer_complete(rhport, n, endpoint.xferLen, XFER_RESULT_SUCCESS, true);
-        }
-      }
-    }
-  }
-}
 
 static void handle_epin_ints(uint8_t rhport, USB_OTG_DeviceTypeDef * dev, USB_OTG_INEndpointTypeDef * in_ep) {
   // DAINT for a given EP clears when DIEPINTx is cleared.
@@ -466,13 +294,14 @@ static void handle_epin_ints(uint8_t rhport, USB_OTG_DeviceTypeDef * dev, USB_OT
     }
   }
 }
+#endif
 
 void dcd_int_handler(uint8_t rhport)
 {
   USB_OTG_GlobalTypeDef * usb_otg = GLOBAL_BASE(rhport);
-  USB_OTG_DeviceTypeDef * dev = DEVICE_BASE(rhport);
-  USB_OTG_OUTEndpointTypeDef * out_ep = OUT_EP_BASE(rhport);
-  USB_OTG_INEndpointTypeDef * in_ep = IN_EP_BASE(rhport);
+//  USB_OTG_DeviceTypeDef * dev = DEVICE_BASE(rhport);
+//  USB_OTG_OUTEndpointTypeDef * out_ep = OUT_EP_BASE(rhport);
+//  USB_OTG_INEndpointTypeDef * in_ep = IN_EP_BASE(rhport);
 
   uint32_t const int_status = usb_otg->GINTSTS & usb_otg->GINTMSK;
 
@@ -543,7 +372,8 @@ void dcd_int_handler(uint8_t rhport)
     // Loop until all available packets were handled
     do
     {
-      handle_rxflvl_ints(rhport, out_ep);
+      //handle_rxflvl_ints(rhport, out_ep);
+      handleRxFifoNonEmpty();
     } while(usb_otg->GINTSTS & USB_OTG_GINTSTS_RXFLVL);
 
     // Manage RX FIFO size
@@ -562,14 +392,16 @@ void dcd_int_handler(uint8_t rhport)
   if(int_status & USB_OTG_GINTSTS_OEPINT)
   {
     // OEPINT is read-only
-    handle_epout_ints(rhport, dev, out_ep);
+//    handle_epout_ints(rhport, dev, out_ep);
+    handleOutEndpointInterrupt(rhport);
   }
 
   // IN endpoint interrupt handling.
   if(int_status & USB_OTG_GINTSTS_IEPINT)
   {
     // IEPINT bit read-only
-    handle_epin_ints(rhport, dev, in_ep);
+//    handle_epin_ints(rhport, dev, in_ep);
+    handleInEndpointInterrupt(rhport);
   }
 
   //  // Check for Incomplete isochronous IN transfer

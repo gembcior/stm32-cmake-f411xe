@@ -195,6 +195,35 @@ public:
 
 private:
   template <uint32_t address>
+  class Fs_grxstsp_deviceReg: public RegisterModel<address>
+  {
+  public:
+    using epnum = FieldModel<address, 0, 0x0000000F>;
+    using bcnt = FieldModel<address, 4, 0x000007FF>;
+    using dpid = FieldModel<address, 15, 0x00000003>;
+    using pktsts = FieldModel<address, 17, 0x0000000F>;
+    using frmnum = FieldModel<address, 21, 0x0000000F>;
+  };
+
+public:
+  using fs_grxstsp_device = Fs_grxstsp_deviceReg<BaseAddress + 0x0020>;
+
+private:
+  template <uint32_t address>
+  class Fs_grxstsp_hostReg: public RegisterModel<address>
+  {
+  public:
+    using chnum = FieldModel<address, 0, 0x0000000F>;
+    using bcnt = FieldModel<address, 4, 0x000007FF>;
+    using dpid = FieldModel<address, 15, 0x00000003>;
+    using pktsts = FieldModel<address, 17, 0x0000000F>;
+  };
+
+public:
+  using fs_grxstsp_host = Fs_grxstsp_hostReg<BaseAddress + 0x0020>;
+
+private:
+  template <uint32_t address>
   class Fs_grxfsizReg: public RegisterModel<address>
   {
   public:
@@ -314,6 +343,35 @@ private:
 
 public:
   using fs_dieptxf3 = Fs_dieptxf3Reg<BaseAddress + 0x010C>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class Fs_grxstsx_deviceBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using epnum = FieldModel<address, 0, 0x0000000F, bankOffset>;
+    using bcnt = FieldModel<address, 4, 0x000007FF, bankOffset>;
+    using dpid = FieldModel<address, 15, 0x00000003, bankOffset>;
+    using pktsts = FieldModel<address, 17, 0x0000000F, bankOffset>;
+    using frmnum = FieldModel<address, 21, 0x0000000F, bankOffset>;
+  };
+
+public:
+  using fs_grxstsx_device = Fs_grxstsx_deviceBankReg<BaseAddress + 0x001C, 0x0004>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class Fs_grxstsx_hostBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using chnum = FieldModel<address, 0, 0x0000000F, bankOffset>;
+    using bcnt = FieldModel<address, 4, 0x000007FF, bankOffset>;
+    using dpid = FieldModel<address, 15, 0x00000003, bankOffset>;
+    using pktsts = FieldModel<address, 17, 0x0000000F, bankOffset>;
+  };
+
+public:
+  using fs_grxstsx_host = Fs_grxstsx_hostBankReg<BaseAddress + 0x001C, 0x0004>;
 };
 
 }

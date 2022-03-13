@@ -336,7 +336,6 @@ void dcd_edpt_clear_stall (uint8_t rhport, uint8_t ep_addr)
   device.clearStall(endpoint);
 }
 
-#if 0
 
 
 void updateRxFifoSize()
@@ -353,45 +352,43 @@ void updateRxFifoSize()
 
 void handleRxFifoNonEmpty()
 {
-  uint32_t rxStatus = otg_fs_global::fs_grxstsr_device::read();
-  uint32_t packetStatus = otg_fs_global::fs_grxstsr_device::pktsts::getFromRegValue(rxStatus); 
-  uint32_t endpointNumber = otg_fs_global::fs_grxstsr_device::epnum::getFromRegValue(rxStatus);
-  uint32_t byteCount = otg_fs_global::fs_grxstsr_device::bcnt::getFromRegValue(rxStatus);
+  uint32_t rxStatus = otg_fs_global::fs_grxstsp_device::read();
+  uint32_t packetStatus = otg_fs_global::fs_grxstsp_device::pktsts::getFromRegValue(rxStatus); 
+  uint32_t endpointNumber = otg_fs_global::fs_grxstsp_device::epnum::getFromRegValue(rxStatus);
+  uint32_t byteCount = otg_fs_global::fs_grxstsp_device::bcnt::getFromRegValue(rxStatus);
 
   auto& device = getObject<OtgFsDeviceHal>();
   volatile uint32_t* rxFifo = reinterpret_cast<volatile uint32_t*>(device.getFifoAddress(0));
 
-//  while (byteCount > 0) {
-  // TU_LOG(1, "Packet Status %lu\n\r", packetStatus);
-  // TU_LOG(1, "EP Num %lu\n\r", endpointNumber);
-  // TU_LOG(1, "byteCount %lu\n\r", byteCount);
-
   switch (packetStatus) {
     case 0x1U:
       break;
+
     case 0x2U: {
       auto& endpoint = getEndpoint(endpointNumber, OtgFsEndpointDirection::Out);
-      auto* xferFifo = getXferFifo(endpointNumber, OtgFsEndpointDirection::Out);
 
-      if (xferFifo) {
-        tu_fifo_write_n_const_addr_full_words(xferFifo, (const void*)rxFifo, byteCount);
+      if (endpoint.xferFifo) {
+        tu_fifo_write_n_const_addr_full_words(endpoint.xferFifo, (const void*)rxFifo, byteCount);
       } else {
-        device.readFifoPacket(endpoint.buffer, byteCount);
-        endpoint.buffer += byteCount;
+        device.readFifoPacket(endpoint.xferBuffer, byteCount);
+        endpoint.xferBuffer += byteCount;
       }
 
       if(byteCount < endpoint.maxPacketSize) {
-        uint32_t xferLen = endpointNumber == 0 ? otg_fs_device::doeptsiz0::xfrsiz::read() : otg_fs_device::doeptsizx::xfrsiz::read(endpointNumber - 1);
+        uint32_t xferLen = (endpoint.number == 0) ? otg_fs_device::doeptsiz0::xfrsiz::read()
+                                                  : otg_fs_device::doeptsizx::xfrsiz::read(endpoint.number - 1);
         endpoint.xferLen -= xferLen;
 
-        if(endpointNumber == 0) {
-          endpoint.xferLen -= Endpoint0Pending[1];
-          Endpoint0Pending[1] = 0;
+        if (endpoint.number == 0) {
+          endpoint.xferLen = 0;
+          Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] = 0;
         }
       }
     } break;
+
     case 0x3U:
       break;
+
     case 0x4U:
       if (endpointNumber == 0) {
         otg_fs_device::doeptsiz0::stupcnt::write(3);
@@ -399,19 +396,15 @@ void handleRxFifoNonEmpty()
         otg_fs_device::doeptsizx::rxdpid_stupcnt::write(endpointNumber - 1, 3);
       }
       break;
+
     case 0x6U:
       device.readFifoPacket(reinterpret_cast<uint8_t*>(SetupPacket), byteCount);
-      // SetupPacket[0] = *rxFifo;
-      // SetupPacket[1] = *rxFifo;
-//      TU_LOG(1, "SetupPacket[0]: %lu\n\r", SetupPacket[0]);
-//      TU_LOG(1, "SetupPacket[1]: %lu\n\r", SetupPacket[1]);
       break;
+
     default:
       TU_BREAKPOINT();
       break;
   }
-  //   byteCount = otg_fs_global::fs_grxstsr_device::bcnt::read();
-  // }
 }
 
 
@@ -432,14 +425,11 @@ void handleOutEndpointInterrupt(uint8_t rhport)
 
         auto& endpoint = getEndpoint(i, OtgFsEndpointDirection::Out);
 
-        if ((endpoint.number == 0) && Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)]) {
-          // TODO check if needed
-          uint32_t totalBytes = tu_min16(Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)], endpoint.maxPacketSize);
-          endpoint.xferLen = totalBytes;
-          Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] -= totalBytes;
-
+        if((i == 0) && (Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] > 0)) {
           auto& device = getObject<OtgFsDeviceHal>();
-          device.startXfer(endpoint);
+          TuEndpoint copyEndpoint = endpoint;
+          copyEndpoint.xferLen = Endpoint0Pending[static_cast<uint32_t>(copyEndpoint.direction)];
+          device.startXfer(copyEndpoint);
         } else {
           dcd_event_xfer_complete(rhport, i, endpoint.xferLen, XFER_RESULT_SUCCESS, true);
         }
@@ -459,17 +449,14 @@ void handleInEndpointInterrupt(uint8_t rhport)
 
     if (iepint & (1U << i)) {
 
-      if (otg_fs_device::diepintx::xfrc::read(i)) {
-        otg_fs_device::diepintx::xfrc::write(i, 1);
+      if (device.getInEndpointInterruptStatus(endpoint, OtgFsDeviceInEndpointInterrupt::Xfrc)) {
+        device.clearInEndpointInterruptStatus(endpoint, OtgFsDeviceInEndpointInterrupt::Xfrc);
 
-        if ((endpoint.number == 0) && Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)]) {
-          // TODO check if needed
-          uint32_t totalBytes = tu_min16(Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)], endpoint.maxPacketSize);
-          endpoint.xferLen = totalBytes;
-          Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] -= totalBytes;
-
+        if((i == 0) && (Endpoint0Pending[static_cast<uint32_t>(endpoint.direction)] > 0)) {
           auto& device = getObject<OtgFsDeviceHal>();
-          device.startXfer(endpoint);
+          TuEndpoint copyEndpoint = endpoint;
+          copyEndpoint.xferLen = Endpoint0Pending[static_cast<uint32_t>(copyEndpoint.direction)];
+          device.startXfer(copyEndpoint);
         } else {
           dcd_event_xfer_complete(rhport, i | TUSB_DIR_IN_MASK, endpoint.xferLen, XFER_RESULT_SUCCESS, true);
         }
@@ -492,24 +479,23 @@ void handleInEndpointInterrupt(uint8_t rhport)
           } else {
             remainingBytes = otg_fs_device::dieptsizx::xfrsiz::read(endpointRegNumber);
           }
-          uint32_t packetSize = tu_min16(remainingBytes, endpoint.maxPacketSize);
+          uint32_t packetSize = tu_min32(remainingBytes, endpoint.maxPacketSize);
 
           if (packetSize > (otg_fs_device::dtxfstsx::ineptfsav::read(i) << 2U)) {
             break;
           }
 
-          auto* xferFifo = getXferFifo(i, OtgFsEndpointDirection::Out);
-
-          if (xferFifo) {
-            uint32_t* txFifo = reinterpret_cast<uint32_t*>(device.getFifoAddress(i));
-            tu_fifo_read_n_const_addr_full_words(xferFifo, txFifo, packetSize);
+          if (endpoint.xferFifo) {
+            volatile uint32_t* txFifo = reinterpret_cast<uint32_t*>(device.getFifoAddress(i));
+            tu_fifo_read_n_const_addr_full_words(endpoint.xferFifo, (void*)txFifo, packetSize);
           } else {
-            device.writeFifoPacket(i, endpoint.buffer, packetSize);
-            endpoint.buffer += packetSize;
+            device.writeFifoPacket(i, endpoint.xferBuffer, packetSize);
+            endpoint.xferBuffer += packetSize;
           }
         }
 
-        if ((otg_fs_device::dieptsizx::xfrsiz::read(endpointRegNumber) == 0) || (otg_fs_device::dieptsiz0::xfrsiz::read() == 0)) {
+        if ((otg_fs_device::dieptsizx::xfrsiz::read(endpointRegNumber) == 0)
+        || ((endpoint.number == 0) && (otg_fs_device::dieptsiz0::xfrsiz::read() == 0))) {
           uint32_t diepempmsk = otg_fs_device::diepempmsk::read();
           otg_fs_device::diepempmsk::write(diepempmsk & ~(1U << i));
         }
@@ -520,6 +506,7 @@ void handleInEndpointInterrupt(uint8_t rhport)
   }
 }
 
+#if 0
 
 void dcd_int_handler(uint8_t rhport)
 {
