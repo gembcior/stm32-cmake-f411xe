@@ -1,15 +1,15 @@
 #include <cstdint>
-#include "tusb_option.h"
-#include "device/dcd.h"
-#include "objects/objects.h"
-#include "otg_fs/OtgFsDeviceHal.h"
 #include <array>
 
+#include "tusb_option.h"
+#include "device/dcd.h"
+#include "tinyusb/tusb_config.h"
+
+#include "objects/objects.h"
+#include "otg_fs/OtgFsDeviceHal.h"
 #include "dral/otg_fs_device.h"
 #include "dral/otg_fs_global.h"
 
-#include "tinyusb/tusb_config.h"
-#include "tinyusb/port.h"
 
 extern "C" {
 
@@ -74,7 +74,6 @@ void dcd_int_disable (uint8_t rhport)
 void dcd_set_address (uint8_t rhport, uint8_t dev_addr)
 {
   (void) rhport;
-  TU_LOG(1, "dcd_set_address\n\r");
 
   auto& device = getObject<OtgFsDeviceHal>();
   device.setAddress(dev_addr);
@@ -86,7 +85,6 @@ void dcd_set_address (uint8_t rhport, uint8_t dev_addr)
 void dcd_remote_wakeup (uint8_t rhport)
 {
   (void) rhport;
-  TU_LOG(1, "dcd_remote_wakeup\n\r");
 
   auto& device = getObject<OtgFsDeviceHal>();
   device.wakeup();
@@ -112,6 +110,12 @@ void dcd_disconnect(uint8_t rhport)
 
 
 /* Endpoints API */
+
+struct TuEndpoint : public stm32::hal::OtgFsEndpoint {
+  uint8_t* xferBuffer;
+  tu_fifo_t* xferFifo;
+  bool pending;
+};
 
 
 TuEndpoint& getEndpoint(uint32_t number, OtgFsEndpointDirection direction)
@@ -506,7 +510,6 @@ void handleInEndpointInterrupt(uint8_t rhport)
   }
 }
 
-#if 0
 
 void dcd_int_handler(uint8_t rhport)
 {
@@ -518,17 +521,16 @@ void dcd_int_handler(uint8_t rhport)
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Usbrst)) {
     usb.clearInterrupt(OtgFsInterrupt::Usbrst);
 
-    TU_LOG(1, "IrqUsbrst\n\r");
-
     OutEndpointClosed = false;
     TxFifoAllocatedWords = 16;
     getEndpoint(0, OtgFsEndpointDirection::In).maxPacketSize = 64;
     getEndpoint(0, OtgFsEndpointDirection::Out).maxPacketSize = 64;
 
+    otg_fs_device::fs_dcfg::dad::write(0);
+
     device.busReset();
 
     // TODO check if needed
-    otg_fs_device::fs_dcfg::dad::write(0);
     otg_fs_global::fs_gintmsk::oepint::write(1);
     otg_fs_global::fs_gintmsk::iepint::write(1);
   }
@@ -536,14 +538,11 @@ void dcd_int_handler(uint8_t rhport)
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Enumdne)) {
     usb.clearInterrupt(OtgFsInterrupt::Enumdne);
 
-    TU_LOG(1, "IrqEnumdne\n\r");
-
     auto speed = device.getSpeed();
     tusb_speed_t tusbSpeed;
 
     if (speed == OtgFsSpeed::FullSpeed) {
       tusbSpeed = tusb_speed_t::TUSB_SPEED_FULL;
-      otg_fs_device::fs_diepctl0::mpsiz::write(0);
     } else {
       tusbSpeed = tusb_speed_t::TUSB_SPEED_INVALID;
     }
@@ -554,23 +553,16 @@ void dcd_int_handler(uint8_t rhport)
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Usbsusp)) {
     usb.clearInterrupt(OtgFsInterrupt::Usbsusp);
 
-    TU_LOG(1, "IrqUsbsusp\n\r");
-
     dcd_event_bus_signal(rhport, DCD_EVENT_SUSPEND, true);
   }
 
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Wkupint)) {
-
-    TU_LOG(1, "IrqWkupint\n\r");
-
     usb.clearInterrupt(OtgFsInterrupt::Wkupint);
+
     dcd_event_bus_signal(rhport, DCD_EVENT_RESUME, true);
   }
 
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Otgint)) {
-
-    TU_LOG(1, "IrqOtgint\n\r");
-
     uint32_t sedet = otg_fs_global::fs_gotgint::sedet::read();
 
     if (sedet == 1) {
@@ -582,49 +574,33 @@ void dcd_int_handler(uint8_t rhport)
   }
 
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Sof)) {
-
-    TU_LOG(1, "IrqSof\n\r");
-
     usb.clearInterrupt(OtgFsInterrupt::Sof);
     usb.setInterruptMask(OtgFsInterrupt::Sof, OtgFsInterruptMask::Masked);
-    dcd_event_bus_signal(rhport, DCD_EVENT_SOF, true);
 
-//    TU_LOG(1, "IrqSofEnd\n\r");
+    dcd_event_bus_signal(rhport, DCD_EVENT_SOF, true);
   }
 
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Rxflvl)) {
 
     usb.setInterruptMask(OtgFsInterrupt::Rxflvl, OtgFsInterruptMask::Masked);
 
-//    TU_LOG(1, "IrqRxflvl\n\r");
-
     do {
       handleRxFifoNonEmpty();
-
-//      TU_LOG(1, "RxflvlSts %lu\n\r", otg_fs_global::fs_gintsts::rxflvl::read());
     } while(otg_fs_global::fs_gintsts::rxflvl::read() != 0);
+
     if (OutEndpointClosed) {
       updateRxFifoSize();
       OutEndpointClosed = false;
     }
-    usb.setInterruptMask(OtgFsInterrupt::Rxflvl, OtgFsInterruptMask::UnMasked);
 
-//    TU_LOG(1, "IrqRxflvlEnd\n\r");
+    usb.setInterruptMask(OtgFsInterrupt::Rxflvl, OtgFsInterruptMask::UnMasked);
   }
 
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Oepint)) {
-
-    TU_LOG(1, "IrqOepint\n\r");
-
     handleOutEndpointInterrupt(rhport);
   }
 
   if (usb.getInterruptStatus(status, OtgFsInterrupt::Iepint)) {
-
-    TU_LOG(1, "IrqIepint\n\r");
-
     handleInEndpointInterrupt(rhport);
   }
 }
-
-#endif

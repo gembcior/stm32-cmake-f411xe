@@ -426,7 +426,7 @@ void OtgFsDeviceHal::busReset()
   }
 
   setAllInEndpointInterruptMask(0, OtgFsInterruptMask::UnMasked);
-  setAllInEndpointInterruptMask(0, OtgFsInterruptMask::UnMasked);
+  setAllOutEndpointInterruptMask(0, OtgFsInterruptMask::UnMasked);
 
   setOutEndpointInterruptMask(OtgFsDeviceOutEndpointInterrupt::Stup, OtgFsInterruptMask::UnMasked);
   setOutEndpointInterruptMask(OtgFsDeviceOutEndpointInterrupt::Xfrc, OtgFsInterruptMask::UnMasked);

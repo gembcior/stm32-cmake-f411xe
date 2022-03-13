@@ -59,4 +59,3 @@ target_compile_options(tinyusb
 )
 
 add_subdirectory(src)
-add_subdirectory(origin)

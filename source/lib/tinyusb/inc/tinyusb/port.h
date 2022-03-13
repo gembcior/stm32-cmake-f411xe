@@ -6,10 +6,5 @@
 #include "device/dcd.h"
 
 
-struct TuEndpoint : public stm32::hal::OtgFsEndpoint {
-  uint8_t* xferBuffer;
-  tu_fifo_t* xferFifo;
-  bool pending;
-};
 
 #endif // !TU_PORT_H
