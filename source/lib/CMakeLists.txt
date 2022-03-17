@@ -5,5 +5,8 @@ add_subdirectory(etl)
 add_subdirectory(irq)
 
 if (UNIT_TEST)
+  add_subdirectory(googletest)
   add_subdirectory(fmt)
+else()
+  add_subdirectory(tinyusb)
 endif()

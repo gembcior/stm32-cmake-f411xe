@@ -36,7 +36,6 @@ int main(void)
   flasher.setPeriod(500);
   flasher.setPin(UserLed2.port, UserLed2.pin);
 
-
   UartConfiguration uartConfig = {
     .mode = UartMode::Tx,
     .baudRate = 115200,

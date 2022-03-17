@@ -15,11 +15,10 @@ private:
   class CtrlReg: public RegisterModel<address>
   {
   public:
-    using enable = FieldModel<address,  0, 0x00000001>;
-    using tickint = FieldModel<address,  1, 0x00000001>;
-    using clksource = FieldModel<address,  2, 0x00000001>;
+    using enable = FieldModel<address, 0, 0x00000001>;
+    using tickint = FieldModel<address, 1, 0x00000001>;
+    using clksource = FieldModel<address, 2, 0x00000001>;
     using countflag = FieldModel<address, 16, 0x00000001>;
-
   };
 
 public:
@@ -30,8 +29,7 @@ private:
   class LoadReg: public RegisterModel<address>
   {
   public:
-    using reload = FieldModel<address,  0, 0x00FFFFFF>;
-
+    using reload = FieldModel<address, 0, 0x00FFFFFF>;
   };
 
 public:
@@ -42,8 +40,7 @@ private:
   class ValReg: public RegisterModel<address>
   {
   public:
-    using current = FieldModel<address,  0, 0x00FFFFFF>;
-
+    using current = FieldModel<address, 0, 0x00FFFFFF>;
   };
 
 public:
@@ -54,16 +51,13 @@ private:
   class CalibReg: public RegisterModel<address>
   {
   public:
-    using tenms = FieldModel<address,  0, 0x00FFFFFF>;
+    using tenms = FieldModel<address, 0, 0x00FFFFFF>;
     using skew = FieldModel<address, 30, 0x00000001>;
     using noref = FieldModel<address, 31, 0x00000001>;
-
   };
 
 public:
   using calib = CalibReg<BaseAddress + 0x000C>;
-
-
 };
 
 }

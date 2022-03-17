@@ -15,13 +15,12 @@ private:
   class Cr1Reg: public RegisterModel<address>
   {
   public:
-    using ckd = FieldModel<address,  8, 0x00000003>;
-    using arpe = FieldModel<address,  7, 0x00000001>;
-    using opm = FieldModel<address,  3, 0x00000001>;
-    using urs = FieldModel<address,  2, 0x00000001>;
-    using udis = FieldModel<address,  1, 0x00000001>;
-    using cen = FieldModel<address,  0, 0x00000001>;
-
+    using ckd = FieldModel<address, 8, 0x00000003>;
+    using arpe = FieldModel<address, 7, 0x00000001>;
+    using opm = FieldModel<address, 3, 0x00000001>;
+    using urs = FieldModel<address, 2, 0x00000001>;
+    using udis = FieldModel<address, 1, 0x00000001>;
+    using cen = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -32,8 +31,7 @@ private:
   class Cr2Reg: public RegisterModel<address>
   {
   public:
-    using mms = FieldModel<address,  4, 0x00000007>;
-
+    using mms = FieldModel<address, 4, 0x00000007>;
   };
 
 public:
@@ -44,10 +42,9 @@ private:
   class SmcrReg: public RegisterModel<address>
   {
   public:
-    using msm = FieldModel<address,  7, 0x00000001>;
-    using ts = FieldModel<address,  4, 0x00000007>;
-    using sms = FieldModel<address,  0, 0x00000007>;
-
+    using msm = FieldModel<address, 7, 0x00000001>;
+    using ts = FieldModel<address, 4, 0x00000007>;
+    using sms = FieldModel<address, 0, 0x00000007>;
   };
 
 public:
@@ -58,11 +55,10 @@ private:
   class DierReg: public RegisterModel<address>
   {
   public:
-    using tie = FieldModel<address,  6, 0x00000001>;
-    using cc2ie = FieldModel<address,  2, 0x00000001>;
-    using cc1ie = FieldModel<address,  1, 0x00000001>;
-    using uie = FieldModel<address,  0, 0x00000001>;
-
+    using tie = FieldModel<address, 6, 0x00000001>;
+    using cc2ie = FieldModel<address, 2, 0x00000001>;
+    using cc1ie = FieldModel<address, 1, 0x00000001>;
+    using uie = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -74,12 +70,11 @@ private:
   {
   public:
     using cc2of = FieldModel<address, 10, 0x00000001>;
-    using cc1of = FieldModel<address,  9, 0x00000001>;
-    using tif = FieldModel<address,  6, 0x00000001>;
-    using cc2if = FieldModel<address,  2, 0x00000001>;
-    using cc1if = FieldModel<address,  1, 0x00000001>;
-    using uif = FieldModel<address,  0, 0x00000001>;
-
+    using cc1of = FieldModel<address, 9, 0x00000001>;
+    using tif = FieldModel<address, 6, 0x00000001>;
+    using cc2if = FieldModel<address, 2, 0x00000001>;
+    using cc1if = FieldModel<address, 1, 0x00000001>;
+    using uif = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -90,11 +85,10 @@ private:
   class EgrReg: public RegisterModel<address>
   {
   public:
-    using tg = FieldModel<address,  6, 0x00000001>;
-    using cc2g = FieldModel<address,  2, 0x00000001>;
-    using cc1g = FieldModel<address,  1, 0x00000001>;
-    using ug = FieldModel<address,  0, 0x00000001>;
-
+    using tg = FieldModel<address, 6, 0x00000001>;
+    using cc2g = FieldModel<address, 2, 0x00000001>;
+    using cc1g = FieldModel<address, 1, 0x00000001>;
+    using ug = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -108,12 +102,11 @@ private:
     using oc2m = FieldModel<address, 12, 0x00000007>;
     using oc2pe = FieldModel<address, 11, 0x00000001>;
     using oc2fe = FieldModel<address, 10, 0x00000001>;
-    using cc2s = FieldModel<address,  8, 0x00000003>;
-    using oc1m = FieldModel<address,  4, 0x00000007>;
-    using oc1pe = FieldModel<address,  3, 0x00000001>;
-    using oc1fe = FieldModel<address,  2, 0x00000001>;
-    using cc1s = FieldModel<address,  0, 0x00000003>;
-
+    using cc2s = FieldModel<address, 8, 0x00000003>;
+    using oc1m = FieldModel<address, 4, 0x00000007>;
+    using oc1pe = FieldModel<address, 3, 0x00000001>;
+    using oc1fe = FieldModel<address, 2, 0x00000001>;
+    using cc1s = FieldModel<address, 0, 0x00000003>;
   };
 
 public:
@@ -126,11 +119,10 @@ private:
   public:
     using ic2f = FieldModel<address, 12, 0x00000007>;
     using ic2pcs = FieldModel<address, 10, 0x00000003>;
-    using cc2s = FieldModel<address,  8, 0x00000003>;
-    using ic1f = FieldModel<address,  4, 0x00000007>;
-    using icpcs = FieldModel<address,  2, 0x00000003>;
-    using cc1s = FieldModel<address,  0, 0x00000003>;
-
+    using cc2s = FieldModel<address, 8, 0x00000003>;
+    using ic1f = FieldModel<address, 4, 0x00000007>;
+    using icpcs = FieldModel<address, 2, 0x00000003>;
+    using cc1s = FieldModel<address, 0, 0x00000003>;
   };
 
 public:
@@ -141,13 +133,12 @@ private:
   class CcerReg: public RegisterModel<address>
   {
   public:
-    using cc2np = FieldModel<address,  7, 0x00000001>;
-    using cc2p = FieldModel<address,  5, 0x00000001>;
-    using cc2e = FieldModel<address,  4, 0x00000001>;
-    using cc1np = FieldModel<address,  3, 0x00000001>;
-    using cc1p = FieldModel<address,  1, 0x00000001>;
-    using cc1e = FieldModel<address,  0, 0x00000001>;
-
+    using cc2np = FieldModel<address, 7, 0x00000001>;
+    using cc2p = FieldModel<address, 5, 0x00000001>;
+    using cc2e = FieldModel<address, 4, 0x00000001>;
+    using cc1np = FieldModel<address, 3, 0x00000001>;
+    using cc1p = FieldModel<address, 1, 0x00000001>;
+    using cc1e = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -158,8 +149,7 @@ private:
   class CntReg: public RegisterModel<address>
   {
   public:
-    using cnt = FieldModel<address,  0, 0x0000FFFF>;
-
+    using cnt = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -170,8 +160,7 @@ private:
   class PscReg: public RegisterModel<address>
   {
   public:
-    using psc = FieldModel<address,  0, 0x0000FFFF>;
-
+    using psc = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -182,8 +171,7 @@ private:
   class ArrReg: public RegisterModel<address>
   {
   public:
-    using arr = FieldModel<address,  0, 0x0000FFFF>;
-
+    using arr = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -194,8 +182,7 @@ private:
   class Ccr1Reg: public RegisterModel<address>
   {
   public:
-    using ccr1 = FieldModel<address,  0, 0x0000FFFF>;
-
+    using ccr1 = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -206,14 +193,11 @@ private:
   class Ccr2Reg: public RegisterModel<address>
   {
   public:
-    using ccr2 = FieldModel<address,  0, 0x0000FFFF>;
-
+    using ccr2 = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
   using ccr2 = Ccr2Reg<BaseAddress + 0x0038>;
-
-
 };
 
 }

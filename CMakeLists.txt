@@ -2,21 +2,23 @@ cmake_minimum_required(VERSION 3.20)
 
 include(FetchContent)
 
-FetchContent_Declare(stm32-cmake-utils
-  GIT_REPOSITORY https://github.com/gembcior/stm32-cmake-utils.git
-  GIT_TAG origin/main
+FetchContent_Declare(cmake-utility
+  GIT_REPOSITORY  https://github.com/gembcior/cmake-utility.git
+  GIT_TAG         origin/main
+  GIT_SHALLOW     ON
+  GIT_PROGRESS    ON
 )
 
-FetchContent_GetProperties(stm32-cmake-utils)
-FetchContent_MakeAvailable(stm32-cmake-utils)
+FetchContent_GetProperties(cmake-utility)
+FetchContent_MakeAvailable(cmake-utility)
 
-list(APPEND CMAKE_MODULE_PATH ${stm32-cmake-utils_SOURCE_DIR}/modules)
-set(TOOLCHAIN_FILES_PATH ${stm32-cmake-utils_SOURCE_DIR}/toolchains)
+list(APPEND CMAKE_MODULE_PATH ${cmake-utility_SOURCE_DIR}/modules)
+set(TOOLCHAIN_FILES_PATH ${cmake-utility_SOURCE_DIR}/toolchains)
 
 project(stm32-cmake-f411re-template)
 
 if (NOT CMAKE_BUILD_TYPE)
-  set(CMAKE_BUILD_TYPE Release CACHE STRING "Build type." FORCE)
+  set(CMAKE_BUILD_TYPE RelWithDebInfo CACHE STRING "Build type." FORCE)
 endif()
 
 if (NOT STM32_TOOLCHAIN)
@@ -24,7 +26,7 @@ if (NOT STM32_TOOLCHAIN)
 endif()
 
 if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  set(CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_BINARY_DIR}/artifacts CACHE PATH "Install path prefix." FORCE)
+  set(CMAKE_INSTALL_PREFIX ${CMAKE_BINARY_DIR}/artifacts CACHE PATH "Install path prefix." FORCE)
 endif()
 
 include(ExternalProject)
@@ -43,15 +45,6 @@ ExternalProject_Add(stm32
                     -D UNIT_TEST:BOOL=OFF
 )
 
-ExternalProject_Add_Step(stm32 openocd
-  COMMAND openocd -f ${CMAKE_CURRENT_LIST_DIR}/utils/openocd.cfg
-  COMMENT "Running OpenOCD"
-  ALWAYS TRUE
-  EXCLUDE_FROM_MAIN TRUE
-)
-
-ExternalProject_Add_StepTargets(stm32 openocd)
-
 ExternalProject_Add(unittests
   PREFIX            unittests
   SOURCE_DIR        ${CMAKE_CURRENT_SOURCE_DIR}/source
@@ -61,7 +54,17 @@ ExternalProject_Add(unittests
   BUILD_ALWAYS      TRUE
   CMAKE_ARGS        -D CMAKE_INSTALL_PREFIX:PATH=<INSTALL_DIR>
                     -D CMAKE_MODULE_PATH:PATH=${CMAKE_MODULE_PATH}
-                    -D CMAKE_TOOLCHAIN_FILE:PATH=${TOOLCHAIN_FILES_PATH}/gcc_unit_tests.cmake
+                    -D CMAKE_TOOLCHAIN_FILE:PATH=${TOOLCHAIN_FILES_PATH}/gcc_native.cmake
                     -D CMAKE_BUILD_TYPE:STRING="Debug"
                     -D UNIT_TEST:BOOL=ON
 )
+
+find_package(Python3)
+
+if (Python3_FOUND)
+  ExternalProject_Add_Step(unittests coverage
+    COMMAND ${Python3_EXECUTABLE} ${CMAKE_CURRENT_SOURCE_DIR}/scripts/coverage/gcov.py ${CMAKE_BINARY_DIR}/gcov
+    COMMENT "Gather coverage with gcov"
+    DEPENDEES test
+  )
+endif()

@@ -15,18 +15,15 @@ private:
   class ActrlReg: public RegisterModel<address>
   {
   public:
-    using dismcycint = FieldModel<address,  0, 0x00000001>;
-    using disdefwbuf = FieldModel<address,  1, 0x00000001>;
-    using disfold = FieldModel<address,  2, 0x00000001>;
-    using disfpca = FieldModel<address,  8, 0x00000001>;
-    using disoofp = FieldModel<address,  9, 0x00000001>;
-
+    using dismcycint = FieldModel<address, 0, 0x00000001>;
+    using disdefwbuf = FieldModel<address, 1, 0x00000001>;
+    using disfold = FieldModel<address, 2, 0x00000001>;
+    using disfpca = FieldModel<address, 8, 0x00000001>;
+    using disoofp = FieldModel<address, 9, 0x00000001>;
   };
 
 public:
   using actrl = ActrlReg<BaseAddress + 0x0000>;
-
-
 };
 
 }

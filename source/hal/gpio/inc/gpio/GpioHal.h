@@ -45,286 +45,72 @@ private:
 template<typename Port>
 void GpioHal<Port>::setMode(Pin pin, PortMode mode)
 {
-  switch (pin) {
-    case Pin::Pin0:
-      Port::moder::moder0::write(static_cast<uint32_t>(mode));
-      break;
-    case Pin::Pin1:
-      Port::moder::moder1::write(static_cast<uint32_t>(mode));
-      break;
-    case Pin::Pin2:
-      Port::moder::moder2::write(static_cast<uint32_t>(mode));
-      break;
-    case Pin::Pin3:
-      Port::moder::moder3::write(static_cast<uint32_t>(mode));
-      break;
-    case Pin::Pin4:
-      Port::moder::moder4::write(static_cast<uint32_t>(mode));
-      break;
-    case Pin::Pin5:
-      Port::moder::moder5::write(static_cast<uint32_t>(mode));
-      break;
-    case Pin::Pin6:
-      Port::moder::moder6::write(static_cast<uint32_t>(mode));
-      break;
-    case Pin::Pin7:
-      Port::moder::moder7::write(static_cast<uint32_t>(mode));
-      break;
-    case Pin::Pin8:
-      Port::moder::moder8::write(static_cast<uint32_t>(mode));
-      break;
-    case Pin::Pin9:
-      Port::moder::moder9::write(static_cast<uint32_t>(mode));
-      break;
-    case Pin::Pin10:
-      Port::moder::moder10::write(static_cast<uint32_t>(mode));
-      break;
-    case Pin::Pin11:
-      Port::moder::moder11::write(static_cast<uint32_t>(mode));
-      break;
-    case Pin::Pin12:
-      Port::moder::moder12::write(static_cast<uint32_t>(mode));
-      break;
-    case Pin::Pin13:
-      Port::moder::moder13::write(static_cast<uint32_t>(mode));
-      break;
-    case Pin::Pin14:
-      Port::moder::moder14::write(static_cast<uint32_t>(mode));
-      break;
-    case Pin::Pin15:
-      Port::moder::moder15::write(static_cast<uint32_t>(mode));
-      break;
-    default:
-      break;
-  }
+  const uint32_t position = static_cast<uint32_t>(pin) * 2;
+  constexpr uint32_t mask = Port::moder::moder0::Mask;
+  uint32_t moder = Port::moder::read() & ~(mask << position);
+  Port::moder::write(moder | (static_cast<uint32_t>(mode) << position));
 }
 
 
 template<typename Port>
 void GpioHal<Port>::setType(Pin pin, PortType type)
 {
-  switch (pin) {
-    case Pin::Pin0:
-      Port::otyper::ot0::write(static_cast<uint32_t>(type));
-      break;
-    case Pin::Pin1:
-      Port::otyper::ot1::write(static_cast<uint32_t>(type));
-      break;
-    case Pin::Pin2:
-      Port::otyper::ot2::write(static_cast<uint32_t>(type));
-      break;
-    case Pin::Pin3:
-      Port::otyper::ot3::write(static_cast<uint32_t>(type));
-      break;
-    case Pin::Pin4:
-      Port::otyper::ot4::write(static_cast<uint32_t>(type));
-      break;
-    case Pin::Pin5:
-      Port::otyper::ot5::write(static_cast<uint32_t>(type));
-      break;
-    case Pin::Pin6:
-      Port::otyper::ot6::write(static_cast<uint32_t>(type));
-      break;
-    case Pin::Pin7:
-      Port::otyper::ot7::write(static_cast<uint32_t>(type));
-      break;
-    case Pin::Pin8:
-      Port::otyper::ot8::write(static_cast<uint32_t>(type));
-      break;
-    case Pin::Pin9:
-      Port::otyper::ot9::write(static_cast<uint32_t>(type));
-      break;
-    case Pin::Pin10:
-      Port::otyper::ot10::write(static_cast<uint32_t>(type));
-      break;
-    case Pin::Pin11:
-      Port::otyper::ot11::write(static_cast<uint32_t>(type));
-      break;
-    case Pin::Pin12:
-      Port::otyper::ot12::write(static_cast<uint32_t>(type));
-      break;
-    case Pin::Pin13:
-      Port::otyper::ot13::write(static_cast<uint32_t>(type));
-      break;
-    case Pin::Pin14:
-      Port::otyper::ot14::write(static_cast<uint32_t>(type));
-      break;
-    case Pin::Pin15:
-      Port::otyper::ot15::write(static_cast<uint32_t>(type));
-      break;
-    default:
-      break;
-  }
+  const uint32_t position = static_cast<uint32_t>(pin);
+  constexpr uint32_t mask = Port::otyper::ot0::Mask;
+  uint32_t otyper = Port::otyper::read() & ~(mask << position);
+  Port::otyper::write(otyper | (static_cast<uint32_t>(type) << position));
 }
 
 
 template<typename Port>
 void GpioHal<Port>::setSpeed(Pin pin, PortSpeed speed)
 {
-  switch (pin) {
-    case Pin::Pin0:
-      Port::ospeedr::ospeedr0::write(static_cast<uint32_t>(speed));
-      break;
-    case Pin::Pin1:
-      Port::ospeedr::ospeedr1::write(static_cast<uint32_t>(speed));
-      break;
-    case Pin::Pin2:
-      Port::ospeedr::ospeedr2::write(static_cast<uint32_t>(speed));
-      break;
-    case Pin::Pin3:
-      Port::ospeedr::ospeedr3::write(static_cast<uint32_t>(speed));
-      break;
-    case Pin::Pin4:
-      Port::ospeedr::ospeedr4::write(static_cast<uint32_t>(speed));
-      break;
-    case Pin::Pin5:
-      Port::ospeedr::ospeedr5::write(static_cast<uint32_t>(speed));
-      break;
-    case Pin::Pin6:
-      Port::ospeedr::ospeedr6::write(static_cast<uint32_t>(speed));
-      break;
-    case Pin::Pin7:
-      Port::ospeedr::ospeedr7::write(static_cast<uint32_t>(speed));
-      break;
-    case Pin::Pin8:
-      Port::ospeedr::ospeedr8::write(static_cast<uint32_t>(speed));
-      break;
-    case Pin::Pin9:
-      Port::ospeedr::ospeedr9::write(static_cast<uint32_t>(speed));
-      break;
-    case Pin::Pin10:
-      Port::ospeedr::ospeedr10::write(static_cast<uint32_t>(speed));
-      break;
-    case Pin::Pin11:
-      Port::ospeedr::ospeedr11::write(static_cast<uint32_t>(speed));
-      break;
-    case Pin::Pin12:
-      Port::ospeedr::ospeedr12::write(static_cast<uint32_t>(speed));
-      break;
-    case Pin::Pin13:
-      Port::ospeedr::ospeedr13::write(static_cast<uint32_t>(speed));
-      break;
-    case Pin::Pin14:
-      Port::ospeedr::ospeedr14::write(static_cast<uint32_t>(speed));
-      break;
-    case Pin::Pin15:
-      Port::ospeedr::ospeedr15::write(static_cast<uint32_t>(speed));
-      break;
-    default:
-      break;
-  }
+  const uint32_t position = static_cast<uint32_t>(pin) * 2;
+  constexpr uint32_t mask = Port::ospeedr::ospeedr0::Mask;
+  uint32_t ospeedr = Port::ospeedr::read() & ~(mask << position);
+  Port::ospeedr::write(ospeedr | (static_cast<uint32_t>(speed) << position));
 }
 
 
 template<typename Port>
 void GpioHal<Port>::setPull(Pin pin, PortPull pull)
 {
-  switch (pin) {
-    case Pin::Pin0:
-      Port::pupdr::pupdr0::write(static_cast<uint32_t>(pull));
-      break;
-    case Pin::Pin1:
-      Port::pupdr::pupdr1::write(static_cast<uint32_t>(pull));
-      break;
-    case Pin::Pin2:
-      Port::pupdr::pupdr2::write(static_cast<uint32_t>(pull));
-      break;
-    case Pin::Pin3:
-      Port::pupdr::pupdr3::write(static_cast<uint32_t>(pull));
-      break;
-    case Pin::Pin4:
-      Port::pupdr::pupdr4::write(static_cast<uint32_t>(pull));
-      break;
-    case Pin::Pin5:
-      Port::pupdr::pupdr5::write(static_cast<uint32_t>(pull));
-      break;
-    case Pin::Pin6:
-      Port::pupdr::pupdr6::write(static_cast<uint32_t>(pull));
-      break;
-    case Pin::Pin7:
-      Port::pupdr::pupdr7::write(static_cast<uint32_t>(pull));
-      break;
-    case Pin::Pin8:
-      Port::pupdr::pupdr8::write(static_cast<uint32_t>(pull));
-      break;
-    case Pin::Pin9:
-      Port::pupdr::pupdr9::write(static_cast<uint32_t>(pull));
-      break;
-    case Pin::Pin10:
-      Port::pupdr::pupdr10::write(static_cast<uint32_t>(pull));
-      break;
-    case Pin::Pin11:
-      Port::pupdr::pupdr11::write(static_cast<uint32_t>(pull));
-      break;
-    case Pin::Pin12:
-      Port::pupdr::pupdr12::write(static_cast<uint32_t>(pull));
-      break;
-    case Pin::Pin13:
-      Port::pupdr::pupdr13::write(static_cast<uint32_t>(pull));
-      break;
-    case Pin::Pin14:
-      Port::pupdr::pupdr14::write(static_cast<uint32_t>(pull));
-      break;
-    case Pin::Pin15:
-      Port::pupdr::pupdr15::write(static_cast<uint32_t>(pull));
-      break;
-    default:
-      break;
-  }
+  const uint32_t position = static_cast<uint32_t>(pin) * 2;
+  constexpr uint32_t mask = Port::pupdr::pupdr0::Mask;
+  uint32_t pupdr = Port::pupdr::read() & ~(mask << position);
+  Port::pupdr::write(pupdr | (static_cast<uint32_t>(pull) << position));
 }
 
 
 template<typename Port>
 void GpioHal<Port>::setAlternateFunction(Pin pin, PortAlternateFunction af)
 {
+  const uint32_t position = (static_cast<uint32_t>(pin) * 4) % 32;
+  constexpr uint32_t mask = Port::afrl::afrl0::Mask;
+  uint32_t afrx;
+
   switch (pin) {
     case Pin::Pin0:
-      Port::afrl::afrl0::write(static_cast<uint32_t>(af));
-      break;
     case Pin::Pin1:
-      Port::afrl::afrl1::write(static_cast<uint32_t>(af));
-      break;
     case Pin::Pin2:
-      Port::afrl::afrl2::write(static_cast<uint32_t>(af));
-      break;
     case Pin::Pin3:
-      Port::afrl::afrl3::write(static_cast<uint32_t>(af));
-      break;
     case Pin::Pin4:
-      Port::afrl::afrl4::write(static_cast<uint32_t>(af));
-      break;
     case Pin::Pin5:
-      Port::afrl::afrl5::write(static_cast<uint32_t>(af));
-      break;
     case Pin::Pin6:
-      Port::afrl::afrl6::write(static_cast<uint32_t>(af));
-      break;
     case Pin::Pin7:
-      Port::afrl::afrl7::write(static_cast<uint32_t>(af));
+      afrx = Port::afrl::read() & ~(mask << position);
+      Port::afrl::write(afrx | (static_cast<uint32_t>(af) << position));
       break;
     case Pin::Pin8:
-      Port::afrh::afrh8::write(static_cast<uint32_t>(af));
-      break;
     case Pin::Pin9:
-      Port::afrh::afrh9::write(static_cast<uint32_t>(af));
-      break;
     case Pin::Pin10:
-      Port::afrh::afrh10::write(static_cast<uint32_t>(af));
-      break;
     case Pin::Pin11:
-      Port::afrh::afrh11::write(static_cast<uint32_t>(af));
-      break;
     case Pin::Pin12:
-      Port::afrh::afrh12::write(static_cast<uint32_t>(af));
-      break;
     case Pin::Pin13:
-      Port::afrh::afrh13::write(static_cast<uint32_t>(af));
-      break;
     case Pin::Pin14:
-      Port::afrh::afrh14::write(static_cast<uint32_t>(af));
-      break;
     case Pin::Pin15:
-      Port::afrh::afrh15::write(static_cast<uint32_t>(af));
+      afrx = Port::afrh::read() & ~(mask << position);
+      Port::afrh::write(afrx | (static_cast<uint32_t>(af) << position));
       break;
     default:
       break;
@@ -349,117 +135,16 @@ uint32_t GpioHal<Port>::getPort()
 template<typename Port>
 void GpioHal<Port>::setPin(Pin pin)
 {
-  switch (pin) {
-    case Pin::Pin0:
-      Port::bsrr::bs0::write(1);
-      break;
-    case Pin::Pin1:
-      Port::bsrr::bs1::write(1);
-      break;
-    case Pin::Pin2:
-      Port::bsrr::bs2::write(1);
-      break;
-    case Pin::Pin3:
-      Port::bsrr::bs3::write(1);
-      break;
-    case Pin::Pin4:
-      Port::bsrr::bs4::write(1);
-      break;
-    case Pin::Pin5:
-      Port::bsrr::bs5::write(1);
-      break;
-    case Pin::Pin6:
-      Port::bsrr::bs6::write(1);
-      break;
-    case Pin::Pin7:
-      Port::bsrr::bs7::write(1);
-      break;
-    case Pin::Pin8:
-      Port::bsrr::bs8::write(1);
-      break;
-    case Pin::Pin9:
-      Port::bsrr::bs9::write(1);
-      break;
-    case Pin::Pin10:
-      Port::bsrr::bs10::write(1);
-      break;
-    case Pin::Pin11:
-      Port::bsrr::bs11::write(1);
-      break;
-    case Pin::Pin12:
-      Port::bsrr::bs12::write(1);
-      break;
-    case Pin::Pin13:
-      Port::bsrr::bs13::write(1);
-      break;
-    case Pin::Pin14:
-      Port::bsrr::bs14::write(1);
-      break;
-    case Pin::Pin15:
-      Port::bsrr::bs15::write(1);
-      break;
-    default:
-      break;
-  }
+  Port::bsrr::write(1 << static_cast<uint32_t>(pin));
 }
 
 
 template<typename Port>
 void GpioHal<Port>::resetPin(Pin pin)
 {
-  switch (pin) {
-    case Pin::Pin0:
-      Port::bsrr::br0::write(1);
-      break;
-    case Pin::Pin1:
-      Port::bsrr::br1::write(1);
-      break;
-    case Pin::Pin2:
-      Port::bsrr::br2::write(1);
-      break;
-    case Pin::Pin3:
-      Port::bsrr::br3::write(1);
-      break;
-    case Pin::Pin4:
-      Port::bsrr::br4::write(1);
-      break;
-    case Pin::Pin5:
-      Port::bsrr::br5::write(1);
-      break;
-    case Pin::Pin6:
-      Port::bsrr::br6::write(1);
-      break;
-    case Pin::Pin7:
-      Port::bsrr::br7::write(1);
-      break;
-    case Pin::Pin8:
-      Port::bsrr::br8::write(1);
-      break;
-    case Pin::Pin9:
-      Port::bsrr::br9::write(1);
-      break;
-    case Pin::Pin10:
-      Port::bsrr::br10::write(1);
-      break;
-    case Pin::Pin11:
-      Port::bsrr::br11::write(1);
-      break;
-    case Pin::Pin12:
-      Port::bsrr::br12::write(1);
-      break;
-    case Pin::Pin13:
-      Port::bsrr::br13::write(1);
-      break;
-    case Pin::Pin14:
-      Port::bsrr::br14::write(1);
-      break;
-    case Pin::Pin15:
-      Port::bsrr::br15::write(1);
-      break;
-    default:
-      break;
-  }
+  Port::bsrr::write(1 << (static_cast<uint32_t>(pin) + 16));
 }
+
 
 template<typename Port>
 void GpioHal<Port>::setPin(Pin pin, PinState state)
@@ -480,61 +165,8 @@ void GpioHal<Port>::setPin(Pin pin, PinState state)
 template<typename Port>
 PinState GpioHal<Port>::getPin(Pin pin)
 {
-  uint32_t state = 0;
-
-  switch (pin) {
-    case Pin::Pin0:
-      state = Port::idr::idr0::read();
-      break;
-    case Pin::Pin1:
-      state = Port::idr::idr1::read();
-      break;
-    case Pin::Pin2:
-      state = Port::idr::idr2::read();
-      break;
-    case Pin::Pin3:
-      state = Port::idr::idr3::read();
-      break;
-    case Pin::Pin4:
-      state = Port::idr::idr4::read();
-      break;
-    case Pin::Pin5:
-      state = Port::idr::idr5::read();
-      break;
-    case Pin::Pin6:
-      state = Port::idr::idr6::read();
-      break;
-    case Pin::Pin7:
-      state = Port::idr::idr7::read();
-      break;
-    case Pin::Pin8:
-      state = Port::idr::idr8::read();
-      break;
-    case Pin::Pin9:
-      state = Port::idr::idr9::read();
-      break;
-    case Pin::Pin10:
-      state = Port::idr::idr10::read();
-      break;
-    case Pin::Pin11:
-      state = Port::idr::idr11::read();
-      break;
-    case Pin::Pin12:
-      state = Port::idr::idr12::read();
-      break;
-    case Pin::Pin13:
-      state = Port::idr::idr13::read();
-      break;
-    case Pin::Pin14:
-      state = Port::idr::idr14::read();
-      break;
-    case Pin::Pin15:
-      state = Port::idr::idr15::read();
-      break;
-    default:
-      break;
-  }
-
+  uint32_t state = Port::idr::read();
+  state = (state >> static_cast<uint32_t>(pin)) & Port::idr::idr0::Mask;
   return static_cast<PinState>(state);
 }
 

@@ -12,7 +12,7 @@ public:
   void disableIrq(uint32_t irq);
   void setPendingIrq(uint32_t irq);
   void clearPendingIrq(uint32_t irq);
-  uint32_t isIrqActive(uint32_t irq);
+  bool isIrqActive(uint32_t irq);
   void setIrqPriority(uint32_t irq, uint32_t priority);
 };
 

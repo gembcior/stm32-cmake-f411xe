@@ -5,6 +5,11 @@ target_include_directories(irq
     inc
 )
 
+target_link_libraries(irq
+  INTERFACE
+    nvic
+)
+
 if (UNIT_TEST)
   add_subdirectory(test)
 endif()

@@ -8,69 +8,94 @@
 #include "irq/DefaultIrqHandler.h"
 #include "irq/ExceptionHandler.h"
 #include "SysTickIrqHandler.h"
+#include "irq/IrqAdapterTable.h"
+
+extern "C" {
+  void UsbIrqHandler();
+}
 
 
 namespace stm32::irq {
 
-constexpr uint32_t IrqNumber = 32;
+constexpr uint32_t IrqNumber = 100;
 
 
-constexpr uint32_t getIrqPosition(uint32_t address)
+constexpr uint32_t getIrqNumber(uint32_t address)
+{
+  if (address > 0x3C) {
+    return ((address - 0x3C) / 4) - 1;
+  } else {
+    return IrqNumber + 1;
+  }
+}
+
+
+constexpr uint32_t getIrqHandlerPosition(uint32_t address)
 {
   return (address / 4) - 2;
 }
 
+
 const Irq NmiIrq = {
-  .position = getIrqPosition(0x8),
+  .number = getIrqNumber(0x8),
   .handler = &objects::getObject<DefaultIrqHandler>(),
+  .handlerPosition = getIrqHandlerPosition(0x8),
 };
 
 
 const Irq HardFaultIrq = {
-  .position = getIrqPosition(0xC),
+  .number = getIrqNumber(0xC),
   .handler = &objects::getObject<ExceptionHandler>(),
+  .handlerPosition = getIrqHandlerPosition(0xC),
 };
 
 
 const Irq MemManageIrq = {
-  .position = getIrqPosition(0x10),
+  .number = getIrqNumber(0x10),
   .handler = &objects::getObject<ExceptionHandler>(),
+  .handlerPosition = getIrqHandlerPosition(0x10),
 };
 
 
 const Irq BusFaultIrq = {
-  .position = getIrqPosition(0x14),
+  .number = getIrqNumber(0x14),
   .handler = &objects::getObject<ExceptionHandler>(),
+  .handlerPosition = getIrqHandlerPosition(0x14),
 };
 
 
 const Irq UsageFaultIrq = {
-  .position = getIrqPosition(0x18),
+  .number = getIrqNumber(0x18),
   .handler = &objects::getObject<ExceptionHandler>(),
+  .handlerPosition = getIrqHandlerPosition(0x18),
 };
 
 
 const Irq SvcIrq = {
-  .position = getIrqPosition(0x2C),
+  .number = getIrqNumber(0x2C),
   .handler = &objects::getObject<DefaultIrqHandler>(),
+  .handlerPosition = getIrqHandlerPosition(0x2C),
 };
 
 
 const Irq DebugMonIrq = {
-  .position = getIrqPosition(0x30),
+  .number = getIrqNumber(0x30),
   .handler = &objects::getObject<DefaultIrqHandler>(),
+  .handlerPosition = getIrqHandlerPosition(0x30),
 };
 
 
 const Irq PendSvIrq = {
-  .position = getIrqPosition(0x38),
+  .number = getIrqNumber(0x38),
   .handler = &objects::getObject<DefaultIrqHandler>(),
+  .handlerPosition = getIrqHandlerPosition(0x38),
 };
 
 
 const Irq SysTickIrq = {
-  .position = getIrqPosition(0x3C),
+  .number = getIrqNumber(0x3C),
   .handler = &objects::getObject<SysTickIrqHandler>(),
+  .handlerPosition = getIrqHandlerPosition(0x3C),
 };
 
 } // namespace

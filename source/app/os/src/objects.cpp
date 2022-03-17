@@ -46,4 +46,11 @@ const IrqAdapterPointer* getIrqVectorTable()
 }
 
 
+template<>
+IrqManager<IrqNumber>& getObject<IrqManager<IrqNumber>>()
+{
+  static IrqManager<IrqNumber> irqManager(getObject<NvicHal>());
+  return irqManager;
+}
+
 } // namespace

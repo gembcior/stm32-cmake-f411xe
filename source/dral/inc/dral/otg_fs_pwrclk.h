@@ -15,16 +15,13 @@ private:
   class Fs_pcgcctlReg: public RegisterModel<address>
   {
   public:
-    using stppclk = FieldModel<address,  0, 0x00000001>;
-    using gatehclk = FieldModel<address,  1, 0x00000001>;
-    using physusp = FieldModel<address,  4, 0x00000001>;
-
+    using stppclk = FieldModel<address, 0, 0x00000001>;
+    using gatehclk = FieldModel<address, 1, 0x00000001>;
+    using physusp = FieldModel<address, 4, 0x00000001>;
   };
 
 public:
   using fs_pcgcctl = Fs_pcgcctlReg<BaseAddress + 0x0000>;
-
-
 };
 
 }

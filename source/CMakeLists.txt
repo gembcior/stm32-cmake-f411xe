@@ -5,17 +5,14 @@ enable_testing()
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED True)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS "ON")
 
 if (UNIT_TEST)
-  include(FetchContent)
-
-  FetchContent_Declare(googletest
-    GIT_REPOSITORY https://github.com/google/googletest.git
-    GIT_TAG release-1.11.0
-  )
-
-  FetchContent_MakeAvailable(googletest)
+add_compile_options("--coverage")
+add_link_options("--coverage")
 endif()
 
 if (NOT UNIT_TEST)

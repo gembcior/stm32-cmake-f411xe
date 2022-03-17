@@ -1,0 +1,34 @@
+{
+  "configurations": {
+    "blinker": {
+      "adapter": "vscode-cpptools",
+      "configuration": {
+        "name": "Blinker - OpenOCD",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "$PWD/build/artifacts/Release/bin/blinker.elf",
+        "cwd": ".",
+        "externalConsole": true,
+        "serverLaunchTimeout": 20000,
+        "MIDebuggerPath": "~/tools/toolchains/gcc-arm-none-eabi-10.3-2021.07/bin/arm-none-eabi-gdb-py",
+        "miDebuggerArgs": "$PWD/build/artifacts/Release/bin/blinker.elf",
+        "debugServerPath": "openocd",
+        "debugServerArgs": "-f $PWD/utils/openocd.cfg -c init -c reset halt",
+        "serverStarted": "stm32f4x.cpu",
+        "filterStdout": true,
+        "filterStderr": true,
+        "stopAtEntry": true,
+        "stopAtConnect": true,
+        "setupCommands": [
+          { "text": "target remote localhost:3333", "description": "Connect to target", "ignoreFailures": false },
+          { "text": "monitor reset halt", "description": "Reset and halt target", "ignoreFailures": false },
+          { "text": "load", "description": "Load executable", "ignoreFailures": false },
+          { "text": "break main", "description": "Set break point at main function", "ignoreFailures": false }
+        ],
+        "customLaunchSetupCommands": [
+        ],
+        "launchCompleteCommand": "None"
+      }
+    }
+  }
+}

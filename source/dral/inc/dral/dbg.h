@@ -15,9 +15,8 @@ private:
   class Dbgmcu_idcodeReg: public RegisterModel<address>
   {
   public:
-    using dev_id = FieldModel<address,  0, 0x00000FFF>;
+    using dev_id = FieldModel<address, 0, 0x00000FFF>;
     using rev_id = FieldModel<address, 16, 0x0000FFFF>;
-
   };
 
 public:
@@ -28,12 +27,11 @@ private:
   class Dbgmcu_crReg: public RegisterModel<address>
   {
   public:
-    using dbg_sleep = FieldModel<address,  0, 0x00000001>;
-    using dbg_stop = FieldModel<address,  1, 0x00000001>;
-    using dbg_standby = FieldModel<address,  2, 0x00000001>;
-    using trace_ioen = FieldModel<address,  5, 0x00000001>;
-    using trace_mode = FieldModel<address,  6, 0x00000003>;
-
+    using dbg_sleep = FieldModel<address, 0, 0x00000001>;
+    using dbg_stop = FieldModel<address, 1, 0x00000001>;
+    using dbg_standby = FieldModel<address, 2, 0x00000001>;
+    using trace_ioen = FieldModel<address, 5, 0x00000001>;
+    using trace_mode = FieldModel<address, 6, 0x00000003>;
   };
 
 public:
@@ -44,17 +42,16 @@ private:
   class Dbgmcu_apb1_fzReg: public RegisterModel<address>
   {
   public:
-    using dbg_tim2_stop = FieldModel<address,  0, 0x00000001>;
-    using dbg_tim3_stop = FieldModel<address,  1, 0x00000001>;
-    using dbg_tim4_stop = FieldModel<address,  2, 0x00000001>;
-    using dbg_tim5_stop = FieldModel<address,  3, 0x00000001>;
+    using dbg_tim2_stop = FieldModel<address, 0, 0x00000001>;
+    using dbg_tim3_stop = FieldModel<address, 1, 0x00000001>;
+    using dbg_tim4_stop = FieldModel<address, 2, 0x00000001>;
+    using dbg_tim5_stop = FieldModel<address, 3, 0x00000001>;
     using dbg_rtc_stop = FieldModel<address, 10, 0x00000001>;
     using dbg_wwdg_stop = FieldModel<address, 11, 0x00000001>;
     using dbg_iwdeg_stop = FieldModel<address, 12, 0x00000001>;
     using dbg_i2c1_smbus_timeout = FieldModel<address, 21, 0x00000001>;
     using dbg_i2c2_smbus_timeout = FieldModel<address, 22, 0x00000001>;
     using dbg_i2c3smbus_timeout = FieldModel<address, 23, 0x00000001>;
-
   };
 
 public:
@@ -65,17 +62,14 @@ private:
   class Dbgmcu_apb2_fzReg: public RegisterModel<address>
   {
   public:
-    using dbg_tim1_stop = FieldModel<address,  0, 0x00000001>;
+    using dbg_tim1_stop = FieldModel<address, 0, 0x00000001>;
     using dbg_tim9_stop = FieldModel<address, 16, 0x00000001>;
     using dbg_tim10_stop = FieldModel<address, 17, 0x00000001>;
     using dbg_tim11_stop = FieldModel<address, 18, 0x00000001>;
-
   };
 
 public:
   using dbgmcu_apb2_fz = Dbgmcu_apb2_fzReg<BaseAddress + 0x000C>;
-
-
 };
 
 }

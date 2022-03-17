@@ -15,8 +15,7 @@ private:
   class KrReg: public RegisterModel<address>
   {
   public:
-    using key = FieldModel<address,  0, 0x0000FFFF>;
-
+    using key = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -27,8 +26,7 @@ private:
   class PrReg: public RegisterModel<address>
   {
   public:
-    using pr = FieldModel<address,  0, 0x00000007>;
-
+    using pr = FieldModel<address, 0, 0x00000007>;
   };
 
 public:
@@ -39,8 +37,7 @@ private:
   class RlrReg: public RegisterModel<address>
   {
   public:
-    using rl = FieldModel<address,  0, 0x00000FFF>;
-
+    using rl = FieldModel<address, 0, 0x00000FFF>;
   };
 
 public:
@@ -51,15 +48,12 @@ private:
   class SrReg: public RegisterModel<address>
   {
   public:
-    using rvu = FieldModel<address,  1, 0x00000001>;
-    using pvu = FieldModel<address,  0, 0x00000001>;
-
+    using rvu = FieldModel<address, 1, 0x00000001>;
+    using pvu = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
   using sr = SrReg<BaseAddress + 0x000C>;
-
-
 };
 
 }

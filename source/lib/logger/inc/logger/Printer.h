@@ -49,10 +49,10 @@ protected:
 
 private:
   enum FormatType : uint32_t {
-    Dec = 10,
-    Hex = 16,
     Bin = 2,
     Oct = 8,
+    Dec = 10,
+    Hex = 16,
   };
 
   enum Align {

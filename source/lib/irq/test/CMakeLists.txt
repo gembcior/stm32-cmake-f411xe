@@ -1,6 +1,5 @@
 include(Testing)
 
-stm32_target_add_test(irq
-  main.cpp
+testing_target_add_test(irq
   IrqTest.cpp
 )

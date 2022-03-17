@@ -4,22 +4,3 @@ target_sources(blinker
     objects.cpp
     BlinkerSystem.cpp
 )
-
-target_link_libraries(blinker
-  PRIVATE
-    crt
-    objects
-    system
-    irq
-    uart
-    flasher
-    logger
-    scb
-    flash
-    gpio
-    pwr
-    rcc
-    systick
-    nvic
-    uart
-)

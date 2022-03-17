@@ -15,8 +15,7 @@ private:
   class PowerReg: public RegisterModel<address>
   {
   public:
-    using pwrctrl = FieldModel<address,  0, 0x00000003>;
-
+    using pwrctrl = FieldModel<address, 0, 0x00000003>;
   };
 
 public:
@@ -31,10 +30,9 @@ private:
     using negedge = FieldModel<address, 13, 0x00000001>;
     using widbus = FieldModel<address, 11, 0x00000003>;
     using bypass = FieldModel<address, 10, 0x00000001>;
-    using pwrsav = FieldModel<address,  9, 0x00000001>;
-    using clken = FieldModel<address,  8, 0x00000001>;
-    using clkdiv = FieldModel<address,  0, 0x000000FF>;
-
+    using pwrsav = FieldModel<address, 9, 0x00000001>;
+    using clken = FieldModel<address, 8, 0x00000001>;
+    using clkdiv = FieldModel<address, 0, 0x000000FF>;
   };
 
 public:
@@ -45,8 +43,7 @@ private:
   class ArgReg: public RegisterModel<address>
   {
   public:
-    using cmdarg = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using cmdarg = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -62,11 +59,10 @@ private:
     using encmdcompl = FieldModel<address, 12, 0x00000001>;
     using sdiosuspend = FieldModel<address, 11, 0x00000001>;
     using cpsmen = FieldModel<address, 10, 0x00000001>;
-    using waitpend = FieldModel<address,  9, 0x00000001>;
-    using waitint = FieldModel<address,  8, 0x00000001>;
-    using waitresp = FieldModel<address,  6, 0x00000003>;
-    using cmdindex = FieldModel<address,  0, 0x0000003F>;
-
+    using waitpend = FieldModel<address, 9, 0x00000001>;
+    using waitint = FieldModel<address, 8, 0x00000001>;
+    using waitresp = FieldModel<address, 6, 0x00000003>;
+    using cmdindex = FieldModel<address, 0, 0x0000003F>;
   };
 
 public:
@@ -77,8 +73,7 @@ private:
   class RespcmdReg: public RegisterModel<address>
   {
   public:
-    using respcmd = FieldModel<address,  0, 0x0000003F>;
-
+    using respcmd = FieldModel<address, 0, 0x0000003F>;
   };
 
 public:
@@ -89,8 +84,7 @@ private:
   class Resp1Reg: public RegisterModel<address>
   {
   public:
-    using cardstatus1 = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using cardstatus1 = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -101,8 +95,7 @@ private:
   class Resp2Reg: public RegisterModel<address>
   {
   public:
-    using cardstatus2 = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using cardstatus2 = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -113,8 +106,7 @@ private:
   class Resp3Reg: public RegisterModel<address>
   {
   public:
-    using cardstatus3 = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using cardstatus3 = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -125,8 +117,7 @@ private:
   class Resp4Reg: public RegisterModel<address>
   {
   public:
-    using cardstatus4 = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using cardstatus4 = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -137,8 +128,7 @@ private:
   class DtimerReg: public RegisterModel<address>
   {
   public:
-    using datatime = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using datatime = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -149,8 +139,7 @@ private:
   class DlenReg: public RegisterModel<address>
   {
   public:
-    using datalength = FieldModel<address,  0, 0x01FFFFFF>;
-
+    using datalength = FieldModel<address, 0, 0x01FFFFFF>;
   };
 
 public:
@@ -163,14 +152,13 @@ private:
   public:
     using sdioen = FieldModel<address, 11, 0x00000001>;
     using rwmod = FieldModel<address, 10, 0x00000001>;
-    using rwstop = FieldModel<address,  9, 0x00000001>;
-    using rwstart = FieldModel<address,  8, 0x00000001>;
-    using dblocksize = FieldModel<address,  4, 0x0000000F>;
-    using dmaen = FieldModel<address,  3, 0x00000001>;
-    using dtmode = FieldModel<address,  2, 0x00000001>;
-    using dtdir = FieldModel<address,  1, 0x00000001>;
-    using dten = FieldModel<address,  0, 0x00000001>;
-
+    using rwstop = FieldModel<address, 9, 0x00000001>;
+    using rwstart = FieldModel<address, 8, 0x00000001>;
+    using dblocksize = FieldModel<address, 4, 0x0000000F>;
+    using dmaen = FieldModel<address, 3, 0x00000001>;
+    using dtmode = FieldModel<address, 2, 0x00000001>;
+    using dtdir = FieldModel<address, 1, 0x00000001>;
+    using dten = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -181,8 +169,7 @@ private:
   class DcountReg: public RegisterModel<address>
   {
   public:
-    using datacount = FieldModel<address,  0, 0x01FFFFFF>;
-
+    using datacount = FieldModel<address, 0, 0x01FFFFFF>;
   };
 
 public:
@@ -207,17 +194,16 @@ private:
     using txact = FieldModel<address, 12, 0x00000001>;
     using cmdact = FieldModel<address, 11, 0x00000001>;
     using dbckend = FieldModel<address, 10, 0x00000001>;
-    using stbiterr = FieldModel<address,  9, 0x00000001>;
-    using dataend = FieldModel<address,  8, 0x00000001>;
-    using cmdsent = FieldModel<address,  7, 0x00000001>;
-    using cmdrend = FieldModel<address,  6, 0x00000001>;
-    using rxoverr = FieldModel<address,  5, 0x00000001>;
-    using txunderr = FieldModel<address,  4, 0x00000001>;
-    using dtimeout = FieldModel<address,  3, 0x00000001>;
-    using ctimeout = FieldModel<address,  2, 0x00000001>;
-    using dcrcfail = FieldModel<address,  1, 0x00000001>;
-    using ccrcfail = FieldModel<address,  0, 0x00000001>;
-
+    using stbiterr = FieldModel<address, 9, 0x00000001>;
+    using dataend = FieldModel<address, 8, 0x00000001>;
+    using cmdsent = FieldModel<address, 7, 0x00000001>;
+    using cmdrend = FieldModel<address, 6, 0x00000001>;
+    using rxoverr = FieldModel<address, 5, 0x00000001>;
+    using txunderr = FieldModel<address, 4, 0x00000001>;
+    using dtimeout = FieldModel<address, 3, 0x00000001>;
+    using ctimeout = FieldModel<address, 2, 0x00000001>;
+    using dcrcfail = FieldModel<address, 1, 0x00000001>;
+    using ccrcfail = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -231,17 +217,16 @@ private:
     using ceataendc = FieldModel<address, 23, 0x00000001>;
     using sdioitc = FieldModel<address, 22, 0x00000001>;
     using dbckendc = FieldModel<address, 10, 0x00000001>;
-    using stbiterrc = FieldModel<address,  9, 0x00000001>;
-    using dataendc = FieldModel<address,  8, 0x00000001>;
-    using cmdsentc = FieldModel<address,  7, 0x00000001>;
-    using cmdrendc = FieldModel<address,  6, 0x00000001>;
-    using rxoverrc = FieldModel<address,  5, 0x00000001>;
-    using txunderrc = FieldModel<address,  4, 0x00000001>;
-    using dtimeoutc = FieldModel<address,  3, 0x00000001>;
-    using ctimeoutc = FieldModel<address,  2, 0x00000001>;
-    using dcrcfailc = FieldModel<address,  1, 0x00000001>;
-    using ccrcfailc = FieldModel<address,  0, 0x00000001>;
-
+    using stbiterrc = FieldModel<address, 9, 0x00000001>;
+    using dataendc = FieldModel<address, 8, 0x00000001>;
+    using cmdsentc = FieldModel<address, 7, 0x00000001>;
+    using cmdrendc = FieldModel<address, 6, 0x00000001>;
+    using rxoverrc = FieldModel<address, 5, 0x00000001>;
+    using txunderrc = FieldModel<address, 4, 0x00000001>;
+    using dtimeoutc = FieldModel<address, 3, 0x00000001>;
+    using ctimeoutc = FieldModel<address, 2, 0x00000001>;
+    using dcrcfailc = FieldModel<address, 1, 0x00000001>;
+    using ccrcfailc = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -266,17 +251,16 @@ private:
     using txactie = FieldModel<address, 12, 0x00000001>;
     using cmdactie = FieldModel<address, 11, 0x00000001>;
     using dbckendie = FieldModel<address, 10, 0x00000001>;
-    using stbiterrie = FieldModel<address,  9, 0x00000001>;
-    using dataendie = FieldModel<address,  8, 0x00000001>;
-    using cmdsentie = FieldModel<address,  7, 0x00000001>;
-    using cmdrendie = FieldModel<address,  6, 0x00000001>;
-    using rxoverrie = FieldModel<address,  5, 0x00000001>;
-    using txunderrie = FieldModel<address,  4, 0x00000001>;
-    using dtimeoutie = FieldModel<address,  3, 0x00000001>;
-    using ctimeoutie = FieldModel<address,  2, 0x00000001>;
-    using dcrcfailie = FieldModel<address,  1, 0x00000001>;
-    using ccrcfailie = FieldModel<address,  0, 0x00000001>;
-
+    using stbiterrie = FieldModel<address, 9, 0x00000001>;
+    using dataendie = FieldModel<address, 8, 0x00000001>;
+    using cmdsentie = FieldModel<address, 7, 0x00000001>;
+    using cmdrendie = FieldModel<address, 6, 0x00000001>;
+    using rxoverrie = FieldModel<address, 5, 0x00000001>;
+    using txunderrie = FieldModel<address, 4, 0x00000001>;
+    using dtimeoutie = FieldModel<address, 3, 0x00000001>;
+    using ctimeoutie = FieldModel<address, 2, 0x00000001>;
+    using dcrcfailie = FieldModel<address, 1, 0x00000001>;
+    using ccrcfailie = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -287,8 +271,7 @@ private:
   class FifocntReg: public RegisterModel<address>
   {
   public:
-    using fifocount = FieldModel<address,  0, 0x00FFFFFF>;
-
+    using fifocount = FieldModel<address, 0, 0x00FFFFFF>;
   };
 
 public:
@@ -299,14 +282,11 @@ private:
   class FifoReg: public RegisterModel<address>
   {
   public:
-    using fifodata = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using fifodata = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
   using fifo = FifoReg<BaseAddress + 0x0080>;
-
-
 };
 
 }

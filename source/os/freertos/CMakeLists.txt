@@ -3,6 +3,8 @@ include(FetchContent)
 FetchContent_Declare(freertos
   GIT_REPOSITORY    https://github.com/FreeRTOS/FreeRTOS-Kernel.git
   GIT_TAG           V10.4.4
+  GIT_SHALLOW       ON
+  GIT_PROGRESS      ON
   CONFIGURE_COMMAND ""
   BUILD_COMMAND     ""
   INSTALL_COMMAND   ""

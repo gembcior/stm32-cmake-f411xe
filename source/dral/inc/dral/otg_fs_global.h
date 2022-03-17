@@ -15,17 +15,16 @@ private:
   class Fs_gotgctlReg: public RegisterModel<address>
   {
   public:
-    using srqscs = FieldModel<address,  0, 0x00000001>;
-    using srq = FieldModel<address,  1, 0x00000001>;
-    using hngscs = FieldModel<address,  8, 0x00000001>;
-    using hnprq = FieldModel<address,  9, 0x00000001>;
+    using srqscs = FieldModel<address, 0, 0x00000001>;
+    using srq = FieldModel<address, 1, 0x00000001>;
+    using hngscs = FieldModel<address, 8, 0x00000001>;
+    using hnprq = FieldModel<address, 9, 0x00000001>;
     using hshnpen = FieldModel<address, 10, 0x00000001>;
     using dhnpen = FieldModel<address, 11, 0x00000001>;
     using cidsts = FieldModel<address, 16, 0x00000001>;
     using dbct = FieldModel<address, 17, 0x00000001>;
     using asvld = FieldModel<address, 18, 0x00000001>;
     using bsvld = FieldModel<address, 19, 0x00000001>;
-
   };
 
 public:
@@ -36,13 +35,12 @@ private:
   class Fs_gotgintReg: public RegisterModel<address>
   {
   public:
-    using sedet = FieldModel<address,  2, 0x00000001>;
-    using srsschg = FieldModel<address,  8, 0x00000001>;
-    using hnsschg = FieldModel<address,  9, 0x00000001>;
+    using sedet = FieldModel<address, 2, 0x00000001>;
+    using srsschg = FieldModel<address, 8, 0x00000001>;
+    using hnsschg = FieldModel<address, 9, 0x00000001>;
     using hngdet = FieldModel<address, 17, 0x00000001>;
     using adtochg = FieldModel<address, 18, 0x00000001>;
     using dbcdne = FieldModel<address, 19, 0x00000001>;
-
   };
 
 public:
@@ -53,10 +51,9 @@ private:
   class Fs_gahbcfgReg: public RegisterModel<address>
   {
   public:
-    using gint = FieldModel<address,  0, 0x00000001>;
-    using txfelvl = FieldModel<address,  7, 0x00000001>;
-    using ptxfelvl = FieldModel<address,  8, 0x00000001>;
-
+    using gint = FieldModel<address, 0, 0x00000001>;
+    using txfelvl = FieldModel<address, 7, 0x00000001>;
+    using ptxfelvl = FieldModel<address, 8, 0x00000001>;
   };
 
 public:
@@ -67,15 +64,14 @@ private:
   class Fs_gusbcfgReg: public RegisterModel<address>
   {
   public:
-    using tocal = FieldModel<address,  0, 0x00000007>;
-    using physel = FieldModel<address,  6, 0x00000001>;
-    using srpcap = FieldModel<address,  8, 0x00000001>;
-    using hnpcap = FieldModel<address,  9, 0x00000001>;
+    using tocal = FieldModel<address, 0, 0x00000007>;
+    using physel = FieldModel<address, 6, 0x00000001>;
+    using srpcap = FieldModel<address, 8, 0x00000001>;
+    using hnpcap = FieldModel<address, 9, 0x00000001>;
     using trdt = FieldModel<address, 10, 0x0000000F>;
     using fhmod = FieldModel<address, 29, 0x00000001>;
     using fdmod = FieldModel<address, 30, 0x00000001>;
     using ctxpkt = FieldModel<address, 31, 0x00000001>;
-
   };
 
 public:
@@ -86,14 +82,13 @@ private:
   class Fs_grstctlReg: public RegisterModel<address>
   {
   public:
-    using csrst = FieldModel<address,  0, 0x00000001>;
-    using hsrst = FieldModel<address,  1, 0x00000001>;
-    using fcrst = FieldModel<address,  2, 0x00000001>;
-    using rxfflsh = FieldModel<address,  4, 0x00000001>;
-    using txfflsh = FieldModel<address,  5, 0x00000001>;
-    using txfnum = FieldModel<address,  6, 0x0000001F>;
+    using csrst = FieldModel<address, 0, 0x00000001>;
+    using hsrst = FieldModel<address, 1, 0x00000001>;
+    using fcrst = FieldModel<address, 2, 0x00000001>;
+    using rxfflsh = FieldModel<address, 4, 0x00000001>;
+    using txfflsh = FieldModel<address, 5, 0x00000001>;
+    using txfnum = FieldModel<address, 6, 0x0000001F>;
     using ahbidl = FieldModel<address, 31, 0x00000001>;
-
   };
 
 public:
@@ -104,14 +99,14 @@ private:
   class Fs_gintstsReg: public RegisterModel<address>
   {
   public:
-    using cmod = FieldModel<address,  0, 0x00000001>;
-    using mmis = FieldModel<address,  1, 0x00000001>;
-    using otgint = FieldModel<address,  2, 0x00000001>;
-    using sof = FieldModel<address,  3, 0x00000001>;
-    using rxflvl = FieldModel<address,  4, 0x00000001>;
-    using nptxfe = FieldModel<address,  5, 0x00000001>;
-    using ginakeff = FieldModel<address,  6, 0x00000001>;
-    using goutnakeff = FieldModel<address,  7, 0x00000001>;
+    using cmod = FieldModel<address, 0, 0x00000001>;
+    using mmis = FieldModel<address, 1, 0x00000001>;
+    using otgint = FieldModel<address, 2, 0x00000001>;
+    using sof = FieldModel<address, 3, 0x00000001>;
+    using rxflvl = FieldModel<address, 4, 0x00000001>;
+    using nptxfe = FieldModel<address, 5, 0x00000001>;
+    using ginakeff = FieldModel<address, 6, 0x00000001>;
+    using goutnakeff = FieldModel<address, 7, 0x00000001>;
     using esusp = FieldModel<address, 10, 0x00000001>;
     using usbsusp = FieldModel<address, 11, 0x00000001>;
     using usbrst = FieldModel<address, 12, 0x00000001>;
@@ -129,7 +124,6 @@ private:
     using discint = FieldModel<address, 29, 0x00000001>;
     using srqint = FieldModel<address, 30, 0x00000001>;
     using wkupint = FieldModel<address, 31, 0x00000001>;
-
   };
 
 public:
@@ -140,13 +134,13 @@ private:
   class Fs_gintmskReg: public RegisterModel<address>
   {
   public:
-    using mmism = FieldModel<address,  1, 0x00000001>;
-    using otgint = FieldModel<address,  2, 0x00000001>;
-    using sofm = FieldModel<address,  3, 0x00000001>;
-    using rxflvlm = FieldModel<address,  4, 0x00000001>;
-    using nptxfem = FieldModel<address,  5, 0x00000001>;
-    using ginakeffm = FieldModel<address,  6, 0x00000001>;
-    using gonakeffm = FieldModel<address,  7, 0x00000001>;
+    using mmism = FieldModel<address, 1, 0x00000001>;
+    using otgint = FieldModel<address, 2, 0x00000001>;
+    using sofm = FieldModel<address, 3, 0x00000001>;
+    using rxflvlm = FieldModel<address, 4, 0x00000001>;
+    using nptxfem = FieldModel<address, 5, 0x00000001>;
+    using ginakeffm = FieldModel<address, 6, 0x00000001>;
+    using gonakeffm = FieldModel<address, 7, 0x00000001>;
     using esuspm = FieldModel<address, 10, 0x00000001>;
     using usbsuspm = FieldModel<address, 11, 0x00000001>;
     using usbrst = FieldModel<address, 12, 0x00000001>;
@@ -165,7 +159,6 @@ private:
     using discint = FieldModel<address, 29, 0x00000001>;
     using srqim = FieldModel<address, 30, 0x00000001>;
     using wuim = FieldModel<address, 31, 0x00000001>;
-
   };
 
 public:
@@ -176,12 +169,11 @@ private:
   class Fs_grxstsr_deviceReg: public RegisterModel<address>
   {
   public:
-    using epnum = FieldModel<address,  0, 0x0000000F>;
-    using bcnt = FieldModel<address,  4, 0x000007FF>;
+    using epnum = FieldModel<address, 0, 0x0000000F>;
+    using bcnt = FieldModel<address, 4, 0x000007FF>;
     using dpid = FieldModel<address, 15, 0x00000003>;
     using pktsts = FieldModel<address, 17, 0x0000000F>;
     using frmnum = FieldModel<address, 21, 0x0000000F>;
-
   };
 
 public:
@@ -192,12 +184,10 @@ private:
   class Fs_grxstsr_hostReg: public RegisterModel<address>
   {
   public:
-    using epnum = FieldModel<address,  0, 0x0000000F>;
-    using bcnt = FieldModel<address,  4, 0x000007FF>;
+    using chnum = FieldModel<address, 0, 0x0000000F>;
+    using bcnt = FieldModel<address, 4, 0x000007FF>;
     using dpid = FieldModel<address, 15, 0x00000003>;
     using pktsts = FieldModel<address, 17, 0x0000000F>;
-    using frmnum = FieldModel<address, 21, 0x0000000F>;
-
   };
 
 public:
@@ -205,11 +195,39 @@ public:
 
 private:
   template <uint32_t address>
+  class Fs_grxstsp_deviceReg: public RegisterModel<address>
+  {
+  public:
+    using epnum = FieldModel<address, 0, 0x0000000F>;
+    using bcnt = FieldModel<address, 4, 0x000007FF>;
+    using dpid = FieldModel<address, 15, 0x00000003>;
+    using pktsts = FieldModel<address, 17, 0x0000000F>;
+    using frmnum = FieldModel<address, 21, 0x0000000F>;
+  };
+
+public:
+  using fs_grxstsp_device = Fs_grxstsp_deviceReg<BaseAddress + 0x0020>;
+
+private:
+  template <uint32_t address>
+  class Fs_grxstsp_hostReg: public RegisterModel<address>
+  {
+  public:
+    using chnum = FieldModel<address, 0, 0x0000000F>;
+    using bcnt = FieldModel<address, 4, 0x000007FF>;
+    using dpid = FieldModel<address, 15, 0x00000003>;
+    using pktsts = FieldModel<address, 17, 0x0000000F>;
+  };
+
+public:
+  using fs_grxstsp_host = Fs_grxstsp_hostReg<BaseAddress + 0x0020>;
+
+private:
+  template <uint32_t address>
   class Fs_grxfsizReg: public RegisterModel<address>
   {
   public:
-    using rxfd = FieldModel<address,  0, 0x0000FFFF>;
-
+    using rxfd = FieldModel<address, 0, 0x0000FFFF>;
   };
 
 public:
@@ -220,9 +238,8 @@ private:
   class Fs_gnptxfsiz_deviceReg: public RegisterModel<address>
   {
   public:
-    using tx0fsa = FieldModel<address,  0, 0x0000FFFF>;
+    using tx0fsa = FieldModel<address, 0, 0x0000FFFF>;
     using tx0fd = FieldModel<address, 16, 0x0000FFFF>;
-
   };
 
 public:
@@ -233,9 +250,8 @@ private:
   class Fs_gnptxfsiz_hostReg: public RegisterModel<address>
   {
   public:
-    using nptxfsa = FieldModel<address,  0, 0x0000FFFF>;
+    using nptxfsa = FieldModel<address, 0, 0x0000FFFF>;
     using nptxfd = FieldModel<address, 16, 0x0000FFFF>;
-
   };
 
 public:
@@ -246,10 +262,9 @@ private:
   class Fs_gnptxstsReg: public RegisterModel<address>
   {
   public:
-    using nptxfsav = FieldModel<address,  0, 0x0000FFFF>;
+    using nptxfsav = FieldModel<address, 0, 0x0000FFFF>;
     using nptqxsav = FieldModel<address, 16, 0x000000FF>;
     using nptxqtop = FieldModel<address, 24, 0x0000007F>;
-
   };
 
 public:
@@ -264,7 +279,7 @@ private:
     using vbusasen = FieldModel<address, 18, 0x00000001>;
     using vbusbsen = FieldModel<address, 19, 0x00000001>;
     using sofouten = FieldModel<address, 20, 0x00000001>;
-
+    using novbussens = FieldModel<address, 21, 0x00000001>;
   };
 
 public:
@@ -275,8 +290,7 @@ private:
   class Fs_cidReg: public RegisterModel<address>
   {
   public:
-    using product_id = FieldModel<address,  0, 0xFFFFFFFF>;
-
+    using product_id = FieldModel<address, 0, 0xFFFFFFFF>;
   };
 
 public:
@@ -287,9 +301,8 @@ private:
   class Fs_hptxfsizReg: public RegisterModel<address>
   {
   public:
-    using ptxsa = FieldModel<address,  0, 0x0000FFFF>;
+    using ptxsa = FieldModel<address, 0, 0x0000FFFF>;
     using ptxfsiz = FieldModel<address, 16, 0x0000FFFF>;
-
   };
 
 public:
@@ -300,9 +313,8 @@ private:
   class Fs_dieptxf1Reg: public RegisterModel<address>
   {
   public:
-    using ineptxsa = FieldModel<address,  0, 0x0000FFFF>;
+    using ineptxsa = FieldModel<address, 0, 0x0000FFFF>;
     using ineptxfd = FieldModel<address, 16, 0x0000FFFF>;
-
   };
 
 public:
@@ -313,9 +325,8 @@ private:
   class Fs_dieptxf2Reg: public RegisterModel<address>
   {
   public:
-    using ineptxsa = FieldModel<address,  0, 0x0000FFFF>;
+    using ineptxsa = FieldModel<address, 0, 0x0000FFFF>;
     using ineptxfd = FieldModel<address, 16, 0x0000FFFF>;
-
   };
 
 public:
@@ -326,15 +337,41 @@ private:
   class Fs_dieptxf3Reg: public RegisterModel<address>
   {
   public:
-    using ineptxsa = FieldModel<address,  0, 0x0000FFFF>;
+    using ineptxsa = FieldModel<address, 0, 0x0000FFFF>;
     using ineptxfd = FieldModel<address, 16, 0x0000FFFF>;
-
   };
 
 public:
   using fs_dieptxf3 = Fs_dieptxf3Reg<BaseAddress + 0x010C>;
 
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class Fs_grxstsx_deviceBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using epnum = FieldModel<address, 0, 0x0000000F, bankOffset>;
+    using bcnt = FieldModel<address, 4, 0x000007FF, bankOffset>;
+    using dpid = FieldModel<address, 15, 0x00000003, bankOffset>;
+    using pktsts = FieldModel<address, 17, 0x0000000F, bankOffset>;
+    using frmnum = FieldModel<address, 21, 0x0000000F, bankOffset>;
+  };
 
+public:
+  using fs_grxstsx_device = Fs_grxstsx_deviceBankReg<BaseAddress + 0x001C, 0x0004>;
+
+private:
+  template <uint32_t address, uint32_t bankOffset>
+  class Fs_grxstsx_hostBankReg: public RegisterBankModel<address, bankOffset>
+  {
+  public:
+    using chnum = FieldModel<address, 0, 0x0000000F, bankOffset>;
+    using bcnt = FieldModel<address, 4, 0x000007FF, bankOffset>;
+    using dpid = FieldModel<address, 15, 0x00000003, bankOffset>;
+    using pktsts = FieldModel<address, 17, 0x0000000F, bankOffset>;
+  };
+
+public:
+  using fs_grxstsx_host = Fs_grxstsx_hostBankReg<BaseAddress + 0x001C, 0x0004>;
 };
 
 }

@@ -26,12 +26,11 @@ private:
     using moder7 = FieldModel<address, 14, 0x00000003>;
     using moder6 = FieldModel<address, 12, 0x00000003>;
     using moder5 = FieldModel<address, 10, 0x00000003>;
-    using moder4 = FieldModel<address,  8, 0x00000003>;
-    using moder3 = FieldModel<address,  6, 0x00000003>;
-    using moder2 = FieldModel<address,  4, 0x00000003>;
-    using moder1 = FieldModel<address,  2, 0x00000003>;
-    using moder0 = FieldModel<address,  0, 0x00000003>;
-
+    using moder4 = FieldModel<address, 8, 0x00000003>;
+    using moder3 = FieldModel<address, 6, 0x00000003>;
+    using moder2 = FieldModel<address, 4, 0x00000003>;
+    using moder1 = FieldModel<address, 2, 0x00000003>;
+    using moder0 = FieldModel<address, 0, 0x00000003>;
   };
 
 public:
@@ -48,17 +47,16 @@ private:
     using ot12 = FieldModel<address, 12, 0x00000001>;
     using ot11 = FieldModel<address, 11, 0x00000001>;
     using ot10 = FieldModel<address, 10, 0x00000001>;
-    using ot9 = FieldModel<address,  9, 0x00000001>;
-    using ot8 = FieldModel<address,  8, 0x00000001>;
-    using ot7 = FieldModel<address,  7, 0x00000001>;
-    using ot6 = FieldModel<address,  6, 0x00000001>;
-    using ot5 = FieldModel<address,  5, 0x00000001>;
-    using ot4 = FieldModel<address,  4, 0x00000001>;
-    using ot3 = FieldModel<address,  3, 0x00000001>;
-    using ot2 = FieldModel<address,  2, 0x00000001>;
-    using ot1 = FieldModel<address,  1, 0x00000001>;
-    using ot0 = FieldModel<address,  0, 0x00000001>;
-
+    using ot9 = FieldModel<address, 9, 0x00000001>;
+    using ot8 = FieldModel<address, 8, 0x00000001>;
+    using ot7 = FieldModel<address, 7, 0x00000001>;
+    using ot6 = FieldModel<address, 6, 0x00000001>;
+    using ot5 = FieldModel<address, 5, 0x00000001>;
+    using ot4 = FieldModel<address, 4, 0x00000001>;
+    using ot3 = FieldModel<address, 3, 0x00000001>;
+    using ot2 = FieldModel<address, 2, 0x00000001>;
+    using ot1 = FieldModel<address, 1, 0x00000001>;
+    using ot0 = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -80,12 +78,11 @@ private:
     using ospeedr7 = FieldModel<address, 14, 0x00000003>;
     using ospeedr6 = FieldModel<address, 12, 0x00000003>;
     using ospeedr5 = FieldModel<address, 10, 0x00000003>;
-    using ospeedr4 = FieldModel<address,  8, 0x00000003>;
-    using ospeedr3 = FieldModel<address,  6, 0x00000003>;
-    using ospeedr2 = FieldModel<address,  4, 0x00000003>;
-    using ospeedr1 = FieldModel<address,  2, 0x00000003>;
-    using ospeedr0 = FieldModel<address,  0, 0x00000003>;
-
+    using ospeedr4 = FieldModel<address, 8, 0x00000003>;
+    using ospeedr3 = FieldModel<address, 6, 0x00000003>;
+    using ospeedr2 = FieldModel<address, 4, 0x00000003>;
+    using ospeedr1 = FieldModel<address, 2, 0x00000003>;
+    using ospeedr0 = FieldModel<address, 0, 0x00000003>;
   };
 
 public:
@@ -107,12 +104,11 @@ private:
     using pupdr7 = FieldModel<address, 14, 0x00000003>;
     using pupdr6 = FieldModel<address, 12, 0x00000003>;
     using pupdr5 = FieldModel<address, 10, 0x00000003>;
-    using pupdr4 = FieldModel<address,  8, 0x00000003>;
-    using pupdr3 = FieldModel<address,  6, 0x00000003>;
-    using pupdr2 = FieldModel<address,  4, 0x00000003>;
-    using pupdr1 = FieldModel<address,  2, 0x00000003>;
-    using pupdr0 = FieldModel<address,  0, 0x00000003>;
-
+    using pupdr4 = FieldModel<address, 8, 0x00000003>;
+    using pupdr3 = FieldModel<address, 6, 0x00000003>;
+    using pupdr2 = FieldModel<address, 4, 0x00000003>;
+    using pupdr1 = FieldModel<address, 2, 0x00000003>;
+    using pupdr0 = FieldModel<address, 0, 0x00000003>;
   };
 
 public:
@@ -129,17 +125,16 @@ private:
     using idr12 = FieldModel<address, 12, 0x00000001>;
     using idr11 = FieldModel<address, 11, 0x00000001>;
     using idr10 = FieldModel<address, 10, 0x00000001>;
-    using idr9 = FieldModel<address,  9, 0x00000001>;
-    using idr8 = FieldModel<address,  8, 0x00000001>;
-    using idr7 = FieldModel<address,  7, 0x00000001>;
-    using idr6 = FieldModel<address,  6, 0x00000001>;
-    using idr5 = FieldModel<address,  5, 0x00000001>;
-    using idr4 = FieldModel<address,  4, 0x00000001>;
-    using idr3 = FieldModel<address,  3, 0x00000001>;
-    using idr2 = FieldModel<address,  2, 0x00000001>;
-    using idr1 = FieldModel<address,  1, 0x00000001>;
-    using idr0 = FieldModel<address,  0, 0x00000001>;
-
+    using idr9 = FieldModel<address, 9, 0x00000001>;
+    using idr8 = FieldModel<address, 8, 0x00000001>;
+    using idr7 = FieldModel<address, 7, 0x00000001>;
+    using idr6 = FieldModel<address, 6, 0x00000001>;
+    using idr5 = FieldModel<address, 5, 0x00000001>;
+    using idr4 = FieldModel<address, 4, 0x00000001>;
+    using idr3 = FieldModel<address, 3, 0x00000001>;
+    using idr2 = FieldModel<address, 2, 0x00000001>;
+    using idr1 = FieldModel<address, 1, 0x00000001>;
+    using idr0 = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -156,17 +151,16 @@ private:
     using odr12 = FieldModel<address, 12, 0x00000001>;
     using odr11 = FieldModel<address, 11, 0x00000001>;
     using odr10 = FieldModel<address, 10, 0x00000001>;
-    using odr9 = FieldModel<address,  9, 0x00000001>;
-    using odr8 = FieldModel<address,  8, 0x00000001>;
-    using odr7 = FieldModel<address,  7, 0x00000001>;
-    using odr6 = FieldModel<address,  6, 0x00000001>;
-    using odr5 = FieldModel<address,  5, 0x00000001>;
-    using odr4 = FieldModel<address,  4, 0x00000001>;
-    using odr3 = FieldModel<address,  3, 0x00000001>;
-    using odr2 = FieldModel<address,  2, 0x00000001>;
-    using odr1 = FieldModel<address,  1, 0x00000001>;
-    using odr0 = FieldModel<address,  0, 0x00000001>;
-
+    using odr9 = FieldModel<address, 9, 0x00000001>;
+    using odr8 = FieldModel<address, 8, 0x00000001>;
+    using odr7 = FieldModel<address, 7, 0x00000001>;
+    using odr6 = FieldModel<address, 6, 0x00000001>;
+    using odr5 = FieldModel<address, 5, 0x00000001>;
+    using odr4 = FieldModel<address, 4, 0x00000001>;
+    using odr3 = FieldModel<address, 3, 0x00000001>;
+    using odr2 = FieldModel<address, 2, 0x00000001>;
+    using odr1 = FieldModel<address, 1, 0x00000001>;
+    using odr0 = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -199,17 +193,16 @@ private:
     using bs12 = FieldModel<address, 12, 0x00000001>;
     using bs11 = FieldModel<address, 11, 0x00000001>;
     using bs10 = FieldModel<address, 10, 0x00000001>;
-    using bs9 = FieldModel<address,  9, 0x00000001>;
-    using bs8 = FieldModel<address,  8, 0x00000001>;
-    using bs7 = FieldModel<address,  7, 0x00000001>;
-    using bs6 = FieldModel<address,  6, 0x00000001>;
-    using bs5 = FieldModel<address,  5, 0x00000001>;
-    using bs4 = FieldModel<address,  4, 0x00000001>;
-    using bs3 = FieldModel<address,  3, 0x00000001>;
-    using bs2 = FieldModel<address,  2, 0x00000001>;
-    using bs1 = FieldModel<address,  1, 0x00000001>;
-    using bs0 = FieldModel<address,  0, 0x00000001>;
-
+    using bs9 = FieldModel<address, 9, 0x00000001>;
+    using bs8 = FieldModel<address, 8, 0x00000001>;
+    using bs7 = FieldModel<address, 7, 0x00000001>;
+    using bs6 = FieldModel<address, 6, 0x00000001>;
+    using bs5 = FieldModel<address, 5, 0x00000001>;
+    using bs4 = FieldModel<address, 4, 0x00000001>;
+    using bs3 = FieldModel<address, 3, 0x00000001>;
+    using bs2 = FieldModel<address, 2, 0x00000001>;
+    using bs1 = FieldModel<address, 1, 0x00000001>;
+    using bs0 = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -227,17 +220,16 @@ private:
     using lck12 = FieldModel<address, 12, 0x00000001>;
     using lck11 = FieldModel<address, 11, 0x00000001>;
     using lck10 = FieldModel<address, 10, 0x00000001>;
-    using lck9 = FieldModel<address,  9, 0x00000001>;
-    using lck8 = FieldModel<address,  8, 0x00000001>;
-    using lck7 = FieldModel<address,  7, 0x00000001>;
-    using lck6 = FieldModel<address,  6, 0x00000001>;
-    using lck5 = FieldModel<address,  5, 0x00000001>;
-    using lck4 = FieldModel<address,  4, 0x00000001>;
-    using lck3 = FieldModel<address,  3, 0x00000001>;
-    using lck2 = FieldModel<address,  2, 0x00000001>;
-    using lck1 = FieldModel<address,  1, 0x00000001>;
-    using lck0 = FieldModel<address,  0, 0x00000001>;
-
+    using lck9 = FieldModel<address, 9, 0x00000001>;
+    using lck8 = FieldModel<address, 8, 0x00000001>;
+    using lck7 = FieldModel<address, 7, 0x00000001>;
+    using lck6 = FieldModel<address, 6, 0x00000001>;
+    using lck5 = FieldModel<address, 5, 0x00000001>;
+    using lck4 = FieldModel<address, 4, 0x00000001>;
+    using lck3 = FieldModel<address, 3, 0x00000001>;
+    using lck2 = FieldModel<address, 2, 0x00000001>;
+    using lck1 = FieldModel<address, 1, 0x00000001>;
+    using lck0 = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
@@ -253,10 +245,9 @@ private:
     using afrl5 = FieldModel<address, 20, 0x0000000F>;
     using afrl4 = FieldModel<address, 16, 0x0000000F>;
     using afrl3 = FieldModel<address, 12, 0x0000000F>;
-    using afrl2 = FieldModel<address,  8, 0x0000000F>;
-    using afrl1 = FieldModel<address,  4, 0x0000000F>;
-    using afrl0 = FieldModel<address,  0, 0x0000000F>;
-
+    using afrl2 = FieldModel<address, 8, 0x0000000F>;
+    using afrl1 = FieldModel<address, 4, 0x0000000F>;
+    using afrl0 = FieldModel<address, 0, 0x0000000F>;
   };
 
 public:
@@ -272,16 +263,13 @@ private:
     using afrh13 = FieldModel<address, 20, 0x0000000F>;
     using afrh12 = FieldModel<address, 16, 0x0000000F>;
     using afrh11 = FieldModel<address, 12, 0x0000000F>;
-    using afrh10 = FieldModel<address,  8, 0x0000000F>;
-    using afrh9 = FieldModel<address,  4, 0x0000000F>;
-    using afrh8 = FieldModel<address,  0, 0x0000000F>;
-
+    using afrh10 = FieldModel<address, 8, 0x0000000F>;
+    using afrh9 = FieldModel<address, 4, 0x0000000F>;
+    using afrh8 = FieldModel<address, 0, 0x0000000F>;
   };
 
 public:
   using afrh = AfrhReg<BaseAddress + 0x0024>;
-
-
 };
 
 }

@@ -1,4 +1,4 @@
-STM32_CUBE_PROGRAMMER=~/tools/stm32/STM32CubeProgrammer/bin/STM32_Programmer_CLI
+STM32_CUBE_PROGRAMMER=STM32_Programmer_CLI
 INSTALL_DIR=./build/artifacts
 BUILD_TYPE=Release
 FLASH_TARGET=$1

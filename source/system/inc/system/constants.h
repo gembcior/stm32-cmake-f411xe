@@ -5,8 +5,8 @@
 
 namespace stm32::system {
 
-constexpr uint32_t SystemClock = 96e6;
-constexpr uint32_t SysTickClock = 1e3;
+constexpr uint32_t SystemClock = 96'000'000U;
+constexpr uint32_t SysTickClock = 1000U;
 
 
 constexpr hal::GpioPin UserLed4 = {
@@ -67,6 +67,32 @@ constexpr hal::GpioPin UserButton = {
   },
   .port = hal::Port::PortC,
   .pin = hal::Pin::Pin13,
+};
+
+
+constexpr hal::GpioPin UsbOtgFsDm = {
+  .config = {
+    .mode = hal::PortMode::AlternateFunction,
+    .type = hal::PortType::PushPull,
+    .speed = hal::PortSpeed::High,
+    .pull = hal::PortPull::NoPull,
+    .af = hal::PortAlternateFunction::Af10,
+  },
+  .port = hal::Port::PortA,
+  .pin = hal::Pin::Pin11,
+};
+
+
+constexpr hal::GpioPin UsbOtgFsDp = {
+  .config = {
+    .mode = hal::PortMode::AlternateFunction,
+    .type = hal::PortType::PushPull,
+    .speed = hal::PortSpeed::High,
+    .pull = hal::PortPull::NoPull,
+    .af = hal::PortAlternateFunction::Af10,
+  },
+  .port = hal::Port::PortA,
+  .pin = hal::Pin::Pin12,
 };
 
 } // namespace

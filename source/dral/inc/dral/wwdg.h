@@ -15,9 +15,8 @@ private:
   class CrReg: public RegisterModel<address>
   {
   public:
-    using wdga = FieldModel<address,  7, 0x00000001>;
-    using t = FieldModel<address,  0, 0x0000007F>;
-
+    using wdga = FieldModel<address, 7, 0x00000001>;
+    using t = FieldModel<address, 0, 0x0000007F>;
   };
 
 public:
@@ -28,11 +27,10 @@ private:
   class CfrReg: public RegisterModel<address>
   {
   public:
-    using ewi = FieldModel<address,  9, 0x00000001>;
-    using wdgtb1 = FieldModel<address,  8, 0x00000001>;
-    using wdgtb0 = FieldModel<address,  7, 0x00000001>;
-    using w = FieldModel<address,  0, 0x0000007F>;
-
+    using ewi = FieldModel<address, 9, 0x00000001>;
+    using wdgtb1 = FieldModel<address, 8, 0x00000001>;
+    using wdgtb0 = FieldModel<address, 7, 0x00000001>;
+    using w = FieldModel<address, 0, 0x0000007F>;
   };
 
 public:
@@ -43,14 +41,11 @@ private:
   class SrReg: public RegisterModel<address>
   {
   public:
-    using ewif = FieldModel<address,  0, 0x00000001>;
-
+    using ewif = FieldModel<address, 0, 0x00000001>;
   };
 
 public:
   using sr = SrReg<BaseAddress + 0x0008>;
-
-
 };
 
 }
