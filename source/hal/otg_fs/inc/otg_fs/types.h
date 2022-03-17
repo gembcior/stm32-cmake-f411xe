@@ -55,6 +55,16 @@ enum class OtgFsInterrupt : uint32_t {
 };
 
 
+enum class OtgFsOtgInterrupt : uint32_t {
+  Sedet = 2,
+  Srsschg = 8,
+  Hnsschg = 9,
+  Hngdet = 17,
+  Adtochg = 18,
+  Dbcdne = 19,
+};
+
+
 enum class OtgFsPeriodicFrameInterval : uint32_t {
   Fi80,
   Fi85,
@@ -81,6 +91,7 @@ enum class OtgFsDeviceInEndpointInterrupt : uint32_t {
   Ittxfe = 4,
   Inepnm = 5,
   Inepne = 6,
+  Txfe   = 7,
   Nak    = 13,
 };
 
@@ -119,6 +130,14 @@ struct OtgFsEndpoint
   uint32_t maxPacketSize;
   uint32_t xferLen;
   uint32_t interval;
+};
+
+
+struct OtgFsRxStatus
+{
+  uint32_t packetStatus;
+  uint32_t endpointNumber;
+  uint32_t byteCount;
 };
 
 } // namespace

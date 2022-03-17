@@ -3,7 +3,6 @@ target_sources(tinyusb
     port.cpp
     usb_descriptors.c
     msc_disk.c
-    printf.c
 )
 
 target_include_directories(tinyusb

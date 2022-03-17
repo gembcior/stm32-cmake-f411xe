@@ -17,14 +17,14 @@ public:
   void wakeup();
   void busReset();
   void setAddress(uint8_t address);
-  void setPeriodicFrameInterval(OtgFsPeriodicFrameInterval interval);
   void setSpeed(OtgFsSpeed speed);
+
   void setInEndpointInterruptMask(OtgFsDeviceInEndpointInterrupt interrupt, OtgFsInterruptMask mask);
   void setOutEndpointInterruptMask(OtgFsDeviceOutEndpointInterrupt interrupt, OtgFsInterruptMask mask);
-  void setAllInEndpointInterruptMask(uint32_t interrupt, OtgFsInterruptMask mask);
-  void setAllInEndpointInterruptMask(OtgFsInterruptMask mask);
-  void setAllOutEndpointInterruptMask(uint32_t interrupt, OtgFsInterruptMask mask);
-  void setAllOutEndpointInterruptMask(OtgFsInterruptMask mask);
+
+  void setEndpointInterruptMask(OtgFsEndpoint& ep, OtgFsInterruptMask mask);
+  bool getEndpointInterruptStatus(OtgFsEndpoint& ep);
+
   void setNonZeroLenStatusOutHandshake(OtgFSNonZeroLenStatusOutHandshake handshake);
   OtgFsSpeed getSpeed();
 
@@ -39,6 +39,14 @@ public:
   bool getOutEndpointInterruptStatus(OtgFsEndpoint& ep, OtgFsDeviceOutEndpointInterrupt interrupt);
   void clearOutEndpointInterruptStatus(OtgFsEndpoint& ep, OtgFsDeviceOutEndpointInterrupt interrupt);
 
+  uint32_t getEndpointXferSize(OtgFsEndpoint& ep);
+  void setOutEndpointSetupPacketCount(OtgFsEndpoint& ep, uint32_t count);
+  uint32_t getEndpointPacketCount(OtgFsEndpoint& ep);
+
+  OtgFsInterruptMask getInEndpointFifoEmptyInterruptMask(uint32_t endpointNumber);
+  void setInEndpointFifoEmptyInterruptMask(uint32_t endpointNumber, OtgFsInterruptMask mask);
+
+  uint32_t getInEndpointFifoAvailableSpace(OtgFsEndpoint& ep);
 
 private:
   void startEndpoint0Xfer(OtgFsEndpoint& ep);
@@ -49,6 +57,9 @@ private:
 
   void deactivateEndpoint0(OtgFsEndpoint& ep);
   void deactivateEndpointX(OtgFsEndpoint& ep);
+
+  void setAllInEndpointInterruptMask(uint32_t interrupt, OtgFsInterruptMask mask);
+  void setAllOutEndpointInterruptMask(uint32_t interrupt, OtgFsInterruptMask mask);
 };
 
 } // namespace

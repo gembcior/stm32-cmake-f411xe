@@ -20,11 +20,9 @@ void OtgFsDeviceHal::init()
 
   setInterruptMask(OtgFsInterrupt::Usbrst, OtgFsInterruptMask::UnMasked);
   setInterruptMask(OtgFsInterrupt::Enumdne, OtgFsInterruptMask::UnMasked);
-//  setInterruptMask(OtgFsInterrupt::Esusp, OtgFsInterruptMask::UnMasked);
   setInterruptMask(OtgFsInterrupt::Usbsusp, OtgFsInterruptMask::UnMasked);
   setInterruptMask(OtgFsInterrupt::Wkupint, OtgFsInterruptMask::UnMasked);
   setInterruptMask(OtgFsInterrupt::Rxflvl, OtgFsInterruptMask::UnMasked);
-//  setInterruptMask(OtgFsInterrupt::Sof, OtgFsInterruptMask::UnMasked);
 
   setTurnaroundTime(SystemClock);
   disableVBusSensing();
@@ -64,13 +62,6 @@ void OtgFsDeviceHal::setAddress(uint8_t address)
 }
 
 
-void OtgFsDeviceHal::setPeriodicFrameInterval(OtgFsPeriodicFrameInterval interval)
-{
-  otg_fs_device::fs_dcfg::pfivl::write(static_cast<uint32_t>(interval));
-}
-
-
-
 void OtgFsDeviceHal::setSpeed(OtgFsSpeed speed)
 {
   otg_fs_device::fs_dcfg::dspd::write(static_cast<uint32_t>(speed));
@@ -87,9 +78,13 @@ OtgFsSpeed OtgFsDeviceHal::getSpeed()
 void OtgFsDeviceHal::setInEndpointInterruptMask(OtgFsDeviceInEndpointInterrupt interrupt, OtgFsInterruptMask mask)
 {
   uint32_t diepmsk = otg_fs_device::fs_diepmsk::read();
+  uint32_t value = 1U << static_cast<uint32_t>(interrupt);
 
-  uint32_t value = ((mask == OtgFsInterruptMask::UnMasked) ? 1U : 0U) << static_cast<uint32_t>(interrupt);
-  value = (diepmsk & ~value) | value;
+  if (mask == OtgFsInterruptMask::UnMasked) {
+    value = diepmsk | value;
+  } else {
+    value = diepmsk & ~value;
+  }
 
   otg_fs_device::fs_diepmsk::write(value);
 }
@@ -98,9 +93,13 @@ void OtgFsDeviceHal::setInEndpointInterruptMask(OtgFsDeviceInEndpointInterrupt i
 void OtgFsDeviceHal::setOutEndpointInterruptMask(OtgFsDeviceOutEndpointInterrupt interrupt, OtgFsInterruptMask mask)
 {
   uint32_t doepmsk = otg_fs_device::fs_doepmsk::read();
+  uint32_t value = 1U << static_cast<uint32_t>(interrupt);
 
-  uint32_t value = ((mask == OtgFsInterruptMask::UnMasked) ? 1U : 0U) << static_cast<uint32_t>(interrupt);
-  value = (doepmsk & ~value) | value;
+  if (mask == OtgFsInterruptMask::UnMasked) {
+    value = doepmsk | value;
+  } else {
+    value = doepmsk & ~value;
+  }
 
   otg_fs_device::fs_doepmsk::write(value);
 }
@@ -108,31 +107,53 @@ void OtgFsDeviceHal::setOutEndpointInterruptMask(OtgFsDeviceOutEndpointInterrupt
 
 void OtgFsDeviceHal::setAllInEndpointInterruptMask(uint32_t interrupt, OtgFsInterruptMask mask)
 {
-  interrupt = ((mask == OtgFsInterruptMask::UnMasked) ? 1U : 0U) << interrupt;
-  uint32_t value = (otg_fs_device::fs_daintmsk::iepm::read() & ~interrupt) | interrupt;
-  otg_fs_device::fs_daintmsk::iepm::write(value);
-}
+  uint32_t iepm = otg_fs_device::fs_daintmsk::iepm::read();
+  uint32_t value = 1U << interrupt;
 
-
-void OtgFsDeviceHal::setAllInEndpointInterruptMask(OtgFsInterruptMask mask)
-{
-  uint32_t value = (mask == OtgFsInterruptMask::UnMasked) ? 0xFFFFU : 0U;
+  if (mask == OtgFsInterruptMask::UnMasked) {
+    value = iepm | value;
+  } else {
+    value = iepm & ~value;
+  }
   otg_fs_device::fs_daintmsk::iepm::write(value);
 }
 
 
 void OtgFsDeviceHal::setAllOutEndpointInterruptMask(uint32_t interrupt, OtgFsInterruptMask mask)
 {
-  interrupt = ((mask == OtgFsInterruptMask::UnMasked) ? 1U : 0U) << interrupt;
-  uint32_t value = (otg_fs_device::fs_daintmsk::oepm::read() & ~interrupt) | interrupt;
+  uint32_t oepm = otg_fs_device::fs_daintmsk::oepm::read();
+  uint32_t value = 1U << interrupt;
+
+  if (mask == OtgFsInterruptMask::UnMasked) {
+    value = oepm | value;
+  } else {
+    value = oepm & ~value;
+  }
+
   otg_fs_device::fs_daintmsk::oepm::write(value);
 }
 
 
-void OtgFsDeviceHal::setAllOutEndpointInterruptMask(OtgFsInterruptMask mask)
+void OtgFsDeviceHal::setEndpointInterruptMask(OtgFsEndpoint& ep, OtgFsInterruptMask mask)
 {
-  uint32_t value = (mask == OtgFsInterruptMask::UnMasked) ? 0xFFFFU : 0U;
-  otg_fs_device::fs_daintmsk::oepm::write(value);
+  if (ep.direction == OtgFsEndpointDirection::In) {
+    setAllInEndpointInterruptMask(ep.number, mask);
+  } else {
+    setAllOutEndpointInterruptMask(ep.number, mask);
+  }
+}
+
+
+bool OtgFsDeviceHal::getEndpointInterruptStatus(OtgFsEndpoint& ep)
+{
+  uint32_t status;
+  if (ep.direction == OtgFsEndpointDirection::In) {
+    status = otg_fs_device::fs_daint::iepint::read();
+  } else {
+    status = otg_fs_device::fs_daint::oepint::read();
+  }
+
+  return (status >> ep.number) & 0x1U;
 }
 
 
@@ -345,7 +366,6 @@ void OtgFsDeviceHal::startEndpointXXfer(OtgFsEndpoint& ep)
     }
   } else {
     otg_fs_device::doeptsizx::pktcnt::write(endpointRegNumber, packetCount);
-//    otg_fs_device::doeptsizx::xfrsiz::write(endpointRegNumber, ep.maxPacketSize * packetCount);
     otg_fs_device::doeptsizx::xfrsiz::write(endpointRegNumber, ep.xferLen);
 
     auto enpointType = static_cast<OtgFsEndpointType>(otg_fs_device::doepctlx::eptyp::read(endpointRegNumber));
@@ -420,6 +440,8 @@ void OtgFsDeviceHal::clearStall(OtgFsEndpoint& ep)
 
 void OtgFsDeviceHal::busReset()
 {
+  otg_fs_device::fs_dcfg::dad::write(0);
+
   otg_fs_device::doepctl0::snak::write(1);
   for (uint32_t i = 0; i < (MaxEndpoints - 1); i++) {
     otg_fs_device::doepctlx::snak::write(i, 1);
@@ -434,7 +456,7 @@ void OtgFsDeviceHal::busReset()
   setInEndpointInterruptMask(OtgFsDeviceInEndpointInterrupt::Xfrc, OtgFsInterruptMask::UnMasked);
   setInEndpointInterruptMask(OtgFsDeviceInEndpointInterrupt::To, OtgFsInterruptMask::UnMasked);
 
-  constexpr uint32_t rxFifoSize = getRxFifoSize(EndpointSize);
+  constexpr uint32_t rxFifoSize = calculateRxFifoSize(EndpointSize);
   otg_fs_global::fs_grxfsiz::rxfd::write(rxFifoSize);
 
   otg_fs_global::fs_gnptxfsiz_device::tx0fd::write(16);
@@ -442,6 +464,9 @@ void OtgFsDeviceHal::busReset()
   otg_fs_global::fs_gnptxfsiz_device::tx0fsa::write(txFifoStartAddress);
 
   otg_fs_device::doeptsiz0::stupcnt::write(3);
+
+  otg_fs_global::fs_gintmsk::oepint::write(1);
+  otg_fs_global::fs_gintmsk::iepint::write(1);
 }
 
 
@@ -465,7 +490,75 @@ bool OtgFsDeviceHal::getOutEndpointInterruptStatus(OtgFsEndpoint& ep, OtgFsDevic
 
 void OtgFsDeviceHal::clearOutEndpointInterruptStatus(OtgFsEndpoint& ep, OtgFsDeviceOutEndpointInterrupt interrupt)
 {
-  otg_fs_device::diepintx::write(ep.number, 1U << static_cast<uint32_t>(interrupt));
+  otg_fs_device::doepintx::write(ep.number, 1U << static_cast<uint32_t>(interrupt));
+}
+
+
+uint32_t OtgFsDeviceHal::getEndpointXferSize(OtgFsEndpoint& ep)
+{
+  uint32_t xferSize;
+  if (ep.direction == OtgFsEndpointDirection::In) {
+    xferSize = (ep.number == 0) ? otg_fs_device::dieptsiz0::xfrsiz::read()
+                                : otg_fs_device::dieptsizx::xfrsiz::read(ep.number - 1);
+  } else {
+    xferSize = (ep.number == 0) ? otg_fs_device::doeptsiz0::xfrsiz::read()
+                                : otg_fs_device::doeptsizx::xfrsiz::read(ep.number - 1);
+  }
+
+  return xferSize;
+}
+
+
+void OtgFsDeviceHal::setOutEndpointSetupPacketCount(OtgFsEndpoint& ep, uint32_t count)
+{
+  if (ep.direction == OtgFsEndpointDirection::Out) {
+    if (ep.number == 0) {
+      otg_fs_device::doeptsiz0::stupcnt::write(count);
+    } else {
+      otg_fs_device::doeptsizx::rxdpid_stupcnt::write(ep.number - 1, count);
+    }
+  }
+}
+
+
+uint32_t OtgFsDeviceHal::getEndpointPacketCount(OtgFsEndpoint& ep)
+{
+  uint32_t packetCount;
+  if (ep.direction == OtgFsEndpointDirection::In) {
+    packetCount = (ep.number == 0) ? otg_fs_device::dieptsiz0::pktcnt::read()
+                                   : otg_fs_device::dieptsizx::pktcnt::read(ep.number - 1);
+  } else {
+    packetCount = (ep.number == 0) ? otg_fs_device::doeptsiz0::pktcnt::read()
+                                   : otg_fs_device::doeptsizx::pktcnt::read(ep.number - 1);
+  }
+
+  return packetCount;
+}
+
+
+OtgFsInterruptMask OtgFsDeviceHal::getInEndpointFifoEmptyInterruptMask(uint32_t endpointNumber)
+{
+  uint32_t mask = (otg_fs_device::diepempmsk::ineptxfem::read() >> endpointNumber) & 0x1U;
+  return static_cast<OtgFsInterruptMask>(mask);
+}
+
+
+void OtgFsDeviceHal::setInEndpointFifoEmptyInterruptMask(uint32_t endpointNumber, OtgFsInterruptMask mask)
+{
+  uint32_t diepempmsk = otg_fs_device::diepempmsk::ineptxfem::read();
+  uint32_t value = 1U << endpointNumber;
+  if (mask == OtgFsInterruptMask::UnMasked) {
+    value = diepempmsk | value;
+  } else {
+    value = diepempmsk & ~value;
+  }
+  otg_fs_device::diepempmsk::ineptxfem::write(value);
+}
+
+
+uint32_t OtgFsDeviceHal::getInEndpointFifoAvailableSpace(OtgFsEndpoint& ep)
+{
+  return otg_fs_device::dtxfstsx::ineptfsav::read(ep.number);
 }
 
 } // namespace

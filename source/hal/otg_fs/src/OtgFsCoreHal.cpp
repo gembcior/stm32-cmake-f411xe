@@ -62,13 +62,6 @@ void OtgFsCoreHal::setCurrentMode(OtgFsMode mode)
 }
 
 
-void OtgFsCoreHal::setFsTimeout(uint8_t fs)
-{
-  // TODO
-}
-
-
-
 void OtgFsCoreHal::setTurnaroundTime(uint32_t hclk)
 {
   uint32_t turnaround;
@@ -99,14 +92,12 @@ void OtgFsCoreHal::setTurnaroundTime(uint32_t hclk)
 }
 
 
-
 void OtgFsCoreHal::disableVBusSensing()
 {
   otg_fs_global::fs_gccfg::novbussens::write(1);
   otg_fs_global::fs_gccfg::vbusbsen::write(0);
   otg_fs_global::fs_gccfg::vbusasen::write(0);
 }
-
 
 
 void OtgFsCoreHal::enableVBusSensing()
@@ -143,9 +134,13 @@ void OtgFsCoreHal::deactivateTransceiver()
 void OtgFsCoreHal::setInterruptMask(OtgFsInterrupt interrupt, OtgFsInterruptMask mask)
 {
   uint32_t gintmsk = otg_fs_global::fs_gintmsk::read();
+  uint32_t value = 1U << static_cast<uint32_t>(interrupt);
 
-  uint32_t value = ((mask == OtgFsInterruptMask::UnMasked) ? 1U : 0U) << static_cast<uint32_t>(interrupt);
-  value = (gintmsk & ~value) | value;
+  if (mask == OtgFsInterruptMask::UnMasked) {
+    value = gintmsk | value;
+  } else {
+    value = gintmsk & ~value;
+  }
 
   otg_fs_global::fs_gintmsk::write(value);
 }
@@ -165,6 +160,72 @@ void OtgFsCoreHal::flushRxFifo()
   otg_fs_global::fs_grstctl::rxfflsh::write(1);
   // TODO add timeout guard
   while (otg_fs_global::fs_grstctl::rxfflsh::read() != 0U);
+}
+
+
+uint32_t OtgFsCoreHal::getRxFifoSize()
+{
+  return otg_fs_global::fs_grxfsiz::rxfd::read();
+}
+
+
+void OtgFsCoreHal::setRxFifoSize(uint32_t size)
+{
+  otg_fs_global::fs_grxfsiz::rxfd::write(size);
+}
+
+
+uint32_t OtgFsCoreHal::getTxFifoSize(uint32_t fifoNumber)
+{
+  uint32_t size = 0;
+  if (fifoNumber == 1) {
+    size = otg_fs_global::fs_dieptxf1::ineptxfd::read();
+  } else if (fifoNumber == 2) {
+    size = otg_fs_global::fs_dieptxf2::ineptxfd::read();
+  } else if (fifoNumber == 3) {
+    size = otg_fs_global::fs_dieptxf3::ineptxfd::read();
+  }
+
+  return size;
+}
+
+
+void OtgFsCoreHal::setTxFifoSize(uint32_t fifoNumber, uint32_t size)
+{
+  if (fifoNumber == 1) {
+    otg_fs_global::fs_dieptxf1::ineptxfd::write(size);
+  } else if (fifoNumber == 2) {
+    otg_fs_global::fs_dieptxf2::ineptxfd::write(size);
+  } else if (fifoNumber == 3) {
+    otg_fs_global::fs_dieptxf3::ineptxfd::write(size);
+  }
+}
+
+
+uint32_t OtgFsCoreHal::getTxFifoStartAddress(uint32_t fifoNumber)
+{
+  uint32_t address = 0;
+  if (fifoNumber == 1) {
+    address = otg_fs_global::fs_dieptxf1::ineptxsa::read();
+  } else if (fifoNumber == 2) {
+    address = otg_fs_global::fs_dieptxf2::ineptxsa::read();
+  } else if (fifoNumber == 3) {
+    address = otg_fs_global::fs_dieptxf3::ineptxsa::read();
+  }
+
+  return address;
+}
+
+
+void OtgFsCoreHal::setTxFifoStartAddress(uint32_t fifoNumber, uint32_t address)
+{
+  if (fifoNumber == 1) {
+    otg_fs_global::fs_dieptxf1::ineptxsa::write(address);
+  } else if (fifoNumber == 2) {
+    otg_fs_global::fs_dieptxf2::ineptxsa::write(address);
+  } else if (fifoNumber == 3) {
+    otg_fs_global::fs_dieptxf3::ineptxsa::write(address);
+  }
 }
 
 
@@ -189,6 +250,25 @@ bool OtgFsCoreHal::getInterruptStatus(OtgFsInterrupt interrupt)
 bool OtgFsCoreHal::getInterruptStatus(uint32_t status, OtgFsInterrupt interrupt)
 {
   return (status >> static_cast<uint32_t>(interrupt)) & 0x1U;
+}
+
+
+bool OtgFsCoreHal::getOtgInterruptStatus(OtgFsOtgInterrupt interrupt)
+{
+  return (otg_fs_global::fs_gotgint::read() >> static_cast<uint32_t>(interrupt)) & 0x1U;
+}
+
+
+void OtgFsCoreHal::clearOtgInterruptStatus(OtgFsOtgInterrupt interrupt)
+{
+  otg_fs_global::fs_gotgint::write(1U << static_cast<uint32_t>(interrupt));
+}
+
+
+void OtgFsCoreHal::clearOtgInterruptStatus()
+{
+  uint32_t otgInt = otg_fs_global::fs_gotgint::read();
+  otg_fs_global::fs_gotgint::write(otgInt);
 }
 
 
@@ -239,6 +319,15 @@ void OtgFsCoreHal::writeFifoPacket(uint32_t fifoNumber, const uint8_t* buffer, u
 
     *txFifo = remainingData;
   }
+}
+
+
+void OtgFsCoreHal::getRxStatus(OtgFsRxStatus& status)
+{
+  uint32_t grxstsp = otg_fs_global::fs_grxstsp_device::read();
+  status.packetStatus = otg_fs_global::fs_grxstsp_device::pktsts::getFromRegValue(grxstsp); 
+  status.endpointNumber = otg_fs_global::fs_grxstsp_device::epnum::getFromRegValue(grxstsp);
+  status.byteCount = otg_fs_global::fs_grxstsp_device::bcnt::getFromRegValue(grxstsp);
 }
 
 } // namespace
