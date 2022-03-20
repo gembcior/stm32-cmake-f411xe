@@ -5,7 +5,6 @@
 #include "task.h"
 
 #include "os/Task.h"
-#include "os/StaticTask.h"
 
 
 namespace os {
@@ -15,12 +14,10 @@ class Scheduler
 public:
   inline void start();
   bool addTask(Task& task);
-  bool addTask(StaticTask& task);
 
 private:
   static void taskFunctionAdapter(void *parameters);
 };
-
 
 
 void Scheduler::start()

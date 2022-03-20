@@ -12,6 +12,7 @@
 #include <array>
 #include "irq/IrqAdapterTable.h"
 #include "irq.h"
+#include "os/Mutex.h"
 
 namespace stm32::objects {
 
@@ -52,5 +53,15 @@ IrqManager<IrqNumber>& getObject<IrqManager<IrqNumber>>()
   static IrqManager<IrqNumber> irqManager(getObject<NvicHal>());
   return irqManager;
 }
+
+template<>
+lib::OsLogger& getObject<lib::OsLogger>()
+{
+  static os::Mutex mutex;
+  static lib::OsLogger logger(mutex);
+
+  return logger;
+}
+
 
 } // namespace

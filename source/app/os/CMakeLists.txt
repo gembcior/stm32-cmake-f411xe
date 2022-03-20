@@ -15,7 +15,6 @@ target_link_libraries(os_app
     irq
     uart
     flasher
-    logger
     scb
     flash
     gpio
@@ -25,6 +24,7 @@ target_link_libraries(os_app
     nvic
     uart
     os
+    os_logger
 )
 
 add_subdirectory(src)

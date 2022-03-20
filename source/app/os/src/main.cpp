@@ -5,10 +5,10 @@
 #include "objects.h"
 #include "system/constants.h"
 #include "uart/types.h"
-#include "logger/Logger.h"
+#include "logger/OsLogger.h"
 #include "ticktack/TickTack.h"
 
-#include "os/StaticTask.h"
+#include "os/Task.h"
 #include "os/Scheduler.h"
 
 
@@ -28,20 +28,19 @@ void writeUart(const char character)
 
 
 constexpr uint32_t blinkerTaskStackSize = 1024;
-StackType_t blinkerTaskStack[blinkerTaskStackSize];
-StaticTask_t blinkerTaskBuffer;
+StackType_t blinkerTaskStack[blinkerTaskStackSize] = {};
 
 
-class BlinkerTask : public os::StaticTask
+class BlinkerTask : public Task
 {
 public:
-  BlinkerTask(StackType_t* stackBuffer, StaticTask_t* taskBuffer) :
-    StaticTask("BlinkerTask", blinkerTaskStackSize, 24, stackBuffer, taskBuffer)
+  BlinkerTask(StackType_t* stackBuffer) :
+    Task("BlinkerTask", blinkerTaskStackSize, 24, stackBuffer)
   {}
 
   void run() final
   {
-    auto& logger = getObject<Logger>();
+    auto& logger = getObject<OsLogger>();
     auto& flasher = getObject<Flasher>();
 
     logger.info("Blinker Task Started");
@@ -58,20 +57,19 @@ public:
 
 
 constexpr uint32_t uartTaskStackSize = 1024;
-StackType_t uartTaskStack[uartTaskStackSize];
-StaticTask_t uartTaskBuffer;
+StackType_t uartTaskStack[uartTaskStackSize] = {};
 
 
-class UartTask : public os::StaticTask
+class UartTask : public Task
 {
 public:
-  UartTask(StackType_t* stackBuffer, StaticTask_t* taskBuffer) :
-    StaticTask("UartTask", uartTaskStackSize, 24, stackBuffer, taskBuffer)
+  UartTask(StackType_t* stackBuffer) :
+    Task("UartTask", uartTaskStackSize, 24, stackBuffer)
   {}
 
   void run() final
   {
-    auto& logger = getObject<Logger>();
+    auto& logger = getObject<OsLogger>();
     auto& gpio = getObject<GpioDriver>();
 
     logger.info("Uart Task Started");
@@ -92,12 +90,16 @@ public:
 };
 
 
+BlinkerTask blinkerTask(blinkerTaskStack);
+UartTask uartTask(uartTaskStack);
+
+
 int main(void)
 {
   getIrqVectorTable();
   auto& system = getObject<System>();
   auto& uart = getObject<UartDriver>();
-  auto& logger = getObject<Logger>();
+  auto& logger = getObject<OsLogger>();
 
   system.initialize();
 
@@ -115,15 +117,14 @@ int main(void)
   logger.registerOutput(writeUart);
   logger.info("Blinker application started!");
 
-  BlinkerTask blinkerTask(blinkerTaskStack, &blinkerTaskBuffer);
-  UartTask uartTask(uartTaskStack, &uartTaskBuffer);
-
   auto& scheduler = getObject<Scheduler>();
   if (!scheduler.addTask(blinkerTask)) logger.error("Blinker Task create failed!");
   if (!scheduler.addTask(uartTask)) logger.error("Uart Task create failed");
 
   logger.info("Tasks created. Starting scheduler!");
 
+  auto field1 = blinkerTask.getBuffer();
+  (void)field1->ucDummy19;
   scheduler.start();
 
   while (1);

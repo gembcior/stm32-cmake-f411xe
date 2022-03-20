@@ -7,6 +7,7 @@
 #include "irq/IrqAdapterTable.h"
 #include "irq/IrqManager.h"
 #include "irq.h"
+#include "logger/OsLogger.h"
 
 namespace stm32::objects {
 
@@ -17,6 +18,9 @@ const irq::IrqAdapterPointer* getIrqVectorTable();
 
 template<>
 irq::IrqManager<irq::IrqNumber>& getObject<irq::IrqManager<irq::IrqNumber>>();
+
+template<>
+lib::OsLogger& getObject<lib::OsLogger>();
 
 } // namespace
 

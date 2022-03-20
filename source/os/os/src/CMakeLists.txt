@@ -2,7 +2,7 @@ target_sources(os
   PRIVATE
     Scheduler.cpp
     Task.cpp
-    StaticTask.cpp
+    Mutex.cpp
 )
 
 target_include_directories(os
